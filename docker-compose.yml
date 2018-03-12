@@ -1,0 +1,26 @@
+version: '3.5'
+
+services:
+  mysql:
+    image: mysql/mysql-server:5.7.21
+    volumes:
+      - /opt/mysql_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=ptt
+      - MYSQL_PASSWORD=ptt
+
+  payara:
+    image: payara/server-full:181
+    volumes:
+      - /usr/share/java/sqlconnector/:/glassfish/domains/domain1
+    ports:
+      - "8080:8080"
+      - "4848:4848"
+      - "8181:8181"
+    links:
+      - mysql:mysql
+    depends_on:
+      - mysql
