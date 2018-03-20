@@ -9,23 +9,28 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author Teun
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Journey.findAll", query = "SELECT j FROM Journey j")
+    ,@NamedQuery(name = "Journey.findById", query = "SELECT j FROM Journey j WHERE id = :id")})
 public class Journey implements IJourney, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
     private final List<ITransLocation> locations = new ArrayList<>();
 
     public Journey() {
     }
 
+    // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
     @Override
     public List<ITransLocation> getTransLocations() {
         return Collections.unmodifiableList(locations);
@@ -33,6 +38,23 @@ public class Journey implements IJourney, Serializable {
 
     public long getId() {
         return id;
+    }
+    // </editor-fold>
+
+    public boolean addTransLocation(ITransLocation loc) {
+        if (loc != null) {
+            locations.add(loc);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean addTransLocation(List<ITransLocation> loc) {
+        if (loc != null) {
+            locations.addAll(loc);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -49,10 +71,9 @@ public class Journey implements IJourney, Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 2;
-        hash = 12 * hash + Objects.hashCode(this.id);
-        hash = 12 * hash + Objects.hashCode(this.locations);
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.locations);
         return hash;
     }
-
 }

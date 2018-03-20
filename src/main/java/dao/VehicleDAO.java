@@ -1,7 +1,8 @@
 package dao;
 
-import domain.IVehicle;
+import domain.Vehicle;
 import java.util.List;
+import javax.persistence.PersistenceException;
 
 /**
  *
@@ -9,13 +10,13 @@ import java.util.List;
  */
 public interface VehicleDAO {
 
-    List<IVehicle> getVehicle(String hashedLicenceplate);
+    List<Vehicle> getVehicle(String hashedLicenceplate) throws PersistenceException;
 
-    List<IVehicle> getAllVehicles();
+    List<Vehicle> getAllVehicles() throws PersistenceException;
 
-    boolean updateVehicle(IVehicle vehicle);
+    boolean updateVehicle(Vehicle vehicle) throws PersistenceException;
 
-    boolean removeVehicle(IVehicle vehicle);
+    boolean removeVehicle(Vehicle vehicle) throws PersistenceException;
 
-    boolean insertVehicle(IVehicle vehicle);
+    boolean insertVehicle(Vehicle vehicle) throws PersistenceException;
 }

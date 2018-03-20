@@ -1,42 +1,48 @@
 package dao;
 
-import domain.IVehicle;
+import domain.Vehicle;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 
 /**
  *
  * @author Teun
  */
-public class VehicleDAOImpl implements VehicleDAO{
+@Stateless
+public class VehicleDAOImpl implements VehicleDAO {
 
-    @PersistenceContext(name = "TO BE FILLED IN !!!!!!!!!!!!!!!!!!1")
+    @PersistenceContext(name = "groep4.ptt_PU")
     EntityManager em;
-    
+
     @Override
-    public List<IVehicle> getVehicle(String hashedLicenceplate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Vehicle> getVehicle(String hashedLicenceplate) throws PersistenceException {
+        return em.createNamedQuery("Vehicle.findByLicenceplate").setParameter("licencePlate", hashedLicenceplate).getResultList();
     }
 
     @Override
-    public List<IVehicle> getAllVehicles() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Vehicle> getAllVehicles() throws PersistenceException {
+        return em.createNamedQuery("Vehicle.findAll").getResultList();
     }
 
     @Override
-    public boolean updateVehicle(IVehicle vehicle) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean updateVehicle(Vehicle vehicle) throws PersistenceException {
+        em.merge(vehicle);
+        return true;
     }
 
     @Override
-    public boolean removeVehicle(IVehicle vehicle) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean removeVehicle(Vehicle vehicle) throws PersistenceException {
+        em.remove(vehicle);
+        return true;
     }
 
     @Override
-    public boolean insertVehicle(IVehicle vehicle) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean insertVehicle(Vehicle vehicle) throws PersistenceException {
+        em.persist(vehicle);
+        return true;
     }
 
 }

@@ -5,12 +5,17 @@ import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author Teun
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "SubInvoice.findAll", query = "SELECT s FROM SubInvoice s")
+    ,@NamedQuery(name = "SubInvoice.findByInvoiceNumber", query = "SELECT s FROM SubInvoice s WHERE invoiceNumber = :invoiceNumber")})
 public class SubInvoice implements ISubInvoice, Serializable {
 
     @Id
@@ -31,6 +36,7 @@ public class SubInvoice implements ISubInvoice, Serializable {
         this.invoiceDate = new Date(System.currentTimeMillis()).toString();
     }
 
+    // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
     @Override
     public String getInvoiceNumber() {
         return invoiceNumber;
@@ -55,6 +61,7 @@ public class SubInvoice implements ISubInvoice, Serializable {
     public double getPrice() {
         return price;
     }
+    // </editor-fold>
 
     @Override
     public boolean equals(Object obj) {
@@ -70,12 +77,12 @@ public class SubInvoice implements ISubInvoice, Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 66 * hash + Objects.hashCode(this.invoiceNumber);
-        hash = 66 * hash + Objects.hashCode(this.country);
-        hash = 66 * hash + Objects.hashCode(this.isPayed);
-        hash = 66 * hash + Objects.hashCode(this.invoiceDate);
-        hash = 66 * hash + Objects.hashCode(this.price);
+        int hash = 5;
+        hash = 73 * hash + Objects.hashCode(this.invoiceNumber);
+        hash = 73 * hash + Objects.hashCode(this.country);
+        hash = 73 * hash + (this.isPayed ? 1 : 0);
+        hash = 73 * hash + Objects.hashCode(this.invoiceDate);
+        hash = 73 * hash + (int) (Double.doubleToLongBits(this.price) ^ (Double.doubleToLongBits(this.price) >>> 32));
         return hash;
     }
 }
