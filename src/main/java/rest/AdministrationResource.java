@@ -15,6 +15,8 @@ public class AdministrationResource {
 
     @Inject
     AdministrationSerivce administrationService;
-    
-    
+
+    public AdministrationResource() {
+    }
+
 }

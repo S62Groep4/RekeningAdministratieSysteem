@@ -18,8 +18,8 @@ public class SubInvoiceDAOImpl implements SubInvoiceDAO {
     EntityManager em;
 
     @Override
-    public List<SubInvoice> getSubInvoice(String invoiceNumber) throws PersistenceException {
-        return em.createNamedQuery("SubInvoice.findByInvoiceNumber").setParameter("invoiceNumber", invoiceNumber).getResultList();
+    public SubInvoice getSubInvoice(String invoiceNumber) throws PersistenceException {
+        return (SubInvoice) em.createNamedQuery("SubInvoice.findByInvoiceNumber").setParameter("invoiceNumber", invoiceNumber).getSingleResult();
     }
 
     @Override

@@ -10,7 +10,7 @@ import javax.persistence.PersistenceException;
  */
 public interface TransLocationDAO {
 
-    List<TransLocation> getTransLocation(String serialNumber) throws PersistenceException;
+    TransLocation getTransLocation(String serialNumber) throws PersistenceException;
 
     List<TransLocation> getAllTransLocations() throws PersistenceException;
 

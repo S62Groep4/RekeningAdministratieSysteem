@@ -10,7 +10,7 @@ import javax.persistence.PersistenceException;
  */
 public interface SubInvoiceDAO {
 
-    List<SubInvoice> getSubInvoice(String invoiceNumber) throws PersistenceException;
+    SubInvoice getSubInvoice(String invoiceNumber) throws PersistenceException;
 
     List<SubInvoice> getAllSubInvoices() throws PersistenceException;
 

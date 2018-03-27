@@ -10,7 +10,7 @@ import javax.persistence.PersistenceException;
  */
 public interface JourneyDAO {
 
-    List<Journey> getJourney(String id) throws PersistenceException;
+    Journey getJourney(String id) throws PersistenceException;
 
     List<Journey> getAllJourneys() throws PersistenceException;
 
