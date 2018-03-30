@@ -19,7 +19,7 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Journey.findAll", query = "SELECT j FROM Journey j")
-    ,@NamedQuery(name = "Journey.findById", query = "SELECT j FROM Journey j WHERE id = :id")})
+    ,@NamedQuery(name = "Journey.findById", query = "SELECT j FROM Journey j WHERE j.id = :id")})
 public class Journey implements IJourney, Serializable {
 
     @Id

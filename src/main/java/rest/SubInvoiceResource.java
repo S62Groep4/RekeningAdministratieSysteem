@@ -45,9 +45,9 @@ public class SubInvoiceResource {
     }
 
     @GET
-    @Path("{invoicenr}")
+    @Path("{invoiceNumber}")
     @Produces(MediaType.APPLICATION_JSON)
-    public SubInvoice getJourney(@PathParam("invoicenr") String invoiceNumber) {
+    public SubInvoice getJourney(@PathParam("invoiceNumber") String invoiceNumber) {
         return subInvoiceService.getSubInvoice(invoiceNumber);
     }
 

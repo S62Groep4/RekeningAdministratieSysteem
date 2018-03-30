@@ -15,7 +15,7 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "SubInvoice.findAll", query = "SELECT s FROM SubInvoice s")
-    ,@NamedQuery(name = "SubInvoice.findByInvoiceNumber", query = "SELECT s FROM SubInvoice s WHERE invoiceNumber = :invoiceNumber")})
+    ,@NamedQuery(name = "SubInvoice.findByInvoiceNumber", query = "SELECT s FROM SubInvoice s WHERE s.invoiceNumber = :invoiceNumber")})
 public class SubInvoice implements ISubInvoice, Serializable {
 
     @Id

@@ -46,9 +46,9 @@ public class TransLocationResource {
     }
 
     @GET
-    @Path("{serialnr}")
+    @Path("{serialNumber}")
     @Produces(MediaType.APPLICATION_JSON)
-    public TransLocation getJourney(@PathParam("serialnr") String serialNumber) {
+    public TransLocation getJourney(@PathParam("serialNumber") String serialNumber) {
         return transLocationService.getTransLocation(serialNumber);
     }
 

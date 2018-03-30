@@ -15,7 +15,7 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "TransLocation.findAll", query = "SELECT t FROM TransLocation t")
-    ,@NamedQuery(name = "TransLocation.findBySerialNumber", query = "SELECT t FROM TransLocation t WHERE serialNumber = :serialNumber")})
+    ,@NamedQuery(name = "TransLocation.findBySerialNumber", query = "SELECT t FROM TransLocation t WHERE t.serialNumber = :serialNumber")})
 public class TransLocation implements ITransLocation, Serializable {
 
     @Id

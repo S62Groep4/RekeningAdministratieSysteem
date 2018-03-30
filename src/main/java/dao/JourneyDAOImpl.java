@@ -14,7 +14,7 @@ import javax.persistence.PersistenceException;
 @Stateless
 public class JourneyDAOImpl implements JourneyDAO {
 
-    @PersistenceContext(name = "groep4.ptt_PU")
+    @PersistenceContext(name = "ptt_test")
     EntityManager em;
 
     @Override
