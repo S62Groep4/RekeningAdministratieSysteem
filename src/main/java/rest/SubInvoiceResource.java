@@ -20,7 +20,7 @@ import service.SubInvoiceService;
  * @author Teun
  */
 @Stateless
-@Path("subinvoice")
+@Path("subinvoices")
 public class SubInvoiceResource {
 
     @Inject

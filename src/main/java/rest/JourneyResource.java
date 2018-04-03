@@ -21,7 +21,7 @@ import service.JourneyService;
  * @author Teun
  */
 @Stateless
-@Path("journey")
+@Path("journeys")
 public class JourneyResource {
 
     @Inject

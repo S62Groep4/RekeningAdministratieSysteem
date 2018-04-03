@@ -1,5 +1,6 @@
 package dao;
 
+import domain.ITransLocation;
 import domain.Journey;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -35,7 +36,12 @@ public class JourneyDAOImpl implements JourneyDAO {
 
     @Override
     public boolean removeJourney(Journey journey) throws PersistenceException {
-        em.remove(journey);
+        Journey temp = em.find(Journey.class, journey.getId());
+        for (ITransLocation tl : temp.getTransLocations()) {
+            em.remove(tl);
+        }
+
+        em.remove(temp);
         return true;
     }
 

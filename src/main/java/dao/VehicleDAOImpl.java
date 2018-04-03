@@ -1,5 +1,7 @@
 package dao;
 
+import domain.IJourney;
+import domain.ISubInvoice;
 import domain.Vehicle;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -35,7 +37,17 @@ public class VehicleDAOImpl implements VehicleDAO {
 
     @Override
     public boolean removeVehicle(Vehicle vehicle) throws PersistenceException {
-        em.remove(vehicle);
+        Vehicle temp = em.find(Vehicle.class, vehicle.getHashedLicensePlate());
+
+        for (IJourney j : temp.getJourneys()) {
+            em.remove(j);
+        }
+
+        for (ISubInvoice si : temp.getSubInvoices()) {
+            em.remove(si);
+        }
+
+        em.remove(temp);
         return true;
     }
 
@@ -44,5 +56,4 @@ public class VehicleDAOImpl implements VehicleDAO {
         em.persist(vehicle);
         return true;
     }
-
 }

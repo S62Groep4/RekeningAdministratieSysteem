@@ -1,6 +1,5 @@
 package rest;
 
-import domain.Journey;
 import domain.TransLocation;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -21,7 +20,7 @@ import service.TransLocationService;
  * @author Teun
  */
 @Stateless
-@Path("translocation")
+@Path("translocations")
 public class TransLocationResource {
 
     @Inject

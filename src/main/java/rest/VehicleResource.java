@@ -16,7 +16,7 @@ import javax.ws.rs.core.MediaType;
 import service.VehicleService;
 
 @Stateless
-@Path("vehicle")
+@Path("vehicles")
 public class VehicleResource {
 
     @Inject
