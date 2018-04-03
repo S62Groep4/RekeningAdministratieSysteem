@@ -34,8 +34,8 @@ public class TransLocationDAOImpl implements TransLocationDAO {
     }
 
     @Override
-    public boolean removeTransLocation(TransLocation location) throws PersistenceException {
-        em.remove(location);
+    public boolean removeTransLocation(String serialNumber) throws PersistenceException {
+        em.remove(em.find(TransLocation.class, serialNumber));
         return true;
     }
 

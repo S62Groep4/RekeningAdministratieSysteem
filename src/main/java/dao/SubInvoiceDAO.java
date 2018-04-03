@@ -16,7 +16,7 @@ public interface SubInvoiceDAO {
 
     boolean updateSubInvoice(SubInvoice invoice) throws PersistenceException;
 
-    boolean removeSubInvoice(SubInvoice invoice) throws PersistenceException;
+    boolean removeSubInvoice(String invoiceNumber) throws PersistenceException;
 
     boolean insertSubInvoice(SubInvoice invoice) throws PersistenceException;
 

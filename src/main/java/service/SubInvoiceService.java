@@ -51,9 +51,9 @@ public class SubInvoiceService {
         }
     }
 
-    public boolean removeSubInvoice(SubInvoice invoice) throws PersistenceException {
+    public boolean removeSubInvoice(String invoiceNumber) throws PersistenceException {
         try {
-            return subinvoiceDao.removeSubInvoice(invoice);
+            return subinvoiceDao.removeSubInvoice(invoiceNumber);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing removeSubInvoice operation; {0}", pe.getMessage());
             return false;

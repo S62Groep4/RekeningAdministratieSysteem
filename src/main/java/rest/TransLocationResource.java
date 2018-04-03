@@ -21,38 +21,36 @@ import service.TransLocationService;
  */
 @Stateless
 @Path("translocations")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class TransLocationResource {
 
     @Inject
     TransLocationService transLocationService;
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
     public void insertTransLocation(TransLocation location) {
         transLocationService.insertTransLocation(location);
     }
 
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
     public void updateJourney(TransLocation location) {
         transLocationService.updateTransLocation(location);
     }
 
     @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void removeJourney(TransLocation location) {
-        transLocationService.removeTransLocation(location);
+    @Path("{serialNumber}")
+    public void removeJourney(@PathParam("serialNumber") String serialNumber) {
+        transLocationService.removeTransLocation(serialNumber);
     }
 
     @GET
     @Path("{serialNumber}")
-    @Produces(MediaType.APPLICATION_JSON)
     public TransLocation getJourney(@PathParam("serialNumber") String serialNumber) {
         return transLocationService.getTransLocation(serialNumber);
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public List<TransLocation> getAllTransLocations() {
         return transLocationService.getAllTransLocations();
     }

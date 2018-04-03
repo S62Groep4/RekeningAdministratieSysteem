@@ -17,38 +17,36 @@ import service.VehicleService;
 
 @Stateless
 @Path("vehicles")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class VehicleResource {
 
     @Inject
     VehicleService vehicleService;
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
     public void insertVehicle(Vehicle vehicle) {
         vehicleService.insertVehicle(vehicle);
     }
 
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
     public void updateVehicle(Vehicle vehicle) {
         vehicleService.updateVehicle(vehicle);
     }
 
     @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void removeVehicle(Vehicle vehicle) {
-        vehicleService.removeVehicle(vehicle);
+    @Path("{hashedLicensePlate}")
+    public void removeVehicle(@PathParam("hashLicensePlate") String hashedLicensePlate) {
+        vehicleService.removeVehicle(hashedLicensePlate);
     }
 
     @GET
     @Path("{hashedLicensePlate}")
-    @Produces(MediaType.APPLICATION_JSON)
     public Vehicle getVehicle(@PathParam("hashLicensePlate") String hashedLicensePlate) {
         return vehicleService.getVehicle(hashedLicensePlate);
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public List<Vehicle> getAllVehicles() {
         return vehicleService.getAllVehicles();
     }

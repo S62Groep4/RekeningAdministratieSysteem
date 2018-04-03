@@ -34,8 +34,8 @@ public class SubInvoiceDAOImpl implements SubInvoiceDAO {
     }
 
     @Override
-    public boolean removeSubInvoice(SubInvoice invoice) throws PersistenceException {
-        em.remove(invoice);
+    public boolean removeSubInvoice(String invoiceNumber) throws PersistenceException {
+        em.remove(em.find(SubInvoice.class, invoiceNumber));
         return true;
     }
 

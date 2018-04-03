@@ -36,8 +36,8 @@ public class VehicleDAOImpl implements VehicleDAO {
     }
 
     @Override
-    public boolean removeVehicle(Vehicle vehicle) throws PersistenceException {
-        Vehicle temp = em.find(Vehicle.class, vehicle.getHashedLicensePlate());
+    public boolean removeVehicle(String hashedLicenceplate) throws PersistenceException {
+        Vehicle temp = em.find(Vehicle.class, hashedLicenceplate);
 
         for (IJourney j : temp.getJourneys()) {
             em.remove(j);

@@ -51,9 +51,9 @@ public class VehicleService {
         }
     }
 
-    public boolean removeVehicle(Vehicle vehicle) throws PersistenceException {
+    public boolean removeVehicle(String hashedLicenceplate) throws PersistenceException {
         try {
-            return vehicleDao.removeVehicle(vehicle);
+            return vehicleDao.removeVehicle(hashedLicenceplate);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing removeVehicle operation; {0}", pe.getMessage());
             return false;

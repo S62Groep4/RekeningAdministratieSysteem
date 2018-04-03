@@ -21,38 +21,36 @@ import service.SubInvoiceService;
  */
 @Stateless
 @Path("subinvoices")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class SubInvoiceResource {
 
     @Inject
     SubInvoiceService subInvoiceService;
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
     public void insertTransLocation(SubInvoice invoice) {
         subInvoiceService.insertSubInvoice(invoice);
     }
 
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
     public void updateJourney(SubInvoice invoice) {
         subInvoiceService.updateSubInvoice(invoice);
     }
 
     @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void removeJourney(SubInvoice invoice) {
-        subInvoiceService.removeSubInvoice(invoice);
+    @Path("{invoiceNumber}")
+    public void removeJourney(@PathParam("invoiceNumber") String invoiceNumber) {
+        subInvoiceService.removeSubInvoice(invoiceNumber);
     }
 
     @GET
     @Path("{invoiceNumber}")
-    @Produces(MediaType.APPLICATION_JSON)
     public SubInvoice getJourney(@PathParam("invoiceNumber") String invoiceNumber) {
         return subInvoiceService.getSubInvoice(invoiceNumber);
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public List<SubInvoice> getAllTransLocations() {
         return subInvoiceService.getAllSubInvoices();
     }

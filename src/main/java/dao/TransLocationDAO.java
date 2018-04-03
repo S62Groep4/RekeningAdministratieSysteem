@@ -16,7 +16,7 @@ public interface TransLocationDAO {
 
     boolean updateTransLocation(TransLocation location) throws PersistenceException;
 
-    boolean removeTransLocation(TransLocation location) throws PersistenceException;
+    boolean removeTransLocation(String serialNumber) throws PersistenceException;
 
     boolean insertTransLocation(TransLocation location) throws PersistenceException;
 

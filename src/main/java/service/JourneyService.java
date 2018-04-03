@@ -51,9 +51,9 @@ public class JourneyService {
         }
     }
 
-    public boolean removeJourney(Journey journey) throws PersistenceException {
+    public boolean removeJourney(String id) throws PersistenceException {
         try {
-            return journeyDao.removeJourney(journey);
+            return journeyDao.removeJourney(id);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing removeJourney operation; {0}", pe.getMessage());
             return false;

@@ -16,7 +16,7 @@ public interface JourneyDAO {
 
     boolean updateJourney(Journey journey) throws PersistenceException;
 
-    boolean removeJourney(Journey journey) throws PersistenceException;
+    boolean removeJourney(String id) throws PersistenceException;
 
     boolean insertJourney(Journey journey) throws PersistenceException;
 

@@ -51,9 +51,9 @@ public class TransLocationService {
         }
     }
 
-    public boolean removeTransLocation(TransLocation location) throws PersistenceException {
+    public boolean removeTransLocation(String serialNumber) throws PersistenceException {
         try {
-            return translocationDao.removeTransLocation(location);
+            return translocationDao.removeTransLocation(serialNumber);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing removeTransLocation operation; {0}", pe.getMessage());
             return false;

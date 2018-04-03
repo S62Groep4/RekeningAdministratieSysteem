@@ -1,7 +1,6 @@
 package rest;
 
 import domain.Journey;
-import domain.Vehicle;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -22,38 +21,36 @@ import service.JourneyService;
  */
 @Stateless
 @Path("journeys")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class JourneyResource {
 
     @Inject
     JourneyService journeyService;
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
     public void insertJourney(Journey journey) {
         journeyService.insertJourney(journey);
     }
 
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
     public void updateJourney(Journey journey) {
         journeyService.updateJourney(journey);
     }
 
     @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void removeJourney(Journey journey) {
-        journeyService.removeJourney(journey);
+    @Path("{id}")
+    public void removeJourney(@PathParam("id") String id) {
+        journeyService.removeJourney(id);
     }
 
     @GET
     @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
     public Journey getJourney(@PathParam("id") String id) {
         return journeyService.getJourney(id);
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public List<Journey> getAllJourneys() {
         return journeyService.getAllJourneys();
     }

@@ -35,8 +35,8 @@ public class JourneyDAOImpl implements JourneyDAO {
     }
 
     @Override
-    public boolean removeJourney(Journey journey) throws PersistenceException {
-        Journey temp = em.find(Journey.class, journey.getId());
+    public boolean removeJourney(String id) throws PersistenceException {
+        Journey temp = em.find(Journey.class, id);
         for (ITransLocation tl : temp.getTransLocations()) {
             em.remove(tl);
         }
