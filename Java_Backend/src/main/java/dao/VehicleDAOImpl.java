@@ -1,5 +1,6 @@
 package dao;
 
+import domain.Journey;
 import domain.SubInvoice;
 import domain.Vehicle;
 import java.util.List;
@@ -19,13 +20,23 @@ public class VehicleDAOImpl implements VehicleDAO {
     EntityManager em;
 
     @Override
+    public List<Vehicle> getAllVehicles() throws PersistenceException {
+        return em.createNamedQuery("Vehicle.findAll").getResultList();
+    }
+
+    @Override
     public Vehicle getVehicle(String hashedLicenceplate) throws PersistenceException {
         return (Vehicle) em.createNamedQuery("Vehicle.findByLicenceplate").setParameter("licencePlate", hashedLicenceplate).getSingleResult();
     }
 
     @Override
-    public List<Vehicle> getAllVehicles() throws PersistenceException {
-        return em.createNamedQuery("Vehicle.findAll").getResultList();
+    public List<SubInvoice> getVehicleInvoices(String hashedLicencePlate) throws PersistenceException {
+        return em.createNamedQuery("Vehicle.findInvoices").setParameter("hashedLicencePlate", hashedLicencePlate).getResultList();
+    }
+
+    @Override
+    public List<Journey> getVehicleJourneys(String hashedLicencePlate) throws PersistenceException {
+        return em.createNamedQuery("Vehicle.findJourneys").setParameter("hashedLicencePlate", hashedLicencePlate).getResultList();
     }
 
     @Override
@@ -41,7 +52,6 @@ public class VehicleDAOImpl implements VehicleDAO {
         for (Integer j : temp.getJourneys()) {
             em.remove(j);
         }
-
         for (SubInvoice si : temp.getSubInvoices()) {
             em.remove(si);
         }

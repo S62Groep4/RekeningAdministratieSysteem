@@ -51,6 +51,12 @@ public class TransLocationResource {
     }
 
     @GET
+    @Path("journeyid/{journeyId}")
+    public List<TransLocation> getAllTransLocationsByJourney(@PathParam("journeyId") long id) {
+        return transLocationService.getAllTransLocationsByJourney(id);
+    }
+
+    @GET
     public List<TransLocation> getAllTransLocations() {
         return transLocationService.getAllTransLocations();
     }

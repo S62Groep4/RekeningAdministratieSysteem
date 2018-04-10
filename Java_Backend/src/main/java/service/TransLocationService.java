@@ -23,6 +23,15 @@ public class TransLocationService {
 
     public TransLocationService() {
     }
+    
+    public List<TransLocation> getAllTransLocationsByJourney(long id){
+        try {
+            return translocationDao.getAllTransLocationsByJourney(id);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing getTransLocation operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
 
     public TransLocation getTransLocation(String serialNumber) throws PersistenceException {
         try {

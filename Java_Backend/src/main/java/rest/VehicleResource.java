@@ -1,5 +1,7 @@
 package rest;
 
+import domain.Journey;
+import domain.SubInvoice;
 import domain.Vehicle;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -44,6 +46,18 @@ public class VehicleResource {
     @Path("{hashedLicensePlate}")
     public Vehicle getVehicle(@PathParam("hashLicensePlate") String hashedLicensePlate) {
         return vehicleService.getVehicle(hashedLicensePlate);
+    }
+    
+    @GET
+    @Path("{hashedLicensePlate}/journeys")
+    public List<Journey> getVehicleJourneys(@PathParam("hashLicensePlate") String hashedLicensePlate) {
+        return vehicleService.getVehicleJourneys(hashedLicensePlate);
+    }
+    
+    @GET
+    @Path("{hashedLicensePlate}/invoices")
+    public List<SubInvoice> getVehicleInvoices(@PathParam("hashLicensePlate") String hashedLicensePlate) {
+        return vehicleService.getVehicleInvoices(hashedLicensePlate);
     }
 
     @GET

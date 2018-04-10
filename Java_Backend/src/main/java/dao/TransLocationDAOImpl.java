@@ -28,6 +28,11 @@ public class TransLocationDAOImpl implements TransLocationDAO {
     }
 
     @Override
+    public List<TransLocation> getAllTransLocationsByJourney(long id) throws PersistenceException {
+        return em.createNamedQuery("TransLocation.findByJourneyId").setParameter("journeyId", id).getResultList();
+    }
+
+    @Override
     public boolean updateTransLocation(TransLocation location) throws PersistenceException {
         em.merge(location);
         return true;

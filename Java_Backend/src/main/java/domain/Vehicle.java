@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -17,19 +19,22 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Vehicle.findAll", query = "SELECT v FROM Vehicle v")
-    ,@NamedQuery(name = "Vehicle.findByLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.hashedLicencePlate = :hashedLicencePlate")})
+    ,@NamedQuery(name = "Vehicle.findByLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.hashedLicencePlate = :hashedLicencePlate")
+    ,@NamedQuery(name = "Vehicle.findJourneys", query = "SELECT t FROM TransLocation t WHERE t.journeyId IN (SELECT v.journeys FROM Vehicle v WHERE v.hashedLicencePlate = :hashedLicencePlate)")
+    ,@NamedQuery(name = "Vehicle.findInvoices", query = "SELECT v.subInvoices from Vehicle v WHERE v.hashedLicencePlate = :hashedLicencePlate")})
 public class Vehicle implements Serializable {
 
     @Id
     private String hashedLicencePlate;
     private final List<Integer> journeys = new ArrayList<>();
+    @OneToMany
     private final List<SubInvoice> subInvoices = new ArrayList<>();
 
     public Vehicle() {
     }
 
-    public Vehicle(String hashedLicencePlate) {
-        this.hashedLicencePlate = hashedLicencePlate;
+    public Vehicle(String licencePlate) {
+        this.hashedLicencePlate = BCrypt.hashpw(licencePlate, BCrypt.gensalt(12));
     }
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
@@ -51,13 +56,13 @@ public class Vehicle implements Serializable {
     // </editor-fold>
 
     public boolean addJourney(int j) {
-            journeys.add(j);
-            return true;
+        journeys.add(j);
+        return true;
     }
 
     public boolean addJourney(List<Integer> j) {
-            journeys.addAll(j);
-            return true;
+        journeys.addAll(j);
+        return true;
     }
 
     public boolean addInvoice(SubInvoice i) {

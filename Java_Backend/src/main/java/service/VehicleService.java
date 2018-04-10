@@ -1,6 +1,8 @@
 package service;
 
 import dao.VehicleDAO;
+import domain.Journey;
+import domain.SubInvoice;
 import domain.Vehicle;
 import java.util.List;
 import java.util.logging.Level;
@@ -29,6 +31,24 @@ public class VehicleService {
             return vehicleDao.getVehicle(hashedLicenceplate);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing getVehicle operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
+    
+    public List<SubInvoice> getVehicleInvoices(String hashedLicenceplate) throws PersistenceException {
+        try {
+            return vehicleDao.getVehicleInvoices(hashedLicenceplate);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing getVehicleInvoices operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
+    
+    public List<Journey> getVehicleJourneys(String hashedLicenceplate) throws PersistenceException {
+        try {
+            return vehicleDao.getVehicleJourneys(hashedLicenceplate);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing getVehicleJourneys operation; {0}", pe.getMessage());
             return null;
         }
     }

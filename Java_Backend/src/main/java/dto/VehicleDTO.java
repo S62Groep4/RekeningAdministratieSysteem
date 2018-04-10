@@ -1,6 +1,7 @@
 package dto;
 
 import java.io.Serializable;
+import java.util.Base64;
 
 /**
  *
@@ -18,7 +19,7 @@ public class VehicleDTO implements Serializable {
     }
 
     public VehicleDTO(String hashedLicencePlate, String journeyUrl, int journeys, String subInvoiceUrl, int subInvoices) {
-        this.hashedLicencePlate = hashedLicencePlate;
+        this.hashedLicencePlate = new String(Base64.getEncoder().encode(hashedLicencePlate.getBytes()));
         this.journeyUrl = journeyUrl;
         this.journeys = journeys;
         this.subInvoiceUrl = subInvoiceUrl;
@@ -64,6 +65,5 @@ public class VehicleDTO implements Serializable {
     public void setSubInvoices(int subInvoices) {
         this.subInvoices = subInvoices;
     }
-    
-    
+
 }
