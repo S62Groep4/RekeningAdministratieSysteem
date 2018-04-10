@@ -18,7 +18,7 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
     @NamedQuery(name = "TransLocation.findAll", query = "SELECT t FROM TransLocation t")
     ,@NamedQuery(name = "TransLocation.findBySerialNumber", query = "SELECT t FROM TransLocation t WHERE t.serialNumber = :serialNumber")})
-public class TransLocation implements ITransLocation, Serializable {
+public class TransLocation implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -28,29 +28,33 @@ public class TransLocation implements ITransLocation, Serializable {
     private String dateTime;
     private String serialNumber;
     private String countryCode;
+    private int journeyId;
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
-    @Override
+    public int getJourneyId() {
+        return journeyId;
+    }
+
+    public void setJourneyId(int journeyId) {
+        this.journeyId = journeyId;
+    }
+
     public Double getLat() {
         return lat;
     }
 
-    @Override
     public Double getLon() {
         return lon;
     }
 
-    @Override
     public String getDateTime() {
         return dateTime;
     }
 
-    @Override
     public String getSerialNumber() {
         return serialNumber;
     }
 
-    @Override
     public String getCountryCode() {
         return countryCode;
     }
@@ -87,12 +91,13 @@ public class TransLocation implements ITransLocation, Serializable {
     public TransLocation() {
     }
 
-    public TransLocation(Double lat, Double lon, String serialNumber, String countryCode) {
+    public TransLocation(Double lat, Double lon, String serialNumber, String countryCode, int journeyId) {
         this.lat = lat;
         this.lon = lon;
         this.dateTime = new Date(System.currentTimeMillis()).toString();
         this.serialNumber = serialNumber;
         this.countryCode = countryCode;
+        this.journeyId = journeyId;
     }
 
     @Override

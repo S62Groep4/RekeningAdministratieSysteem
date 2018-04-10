@@ -16,7 +16,7 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
     @NamedQuery(name = "SubInvoice.findAll", query = "SELECT s FROM SubInvoice s")
     ,@NamedQuery(name = "SubInvoice.findByInvoiceNumber", query = "SELECT s FROM SubInvoice s WHERE s.invoiceNumber = :invoiceNumber")})
-public class SubInvoice implements ISubInvoice, Serializable {
+public class SubInvoice implements Serializable {
 
     @Id
     private String invoiceNumber;
@@ -37,27 +37,22 @@ public class SubInvoice implements ISubInvoice, Serializable {
     }
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
-    @Override
     public String getInvoiceNumber() {
         return invoiceNumber;
     }
 
-    @Override
     public String getCountry() {
         return country;
     }
 
-    @Override
     public boolean getPaymentStatus() {
         return isPayed;
     }
 
-    @Override
     public String getInvoiceDate() {
         return invoiceDate;
     }
 
-    @Override
     public double getPrice() {
         return price;
     }

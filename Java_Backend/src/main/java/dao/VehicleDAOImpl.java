@@ -1,7 +1,6 @@
 package dao;
 
-import domain.IJourney;
-import domain.ISubInvoice;
+import domain.SubInvoice;
 import domain.Vehicle;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -39,11 +38,11 @@ public class VehicleDAOImpl implements VehicleDAO {
     public boolean removeVehicle(String hashedLicenceplate) throws PersistenceException {
         Vehicle temp = em.find(Vehicle.class, hashedLicenceplate);
 
-        for (IJourney j : temp.getJourneys()) {
+        for (Integer j : temp.getJourneys()) {
             em.remove(j);
         }
 
-        for (ISubInvoice si : temp.getSubInvoices()) {
+        for (SubInvoice si : temp.getSubInvoices()) {
             em.remove(si);
         }
 
