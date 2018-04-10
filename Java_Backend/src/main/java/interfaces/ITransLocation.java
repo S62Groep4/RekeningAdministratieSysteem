@@ -1,4 +1,4 @@
-package domain;
+package interfaces;
 
 public interface ITransLocation {
 
