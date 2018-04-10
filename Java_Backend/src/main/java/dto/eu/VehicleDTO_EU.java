@@ -1,4 +1,4 @@
-package dto;
+package dto.eu;
 
 import java.io.Serializable;
 import java.util.Base64;
