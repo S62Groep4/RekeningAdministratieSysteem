@@ -18,6 +18,10 @@ public class Journey implements Serializable {
     public Journey() {
     }
 
+    public Journey(Long id) {
+        this.id = id;
+    }
+
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
     public List<TransLocation> getTransLocations() {
         return Collections.unmodifiableList(locations);

@@ -35,6 +35,14 @@ public class SubInvoice implements Serializable {
         this.isPayed = false;
         this.invoiceDate = new Date(System.currentTimeMillis()).toString();
     }
+    
+    public SubInvoice(String invoiceNumber, String country, double price, String invoiceDate, boolean isPayed) {
+        this.invoiceNumber = invoiceNumber;
+        this.country = country;
+        this.price = price;
+        this.isPayed = isPayed;
+        this.invoiceDate = invoiceDate;
+    }
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
     public String getInvoiceNumber() {

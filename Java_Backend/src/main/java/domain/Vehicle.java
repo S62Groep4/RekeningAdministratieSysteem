@@ -34,7 +34,7 @@ public class Vehicle implements Serializable {
     }
 
     public Vehicle(String licencePlate) {
-        this.hashedLicencePlate = BCrypt.hashpw(licencePlate, BCrypt.gensalt(12));
+        this.hashedLicencePlate = licencePlate;
     }
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
@@ -44,6 +44,10 @@ public class Vehicle implements Serializable {
 
     public void setHashedLicencePlate(String hashedLicencePlate) {
         this.hashedLicencePlate = hashedLicencePlate;
+    }
+    
+    public void setUnHashedLicencePlate(String licencePlate) {
+        this.hashedLicencePlate = BCrypt.hashpw(licencePlate, BCrypt.gensalt(12));
     }
 
     public List<Integer> getJourneys() {

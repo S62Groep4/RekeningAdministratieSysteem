@@ -100,6 +100,15 @@ public class TransLocation implements Serializable {
         this.countryCode = countryCode;
         this.journeyId = journeyId;
     }
+    
+    public TransLocation(Double lat, Double lon, String serialNumber, String countryCode) {
+        this.lat = lat;
+        this.lon = lon;
+        this.dateTime = new Date(System.currentTimeMillis()).toString();
+        this.serialNumber = serialNumber;
+        this.countryCode = countryCode;
+        this.journeyId = -1;
+    }
 
     @Override
     public boolean equals(Object obj) {

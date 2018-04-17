@@ -19,7 +19,7 @@ public class VehicleDTO_EU implements Serializable {
     }
 
     public VehicleDTO_EU(String hashedLicencePlate, String journeyUrl, int journeys, String subInvoiceUrl, int subInvoices) {
-        this.hashedLicencePlate = new String(Base64.getEncoder().encode(hashedLicencePlate.getBytes()));
+        this.hashedLicencePlate = hashedLicencePlate;
         this.journeyUrl = journeyUrl;
         this.journeys = journeys;
         this.subInvoiceUrl = subInvoiceUrl;
@@ -32,6 +32,10 @@ public class VehicleDTO_EU implements Serializable {
 
     public void setHashedLicencePlate(String hashedLicencePlate) {
         this.hashedLicencePlate = hashedLicencePlate;
+    }
+
+    public void setUnHashedLicencePlate(String licencePlate) {
+        this.hashedLicencePlate = new String(Base64.getEncoder().encode(hashedLicencePlate.getBytes()));
     }
 
     public String getJourneyUrl() {

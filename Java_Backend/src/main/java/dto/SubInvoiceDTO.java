@@ -41,7 +41,7 @@ public class SubInvoiceDTO implements Serializable {
         this.country = country;
     }
 
-    public boolean isIsPayed() {
+    public boolean getIsPayed() {
         return isPayed;
     }
 

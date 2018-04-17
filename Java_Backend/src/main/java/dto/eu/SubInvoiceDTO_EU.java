@@ -41,7 +41,7 @@ public class SubInvoiceDTO_EU implements Serializable {
         this.country = country;
     }
 
-    public boolean isIsPayed() {
+    public boolean getIsPayed() {
         return isPayed;
     }
 

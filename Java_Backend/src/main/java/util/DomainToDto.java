@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Teun
  */
-public class DomainToTransferObject {
+public class DomainToDto {
 
     static final String APIURL = "http://localhost:8080/Java_Backend/api/";
 
