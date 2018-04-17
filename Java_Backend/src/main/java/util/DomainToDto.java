@@ -27,10 +27,10 @@ public class DomainToDto {
 
         for (Vehicle v : vehicles) {
             VehicleDTO vehicle = new VehicleDTO(
-                    v.getHashedLicensePlate(),
-                    APIURL + "/vehicles/" + v.getHashedLicensePlate() + "/journeys",
+                    v.getHashedLicencePlate(),
+                    APIURL + "/vehicles/" + v.getHashedLicencePlate() + "/journeys",
                     v.getJourneys().size(),
-                    APIURL + "/vehicles/" + v.getHashedLicensePlate() + "/invoices",
+                    APIURL + "/vehicles/" + v.getHashedLicencePlate() + "/invoices",
                     v.getSubInvoices().size());
 
             VehicleDTOs.add(vehicle);

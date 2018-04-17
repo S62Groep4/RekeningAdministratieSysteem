@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
@@ -18,7 +19,7 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
     @NamedQuery(name = "TransLocation.findAll", query = "SELECT t FROM TransLocation t")
     ,@NamedQuery(name = "TransLocation.findBySerialNumber", query = "SELECT t FROM TransLocation t WHERE t.serialNumber = :serialNumber")
-    ,@NamedQuery(name = "TransLocation.findByJourneyId", query = "SELECT t FROM TransLocation t WHERE t.journeyId = :journeyId")})
+    ,@NamedQuery(name = "TransLocation.findByJourneyId", query = "SELECT t FROM TransLocation t WHERE t.journey.id = :journeyId")})
 public class TransLocation implements Serializable {
 
     @Id
@@ -29,15 +30,16 @@ public class TransLocation implements Serializable {
     private String dateTime;
     private String serialNumber;
     private String countryCode;
-    private int journeyId;
+    @ManyToOne
+    private Journey journey;
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
-    public int getJourneyId() {
-        return journeyId;
+    public Journey getJourney() {
+        return journey;
     }
 
-    public void setJourneyId(int journeyId) {
-        this.journeyId = journeyId;
+    public void setJourney(Journey journey) {
+        this.journey = journey;
     }
 
     public Double getLat() {
@@ -92,22 +94,12 @@ public class TransLocation implements Serializable {
     public TransLocation() {
     }
 
-    public TransLocation(Double lat, Double lon, String serialNumber, String countryCode, int journeyId) {
-        this.lat = lat;
-        this.lon = lon;
-        this.dateTime = new Date(System.currentTimeMillis()).toString();
-        this.serialNumber = serialNumber;
-        this.countryCode = countryCode;
-        this.journeyId = journeyId;
-    }
-    
     public TransLocation(Double lat, Double lon, String serialNumber, String countryCode) {
         this.lat = lat;
         this.lon = lon;
         this.dateTime = new Date(System.currentTimeMillis()).toString();
         this.serialNumber = serialNumber;
         this.countryCode = countryCode;
-        this.journeyId = -1;
     }
 
     @Override

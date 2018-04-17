@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -19,15 +20,14 @@ import org.mindrot.jbcrypt.BCrypt;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Vehicle.findAll", query = "SELECT v FROM Vehicle v")
-    ,@NamedQuery(name = "Vehicle.findByLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.hashedLicencePlate = :hashedLicencePlate")
-    ,@NamedQuery(name = "Vehicle.findJourneys", query = "SELECT t FROM TransLocation t WHERE t.journeyId IN (SELECT v.journeys FROM Vehicle v WHERE v.hashedLicencePlate = :hashedLicencePlate)")
-    ,@NamedQuery(name = "Vehicle.findInvoices", query = "SELECT v.subInvoices from Vehicle v WHERE v.hashedLicencePlate = :hashedLicencePlate")})
+    ,@NamedQuery(name = "Vehicle.findByLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.hashedLicencePlate = :hashedLicencePlate")})
 public class Vehicle implements Serializable {
 
     @Id
     private String hashedLicencePlate;
-    private final List<Integer> journeys = new ArrayList<>();
-    @OneToMany
+    @OneToMany(mappedBy = "vehicle", cascade = ALL)
+    private final List<Journey> journeys = new ArrayList<>();
+    @OneToMany(mappedBy = "vehicle", cascade = ALL)
     private final List<SubInvoice> subInvoices = new ArrayList<>();
 
     public Vehicle() {
@@ -38,19 +38,19 @@ public class Vehicle implements Serializable {
     }
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
-    public String getHashedLicensePlate() {
-        return hashedLicencePlate;
-    }
-
     public void setHashedLicencePlate(String hashedLicencePlate) {
         this.hashedLicencePlate = hashedLicencePlate;
     }
-    
+
     public void setUnHashedLicencePlate(String licencePlate) {
         this.hashedLicencePlate = BCrypt.hashpw(licencePlate, BCrypt.gensalt(12));
     }
 
-    public List<Integer> getJourneys() {
+    public String getHashedLicencePlate() {
+        return hashedLicencePlate;
+    }
+
+    public List<Journey> getJourneys() {
         return Collections.unmodifiableList(journeys);
     }
 
@@ -59,14 +59,20 @@ public class Vehicle implements Serializable {
     }
     // </editor-fold>
 
-    public boolean addJourney(int j) {
-        journeys.add(j);
-        return true;
+    public boolean addJourney(Journey j) {
+        if (j != null) {
+            journeys.add(j);
+            return true;
+        }
+        return false;
     }
 
-    public boolean addJourney(List<Integer> j) {
-        journeys.addAll(j);
-        return true;
+    public boolean addJourney(List<Journey> j) {
+        if (j != null) {
+            journeys.addAll(j);
+            return true;
+        }
+        return false;
     }
 
     public boolean addInvoice(SubInvoice i) {

@@ -4,7 +4,6 @@ import domain.Journey;
 import domain.SubInvoice;
 import domain.TransLocation;
 import domain.Vehicle;
-import dto.TransLocationDTO;
 import dto.eu.JourneyDTO_EU;
 import dto.eu.SubInvoiceDTO_EU;
 import dto.eu.TransLocationDTO_EU;
@@ -19,7 +18,7 @@ import java.util.List;
  */
 public class Dto_EUToDomain {
 
-    public static List<Vehicle> VEHICLEEUDTOTODOMAIN(List<VehicleDTO_EU> vehicles) {
+    public static List<Vehicle> VEHICLE_EU_DTO_TO_DOMAIN(List<VehicleDTO_EU> vehicles) {
         List<Vehicle> domain = new ArrayList<>();
         if (vehicles == null || vehicles.isEmpty()) {
             return domain;
@@ -27,12 +26,14 @@ public class Dto_EUToDomain {
 
         for (VehicleDTO_EU v : vehicles) {
             Vehicle vehicle = new Vehicle(new String(Base64.getDecoder().decode(v.getHashedLicencePlate())));
+//            vehicle.addJourney(); http call naar v.getJourneyUrl()
+//            vehicle.addInvoice(); http call naar v.getSubInvoiceUrl()
             domain.add(vehicle);
         }
         return domain;
     }
 
-    public static List<SubInvoice> SUBINVOICEEUDTOTODOMAIN(List<SubInvoiceDTO_EU> invoices) {
+    public static List<SubInvoice> SUBINVOICE_EU_DTO_TO_DOMAIN(List<SubInvoiceDTO_EU> invoices) {
         List<SubInvoice> domain = new ArrayList<>();
         if (invoices == null || invoices.isEmpty()) {
             return domain;
@@ -45,7 +46,7 @@ public class Dto_EUToDomain {
         return domain;
     }
 
-    public static List<Journey> JOURNEYEUDTOTODOMAIN(List<JourneyDTO_EU> journeys) {
+    public static List<Journey> JOURNEY_EU_DTO_TO_DOMAIN(List<JourneyDTO_EU> journeys) {
         List<Journey> domain = new ArrayList<>();
         if (journeys == null || journeys.isEmpty()) {
             return domain;
@@ -53,12 +54,13 @@ public class Dto_EUToDomain {
 
         for (JourneyDTO_EU j : journeys) {
             Journey journey = new Journey(j.getId());
+//            journey.addTransLocation(loc) http call naar j.getTranslocationUrl()
             domain.add(journey);
         }
         return domain;
     }
 
-    public static List<TransLocation> TRANSLOCATIONEUDTOTODOMAIN(List<TransLocationDTO_EU> locations) {
+    public static List<TransLocation> TRANSLOCATION_EU_DTO_TO_DOMAIN(List<TransLocationDTO_EU> locations) {
         List<TransLocation> TransLocationDTOs = new ArrayList<>();
         if (locations == null || locations.isEmpty()) {
             return TransLocationDTOs;

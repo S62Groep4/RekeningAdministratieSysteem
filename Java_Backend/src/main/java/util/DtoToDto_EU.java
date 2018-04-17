@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class DtoToDto_EU {
 
-    public static List<VehicleDTO_EU> VEHICLEDTOSTOEU(List<VehicleDTO> vehicles) {
+    public static List<VehicleDTO_EU> VEHICLE_DTOS_TO_EU(List<VehicleDTO> vehicles) {
         List<VehicleDTO_EU> euDTOs = new ArrayList<>();
         if (vehicles == null || vehicles.isEmpty()) {
             return euDTOs;
@@ -36,7 +36,7 @@ public class DtoToDto_EU {
         return euDTOs;
     }
 
-    public static List<SubInvoiceDTO_EU> SUBINVOICEDTOSSTOEU(List<SubInvoiceDTO> invoices) {
+    public static List<SubInvoiceDTO_EU> SUBINVOICE_DTOS_TO_EU(List<SubInvoiceDTO> invoices) {
         List<SubInvoiceDTO_EU> euDTOs = new ArrayList<>();
         if (invoices == null || invoices.isEmpty()) {
             return euDTOs;
@@ -54,7 +54,7 @@ public class DtoToDto_EU {
         return euDTOs;
     }
 
-    public static List<JourneyDTO_EU> JOURNEYDTOSTOEU(List<JourneyDTO> journeys) {
+    public static List<JourneyDTO_EU> JOURNEY_DTOS_TO_EU(List<JourneyDTO> journeys) {
         List<JourneyDTO_EU> euDTOs = new ArrayList<>();
         if (journeys == null || journeys.isEmpty()) {
             return euDTOs;
@@ -70,7 +70,7 @@ public class DtoToDto_EU {
         return euDTOs;
     }
 
-    public static List<TransLocationDTO_EU> TRANSLOCATIONDTOSTOEU(List<TransLocationDTO> locations) {
+    public static List<TransLocationDTO_EU> TRANSLOCATION_DTOS_TO_EU(List<TransLocationDTO> locations) {
         List<TransLocationDTO_EU> TransLocationDTOs = new ArrayList<>();
         if (locations == null || locations.isEmpty()) {
             return TransLocationDTOs;
