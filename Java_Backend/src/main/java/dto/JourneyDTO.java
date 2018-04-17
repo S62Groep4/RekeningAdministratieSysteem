@@ -1,6 +1,8 @@
 package dto;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -8,41 +10,21 @@ import java.io.Serializable;
  */
 public class JourneyDTO implements Serializable {
 
-    private Long id;
-    private String translocationUrl;
-    private int translocations;
+    private List<TransLocationDTO> translocationDtos;
 
     public JourneyDTO() {
     }
 
-    public JourneyDTO(Long id, String translocationUrl, int translocations) {
-        this.id = id;
-        this.translocationUrl = translocationUrl;
-        this.translocations = translocations;
+    public JourneyDTO(List<TransLocationDTO> translocationDtos) {
+        this.translocationDtos = translocationDtos;
     }
 
-    public Long getId() {
-        return id;
+    public List<TransLocationDTO> getTranslocationDtos() {
+        return Collections.unmodifiableList(translocationDtos);
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTranslocationUrl() {
-        return translocationUrl;
-    }
-
-    public void setTranslocationUrl(String translocationUrl) {
-        this.translocationUrl = translocationUrl;
-    }
-
-    public int getTranslocations() {
-        return translocations;
-    }
-
-    public void setTranslocations(int translocations) {
-        this.translocations = translocations;
+    public void setTranslocationDtos(List<TransLocationDTO> translocationDtos) {
+        this.translocationDtos = translocationDtos;
     }
 
 }

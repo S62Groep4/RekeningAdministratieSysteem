@@ -1,7 +1,7 @@
 package dto;
 
 import java.io.Serializable;
-import java.util.Base64;
+import java.util.List;
 
 /**
  *
@@ -9,65 +9,31 @@ import java.util.Base64;
  */
 public class VehicleDTO implements Serializable {
 
-    private String hashedLicencePlate;
-    private String journeyUrl;
-    private int journeys;
-    private String subInvoiceUrl;
-    private int subInvoices;
+    private String HashedLicensePlate;
+    /**
+     * List of all journeys this car made.
+     */
+    private List<JourneyDTO> Journeys;
+    /**
+     * List of all sub invoices this car made.
+     */
+    private List<SubInvoiceDTO> SubInvoices;
 
-    public VehicleDTO() {
+    public VehicleDTO(String hashedLicensePlate, List<JourneyDTO> journeys, List<SubInvoiceDTO> subInvoices) {
+        HashedLicensePlate = hashedLicensePlate;
+        Journeys = journeys;
+        SubInvoices = subInvoices;
     }
 
-    public VehicleDTO(String hashedLicencePlate, String journeyUrl, int journeys, String subInvoiceUrl, int subInvoices) {
-        this.hashedLicencePlate = hashedLicencePlate;
-        this.journeyUrl = journeyUrl;
-        this.journeys = journeys;
-        this.subInvoiceUrl = subInvoiceUrl;
-        this.subInvoices = subInvoices;
+    public String getHashedLicensePlate() {
+        return HashedLicensePlate;
     }
 
-    public String getHashedLicencePlate() {
-        return hashedLicencePlate;
+    public List<JourneyDTO> getJourneys() {
+        return Journeys;
     }
 
-    public void setHashedLicencePlate(String hashedLicencePlate) {
-        this.hashedLicencePlate = hashedLicencePlate;
+    public List<SubInvoiceDTO> getSubInvoices() {
+        return SubInvoices;
     }
-
-    public void setUnHashedLicencePlate(String licencePlate) {
-        this.hashedLicencePlate = new String(Base64.getEncoder().encode(hashedLicencePlate.getBytes()));
-    }
-
-    public String getJourneyUrl() {
-        return journeyUrl;
-    }
-
-    public void setJourneyUrl(String journeyUrl) {
-        this.journeyUrl = journeyUrl;
-    }
-
-    public int getJourneys() {
-        return journeys;
-    }
-
-    public void setJourneys(int journeys) {
-        this.journeys = journeys;
-    }
-
-    public String getSubInvoiceUrl() {
-        return subInvoiceUrl;
-    }
-
-    public void setSubInvoiceUrl(String subInvoiceUrl) {
-        this.subInvoiceUrl = subInvoiceUrl;
-    }
-
-    public int getSubInvoices() {
-        return subInvoices;
-    }
-
-    public void setSubInvoices(int subInvoices) {
-        this.subInvoices = subInvoices;
-    }
-
 }

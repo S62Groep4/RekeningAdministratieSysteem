@@ -1,13 +1,7 @@
 package service;
 
-import domain.Journey;
-import domain.SubInvoice;
-import domain.TransLocation;
 import domain.Vehicle;
-import dto.eu.JourneyDTO_EU;
-import dto.eu.SubInvoiceDTO_EU;
-import dto.eu.TransLocationDTO_EU;
-import dto.eu.VehicleDTO_EU;
+import dto.*;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
@@ -41,32 +35,31 @@ public class Init {
         //|||||||||||||||||||||||||||||||||||||||||
         //||     PERSISTING EU_DTO OBJECTS       ||
         //|||||||||||||||||||||||||||||||||||||||||
-        List<JourneyDTO_EU> journeys = new ArrayList();
-        journeys.add(new JourneyDTO_EU(1L, "translocation/1", 0));
-        journeys.add(new JourneyDTO_EU(2L, "translocation/2", 0));
+        List<TransLocationDTO> loc1 = new ArrayList();
+        loc1.add(new TransLocationDTO("51.855305", "9.623518", new Date().toString(), "654161", "31"));
+        loc1.add(new TransLocationDTO("51.735719", "9.579573", new Date().toString(), "654162", "31"));
+        loc1.add(new TransLocationDTO("51.626728", "9.689436", new Date().toString(), "654163", "31"));
+        List<TransLocationDTO> loc2 = new ArrayList();
+        loc2.add(new TransLocationDTO("48.087453", "11.535139", new Date().toString(), "188654", "31"));
+        loc2.add(new TransLocationDTO("48.058089", "11.359358", new Date().toString(), "188655", "31"));
+        loc2.add(new TransLocationDTO("48.014012", "11.139631", new Date().toString(), "188656", "31"));
+        loc2.add(new TransLocationDTO("48.028709", "10.985823", new Date().toString(), "188657", "31"));
 
-        List<TransLocationDTO_EU> locations = new ArrayList();
-        locations.add(new TransLocationDTO_EU(1L, 51.855305, 9.623518, new Date().toString(), "654161", "31"));
-        locations.add(new TransLocationDTO_EU(2L, 51.735719, 9.579573, new Date().toString(), "654162", "31"));
-        locations.add(new TransLocationDTO_EU(3L, 51.626728, 9.689436, new Date().toString(), "654163", "31"));
-        locations.add(new TransLocationDTO_EU(4L, 48.087453, 11.535139, new Date().toString(), "188654", "31"));
-        locations.add(new TransLocationDTO_EU(5L, 48.058089, 11.359358, new Date().toString(), "188655", "31"));
-        locations.add(new TransLocationDTO_EU(6L, 48.014012, 11.139631, new Date().toString(), "188656", "31"));
-        locations.add(new TransLocationDTO_EU(7L, 48.028709, 10.985823, new Date().toString(), "188657", "31"));
+        List<JourneyDTO> journeys1 = new ArrayList();
+        journeys1.add(new JourneyDTO(loc1));
+        List<JourneyDTO> journeys2 = new ArrayList();
+        journeys2.add(new JourneyDTO(loc2));
 
-        List<VehicleDTO_EU> vehicles = new ArrayList();
-        vehicles.add(new VehicleDTO_EU(new String(Base64.getEncoder().encode("68JFSF".getBytes())), "journeys/1", 0, "invoice/1", 0));
-        vehicles.add(new VehicleDTO_EU(new String(Base64.getEncoder().encode("54HSHS".getBytes())), "journeys/2", 0, "invoice/2", 0));
+        List<SubInvoiceDTO> inv1 = new ArrayList();
+        inv1.add(new SubInvoiceDTO("1", "31", "Open", new Date().toString(), "165.00"));
+        List<SubInvoiceDTO> inv2 = new ArrayList();
+        inv2.add(new SubInvoiceDTO("2", "31", "Open", new Date().toString(), "486.00"));
 
-        List<SubInvoiceDTO_EU> invoices = new ArrayList();
-        invoices.add(new SubInvoiceDTO_EU("1", "31", false, new Date().toString(), 165.00));
-        invoices.add(new SubInvoiceDTO_EU("2", "31", false, new Date().toString(), 486.00));
+        List<VehicleDTO> vehicles = new ArrayList();
+        vehicles.add(new VehicleDTO(new String(Base64.getEncoder().encode("68JFSF".getBytes())), journeys1, inv1));
+        vehicles.add(new VehicleDTO(new String(Base64.getEncoder().encode("54HSHS".getBytes())), journeys2, inv2));
 
-        List<SubInvoice> domainInvoices = SUBINVOICE_EU_DTO_TO_DOMAIN(invoices);
-        List<TransLocation> domainLocations = TRANSLOCATION_EU_DTO_TO_DOMAIN(locations);
-        
         List<Vehicle> domainVehicles = VEHICLE_EU_DTO_TO_DOMAIN(vehicles);
-        List<Journey> domainJourneys = JOURNEY_EU_DTO_TO_DOMAIN(journeys);
 
         /*
         //|||||||||||||||||||||||||||||||||||||||||

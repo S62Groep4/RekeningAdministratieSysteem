@@ -1,4 +1,4 @@
-package dto.eu;
+package dto.hateoas;
 
 import java.io.Serializable;
 
@@ -6,21 +6,21 @@ import java.io.Serializable;
  *
  * @author Teun
  */
-public class SubInvoiceDTO_EU implements Serializable {
+public class SubInvoiceDTO implements Serializable {
 
     private String invoiceNumber;
     private String country;
-    private boolean isPayed;
+    private String paymentStatus;
     private String invoiceDate;
     private double price;
 
-    public SubInvoiceDTO_EU() {
+    public SubInvoiceDTO() {
     }
 
-    public SubInvoiceDTO_EU(String invoiceNumber, String country, boolean isPayed, String invoiceDate, double price) {
+    public SubInvoiceDTO(String invoiceNumber, String country, String paymentStatus, String invoiceDate, double price) {
         this.invoiceNumber = invoiceNumber;
         this.country = country;
-        this.isPayed = isPayed;
+        this.paymentStatus = paymentStatus;
         this.invoiceDate = invoiceDate;
         this.price = price;
     }
@@ -41,14 +41,6 @@ public class SubInvoiceDTO_EU implements Serializable {
         this.country = country;
     }
 
-    public boolean getIsPayed() {
-        return isPayed;
-    }
-
-    public void setIsPayed(boolean isPayed) {
-        this.isPayed = isPayed;
-    }
-
     public String getInvoiceDate() {
         return invoiceDate;
     }
@@ -65,4 +57,11 @@ public class SubInvoiceDTO_EU implements Serializable {
         this.price = price;
     }
 
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
 }

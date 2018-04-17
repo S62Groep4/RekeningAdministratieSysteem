@@ -4,10 +4,7 @@ import domain.Journey;
 import domain.SubInvoice;
 import domain.TransLocation;
 import domain.Vehicle;
-import dto.eu.JourneyDTO_EU;
-import dto.eu.SubInvoiceDTO_EU;
-import dto.eu.TransLocationDTO_EU;
-import dto.eu.VehicleDTO_EU;
+import dto.*;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -18,56 +15,65 @@ import java.util.List;
  */
 public class Dto_EUToDomain {
 
-    public static List<Vehicle> VEHICLE_EU_DTO_TO_DOMAIN(List<VehicleDTO_EU> vehicles) {
+    public static List<Vehicle> VEHICLE_EU_DTO_TO_DOMAIN(List<VehicleDTO> vehicles) {
         List<Vehicle> domain = new ArrayList<>();
         if (vehicles == null || vehicles.isEmpty()) {
             return domain;
         }
 
-        for (VehicleDTO_EU v : vehicles) {
-            Vehicle vehicle = new Vehicle(new String(Base64.getDecoder().decode(v.getHashedLicencePlate())));
-//            vehicle.addJourney(); http call naar v.getJourneyUrl()
-//            vehicle.addInvoice(); http call naar v.getSubInvoiceUrl()
+        for (VehicleDTO v : vehicles) {
+            Vehicle vehicle = new Vehicle(new String(Base64.getDecoder().decode(v.getHashedLicensePlate())));
+            vehicle.addJourney(JOURNEY_EU_DTO_TO_DOMAIN(v.getJourneys()));
+            vehicle.addInvoice(SUBINVOICE_EU_DTO_TO_DOMAIN(v.getSubInvoices()));
             domain.add(vehicle);
         }
         return domain;
     }
 
-    public static List<SubInvoice> SUBINVOICE_EU_DTO_TO_DOMAIN(List<SubInvoiceDTO_EU> invoices) {
+    public static List<SubInvoice> SUBINVOICE_EU_DTO_TO_DOMAIN(List<SubInvoiceDTO> invoices) {
         List<SubInvoice> domain = new ArrayList<>();
         if (invoices == null || invoices.isEmpty()) {
             return domain;
         }
 
-        for (SubInvoiceDTO_EU s : invoices) {
-            SubInvoice invoice = new SubInvoice(s.getInvoiceNumber(), s.getCountry(), s.getPrice(), s.getInvoiceDate(), s.getIsPayed());
+        for (SubInvoiceDTO s : invoices) {
+            SubInvoice invoice = new SubInvoice(
+                    s.getInvoiceNumber(),
+                    s.getCountry(),
+                    Double.parseDouble(s.getPrice()),
+                    s.getInvoiceDate(),
+                    s.getPaymentStatus());
             domain.add(invoice);
         }
         return domain;
     }
 
-    public static List<Journey> JOURNEY_EU_DTO_TO_DOMAIN(List<JourneyDTO_EU> journeys) {
+    public static List<Journey> JOURNEY_EU_DTO_TO_DOMAIN(List<JourneyDTO> journeys) {
         List<Journey> domain = new ArrayList<>();
         if (journeys == null || journeys.isEmpty()) {
             return domain;
         }
 
-        for (JourneyDTO_EU j : journeys) {
-            Journey journey = new Journey(j.getId());
-//            journey.addTransLocation(loc) http call naar j.getTranslocationUrl()
+        for (JourneyDTO j : journeys) {
+            Journey journey = new Journey();
+            journey.addTransLocation(TRANSLOCATION_EU_DTO_TO_DOMAIN(j.getTranslocationDtos()));
             domain.add(journey);
         }
         return domain;
     }
 
-    public static List<TransLocation> TRANSLOCATION_EU_DTO_TO_DOMAIN(List<TransLocationDTO_EU> locations) {
+    public static List<TransLocation> TRANSLOCATION_EU_DTO_TO_DOMAIN(List<TransLocationDTO> locations) {
         List<TransLocation> TransLocationDTOs = new ArrayList<>();
         if (locations == null || locations.isEmpty()) {
             return TransLocationDTOs;
         }
 
-        for (TransLocationDTO_EU t : locations) {
-            TransLocation location = new TransLocation(t.getLat(), t.getLon(), t.getSerialNumber(), t.getCountryCode());
+        for (TransLocationDTO t : locations) {
+            TransLocation location = new TransLocation(
+                    Double.parseDouble(t.getLat()),
+                    Double.parseDouble(t.getLon()),
+                    t.getSerialNumber(),
+                    t.getCountryCode());
             TransLocationDTOs.add(location);
         }
         return TransLocationDTOs;

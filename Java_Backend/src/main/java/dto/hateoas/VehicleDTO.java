@@ -1,4 +1,4 @@
-package dto.eu;
+package dto.hateoas;
 
 import java.io.Serializable;
 import java.util.Base64;
@@ -7,7 +7,7 @@ import java.util.Base64;
  *
  * @author Teun
  */
-public class VehicleDTO_EU implements Serializable {
+public class VehicleDTO implements Serializable {
 
     private String hashedLicencePlate;
     private String journeyUrl;
@@ -15,10 +15,10 @@ public class VehicleDTO_EU implements Serializable {
     private String subInvoiceUrl;
     private int subInvoices;
 
-    public VehicleDTO_EU() {
+    public VehicleDTO() {
     }
 
-    public VehicleDTO_EU(String hashedLicencePlate, String journeyUrl, int journeys, String subInvoiceUrl, int subInvoices) {
+    public VehicleDTO(String hashedLicencePlate, String journeyUrl, int journeys, String subInvoiceUrl, int subInvoices) {
         this.hashedLicencePlate = hashedLicencePlate;
         this.journeyUrl = journeyUrl;
         this.journeys = journeys;

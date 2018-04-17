@@ -36,6 +36,14 @@ public class Journey implements Serializable {
     }
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
     public List<TransLocation> getTransLocations() {
         return Collections.unmodifiableList(locations);
     }

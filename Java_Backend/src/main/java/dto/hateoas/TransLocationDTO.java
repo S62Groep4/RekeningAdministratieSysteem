@@ -1,4 +1,4 @@
-package dto.eu;
+package dto.hateoas;
 
 import java.io.Serializable;
 
@@ -6,7 +6,7 @@ import java.io.Serializable;
  *
  * @author Teun
  */
-public class TransLocationDTO_EU implements Serializable {
+public class TransLocationDTO implements Serializable {
 
     private Long id;
     private Double lat;
@@ -15,10 +15,10 @@ public class TransLocationDTO_EU implements Serializable {
     private String serialNumber;
     private String countryCode;
 
-    public TransLocationDTO_EU() {
+    public TransLocationDTO() {
     }
 
-    public TransLocationDTO_EU(Long id, Double lat, Double lon, String dateTime, String serialNumber, String countryCode) {
+    public TransLocationDTO(Long id, Double lat, Double lon, String dateTime, String serialNumber, String countryCode) {
         this.id = id;
         this.lat = lat;
         this.lon = lon;

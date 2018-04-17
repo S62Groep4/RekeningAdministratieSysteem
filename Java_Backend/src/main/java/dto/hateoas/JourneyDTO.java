@@ -1,4 +1,4 @@
-package dto.eu;
+package dto.hateoas;
 
 import java.io.Serializable;
 
@@ -6,16 +6,16 @@ import java.io.Serializable;
  *
  * @author Teun
  */
-public class JourneyDTO_EU implements Serializable {
+public class JourneyDTO implements Serializable {
 
     private Long id;
     private String translocationUrl;
     private int translocations;
 
-    public JourneyDTO_EU() {
+    public JourneyDTO() {
     }
 
-    public JourneyDTO_EU(Long id, String translocationUrl, int translocations) {
+    public JourneyDTO(Long id, String translocationUrl, int translocations) {
         this.id = id;
         this.translocationUrl = translocationUrl;
         this.translocations = translocations;

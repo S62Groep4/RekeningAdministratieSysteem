@@ -4,10 +4,7 @@ import domain.Journey;
 import domain.SubInvoice;
 import domain.TransLocation;
 import domain.Vehicle;
-import dto.JourneyDTO;
-import dto.SubInvoiceDTO;
-import dto.TransLocationDTO;
-import dto.VehicleDTO;
+import dto.hateoas.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +12,7 @@ import java.util.List;
  *
  * @author Teun
  */
-public class DomainToDto {
+public class DomainToHATEOASDto {
 
     static final String APIURL = "http://localhost:8080/Java_Backend/api/";
 

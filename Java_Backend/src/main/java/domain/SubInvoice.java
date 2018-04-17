@@ -22,7 +22,7 @@ public class SubInvoice implements Serializable {
     @Id
     private String invoiceNumber;
     private String country;
-    private boolean isPayed;
+    private String paymentStatus;
     private String invoiceDate;
     private double price;
     @ManyToOne
@@ -35,29 +35,40 @@ public class SubInvoice implements Serializable {
         this.invoiceNumber = invoiceNumber;
         this.country = country;
         this.price = price;
-        this.isPayed = false;
         this.invoiceDate = new Date(System.currentTimeMillis()).toString();
     }
-    
-    public SubInvoice(String invoiceNumber, String country, double price, String invoiceDate, boolean isPayed) {
+
+    public SubInvoice(String invoiceNumber, String country, double price, String invoiceDate, String paymentStatus) {
         this.invoiceNumber = invoiceNumber;
         this.country = country;
         this.price = price;
-        this.isPayed = isPayed;
+        this.paymentStatus = paymentStatus;
         this.invoiceDate = invoiceDate;
     }
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
     public String getInvoiceNumber() {
         return invoiceNumber;
     }
 
     public String getCountry() {
         return country;
-    }
-
-    public boolean getPaymentStatus() {
-        return isPayed;
     }
 
     public String getInvoiceDate() {
@@ -83,12 +94,13 @@ public class SubInvoice implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 73 * hash + Objects.hashCode(this.invoiceNumber);
-        hash = 73 * hash + Objects.hashCode(this.country);
-        hash = 73 * hash + (this.isPayed ? 1 : 0);
-        hash = 73 * hash + Objects.hashCode(this.invoiceDate);
-        hash = 73 * hash + (int) (Double.doubleToLongBits(this.price) ^ (Double.doubleToLongBits(this.price) >>> 32));
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.invoiceNumber);
+        hash = 97 * hash + Objects.hashCode(this.country);
+        hash = 97 * hash + Objects.hashCode(this.paymentStatus);
+        hash = 97 * hash + Objects.hashCode(this.invoiceDate);
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.price) ^ (Double.doubleToLongBits(this.price) >>> 32));
+        hash = 97 * hash + Objects.hashCode(this.vehicle);
         return hash;
     }
 }
