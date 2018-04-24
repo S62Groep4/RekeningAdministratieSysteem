@@ -29,13 +29,13 @@ public class TransLocationResource {
     TransLocationService transLocationService;
 
     @POST
-    public void insertTransLocation(TransLocation location) {
-        transLocationService.insertTransLocation(location);
+    public TransLocation insertTransLocation(TransLocation location) {
+        return transLocationService.insertTransLocation(location);
     }
 
     @PUT
-    public void updateJourney(TransLocation location) {
-        transLocationService.updateTransLocation(location);
+    public TransLocation updateJourney(TransLocation location) {
+        return transLocationService.updateTransLocation(location);
     }
 
     @DELETE
