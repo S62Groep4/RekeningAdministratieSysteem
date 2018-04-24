@@ -62,30 +62,29 @@ public class VehicleService {
         }
     }
 
-    public boolean updateVehicle(Vehicle vehicle) throws PersistenceException {
+    public Vehicle updateVehicle(Vehicle vehicle) throws PersistenceException {
         try {
             return vehicleDao.updateVehicle(vehicle);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing updateVehicle operation; {0}", pe.getMessage());
-            return false;
+            return null;
         }
     }
 
-    public boolean removeVehicle(String hashedLicenceplate) throws PersistenceException {
+    public void removeVehicle(String hashedLicenceplate) throws PersistenceException {
         try {
-            return vehicleDao.removeVehicle(hashedLicenceplate);
+            vehicleDao.removeVehicle(hashedLicenceplate);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing removeVehicle operation; {0}", pe.getMessage());
-            return false;
         }
     }
 
-    public boolean insertVehicle(Vehicle vehicle) throws PersistenceException {
+    public Vehicle insertVehicle(Vehicle vehicle) throws PersistenceException {
         try {
             return vehicleDao.insertVehicle(vehicle);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing insertVehicle operation; {0}", pe.getMessage());
-            return false;
+            return null;
         }
     }
 }

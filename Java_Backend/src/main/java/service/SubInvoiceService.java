@@ -42,30 +42,29 @@ public class SubInvoiceService {
         }
     }
 
-    public boolean updateSubInvoice(SubInvoice invoice) throws PersistenceException {
+    public SubInvoice updateSubInvoice(SubInvoice invoice) throws PersistenceException {
         try {
             return subinvoiceDao.updateSubInvoice(invoice);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing updateSubInvoice operation; {0}", pe.getMessage());
-            return false;
+            return null;
         }
     }
 
-    public boolean removeSubInvoice(String invoiceNumber) throws PersistenceException {
+    public void removeSubInvoice(String invoiceNumber) throws PersistenceException {
         try {
-            return subinvoiceDao.removeSubInvoice(invoiceNumber);
+            subinvoiceDao.removeSubInvoice(invoiceNumber);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing removeSubInvoice operation; {0}", pe.getMessage());
-            return false;
         }
     }
 
-    public boolean insertSubInvoice(SubInvoice invoice) throws PersistenceException {
+    public SubInvoice insertSubInvoice(SubInvoice invoice) throws PersistenceException {
         try {
             return subinvoiceDao.insertSubInvoice(invoice);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing insertSubInvoice operation; {0}", pe.getMessage());
-            return false;
+            return null;
         }
     }
 }

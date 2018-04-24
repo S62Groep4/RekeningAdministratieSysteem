@@ -20,9 +20,9 @@ public interface VehicleDAO {
     
     List<Journey> getVehicleJourneys(String hashedLicencePlate) throws PersistenceException;
 
-    boolean updateVehicle(Vehicle vehicle) throws PersistenceException;
+    Vehicle updateVehicle(Vehicle vehicle) throws PersistenceException;
 
-    boolean removeVehicle(String hashedLicenceplate) throws PersistenceException;
+    void removeVehicle(String hashedLicenceplate) throws PersistenceException;
 
-    boolean insertVehicle(Vehicle vehicle) throws PersistenceException;
+    Vehicle insertVehicle(Vehicle vehicle) throws PersistenceException;
 }

@@ -14,10 +14,10 @@ public interface SubInvoiceDAO {
 
     List<SubInvoice> getAllSubInvoices() throws PersistenceException;
 
-    boolean updateSubInvoice(SubInvoice invoice) throws PersistenceException;
+    SubInvoice updateSubInvoice(SubInvoice invoice) throws PersistenceException;
 
-    boolean removeSubInvoice(String invoiceNumber) throws PersistenceException;
+    void removeSubInvoice(String invoiceNumber) throws PersistenceException;
 
-    boolean insertSubInvoice(SubInvoice invoice) throws PersistenceException;
+    SubInvoice insertSubInvoice(SubInvoice invoice) throws PersistenceException;
 
 }

@@ -40,13 +40,12 @@ public class VehicleDAOImpl implements VehicleDAO {
     }
 
     @Override
-    public boolean updateVehicle(Vehicle vehicle) throws PersistenceException {
-        em.merge(vehicle);
-        return true;
+    public Vehicle updateVehicle(Vehicle vehicle) throws PersistenceException {
+        return em.merge(vehicle);
     }
 
     @Override
-    public boolean removeVehicle(String hashedLicenceplate) throws PersistenceException {
+    public void removeVehicle(String hashedLicenceplate) throws PersistenceException {
         Vehicle temp = em.find(Vehicle.class, hashedLicenceplate);
 
         for (Journey j : temp.getJourneys()) {
@@ -57,12 +56,11 @@ public class VehicleDAOImpl implements VehicleDAO {
         }
 
         em.remove(temp);
-        return true;
     }
 
     @Override
-    public boolean insertVehicle(Vehicle vehicle) throws PersistenceException {
+    public Vehicle insertVehicle(Vehicle vehicle) throws PersistenceException {
         em.persist(vehicle);
-        return true;
+        return vehicle;
     }
 }

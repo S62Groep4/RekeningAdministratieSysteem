@@ -33,20 +33,18 @@ public class TransLocationDAOImpl implements TransLocationDAO {
     }
 
     @Override
-    public boolean updateTransLocation(TransLocation location) throws PersistenceException {
-        em.merge(location);
-        return true;
+    public TransLocation updateTransLocation(TransLocation location) throws PersistenceException {
+        return em.merge(location);
     }
 
     @Override
-    public boolean removeTransLocation(String serialNumber) throws PersistenceException {
+    public void removeTransLocation(String serialNumber) throws PersistenceException {
         em.remove(em.find(TransLocation.class, serialNumber));
-        return true;
     }
 
     @Override
-    public boolean insertTransLocation(TransLocation location) throws PersistenceException {
+    public TransLocation insertTransLocation(TransLocation location) throws PersistenceException {
         em.persist(location);
-        return true;
+        return location;
     }
 }

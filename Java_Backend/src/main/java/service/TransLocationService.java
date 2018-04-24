@@ -51,30 +51,29 @@ public class TransLocationService {
         }
     }
 
-    public boolean updateTransLocation(TransLocation location) throws PersistenceException {
+    public TransLocation updateTransLocation(TransLocation location) throws PersistenceException {
         try {
             return translocationDao.updateTransLocation(location);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing updateTransLocation operation; {0}", pe.getMessage());
-            return false;
+            return null;
         }
     }
 
-    public boolean removeTransLocation(String serialNumber) throws PersistenceException {
+    public void removeTransLocation(String serialNumber) throws PersistenceException {
         try {
-            return translocationDao.removeTransLocation(serialNumber);
+            translocationDao.removeTransLocation(serialNumber);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing removeTransLocation operation; {0}", pe.getMessage());
-            return false;
         }
     }
 
-    public boolean insertTransLocation(TransLocation location) throws PersistenceException {
+    public TransLocation insertTransLocation(TransLocation location) throws PersistenceException {
         try {
             return translocationDao.insertTransLocation(location);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing insertTransLocation operation; {0}", pe.getMessage());
-            return false;
+            return null;
         }
     }
 }

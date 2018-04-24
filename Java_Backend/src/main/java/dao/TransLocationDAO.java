@@ -16,10 +16,10 @@ public interface TransLocationDAO {
     
     List<TransLocation> getAllTransLocationsByJourney(long id) throws PersistenceException;
 
-    boolean updateTransLocation(TransLocation location) throws PersistenceException;
+    TransLocation updateTransLocation(TransLocation location) throws PersistenceException;
 
-    boolean removeTransLocation(String serialNumber) throws PersistenceException;
+    void removeTransLocation(String serialNumber) throws PersistenceException;
 
-    boolean insertTransLocation(TransLocation location) throws PersistenceException;
+    TransLocation insertTransLocation(TransLocation location) throws PersistenceException;
 
 }
