@@ -27,13 +27,13 @@ public class VehicleResource {
     VehicleService vehicleService;
 
     @POST
-    public void insertVehicle(Vehicle vehicle) {
-        vehicleService.insertVehicle(vehicle);
+    public Vehicle insertVehicle(Vehicle vehicle) {
+        return vehicleService.insertVehicle(vehicle);
     }
 
     @PUT
-    public void updateVehicle(Vehicle vehicle) {
-        vehicleService.updateVehicle(vehicle);
+    public Vehicle updateVehicle(Vehicle vehicle) {
+        return vehicleService.updateVehicle(vehicle);
     }
 
     @DELETE
@@ -47,13 +47,13 @@ public class VehicleResource {
     public Vehicle getVehicle(@PathParam("hashLicensePlate") String hashedLicensePlate) {
         return vehicleService.getVehicle(hashedLicensePlate);
     }
-    
+
     @GET
     @Path("{hashedLicensePlate}/journeys")
     public List<Journey> getVehicleJourneys(@PathParam("hashLicensePlate") String hashedLicensePlate) {
         return vehicleService.getVehicleJourneys(hashedLicensePlate);
     }
-    
+
     @GET
     @Path("{hashedLicensePlate}/invoices")
     public List<SubInvoice> getVehicleInvoices(@PathParam("hashLicensePlate") String hashedLicensePlate) {

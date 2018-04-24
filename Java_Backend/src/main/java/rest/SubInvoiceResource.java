@@ -13,6 +13,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import service.SubInvoiceService;
 
 /**
@@ -29,13 +30,13 @@ public class SubInvoiceResource {
     SubInvoiceService subInvoiceService;
 
     @POST
-    public void insertTransLocation(SubInvoice invoice) {
-        subInvoiceService.insertSubInvoice(invoice);
+    public SubInvoice insertTransLocation(SubInvoice invoice) {
+        return subInvoiceService.insertSubInvoice(invoice);
     }
 
     @PUT
-    public void updateJourney(SubInvoice invoice) {
-        subInvoiceService.updateSubInvoice(invoice);
+    public SubInvoice updateJourney(SubInvoice invoice) {
+        return subInvoiceService.updateSubInvoice(invoice);
     }
 
     @DELETE
