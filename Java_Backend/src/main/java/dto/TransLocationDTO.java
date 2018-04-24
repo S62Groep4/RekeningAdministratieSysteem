@@ -8,11 +8,11 @@ import java.io.Serializable;
  */
 public class TransLocationDTO implements Serializable {
 
-    private String lat;
-    private String lon;
-    private String dateTime;
-    private String serialNumber;
-    private String countryCode;
+    private final String lat;
+    private final String lon;
+    private final String dateTime;
+    private final String serialNumber;
+    private final String countryCode;
 
     public TransLocationDTO(String lat, String lon, String dateTime, String serialNumber, String countryCode) {
         this.lat = lat;

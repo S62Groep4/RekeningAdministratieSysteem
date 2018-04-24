@@ -10,7 +10,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
-import static util.Dto_EUToDomain.*;
+import org.mindrot.jbcrypt.BCrypt;
+import static util.DtoToDomain.*;
 
 /**
  *
@@ -46,9 +47,9 @@ public class Init {
         loc2.add(new TransLocationDTO("48.028709", "10.985823", new Date().toString(), "188657", "31"));
 
         List<JourneyDTO> journeys1 = new ArrayList();
-        journeys1.add(new JourneyDTO(loc1));
+        journeys1.add(new JourneyDTO(1L, loc1));
         List<JourneyDTO> journeys2 = new ArrayList();
-        journeys2.add(new JourneyDTO(loc2));
+        journeys2.add(new JourneyDTO(1L, loc2));
 
         List<SubInvoiceDTO> inv1 = new ArrayList();
         inv1.add(new SubInvoiceDTO("1", "31", "Open", new Date().toString(), "165.00"));
@@ -56,10 +57,10 @@ public class Init {
         inv2.add(new SubInvoiceDTO("2", "31", "Open", new Date().toString(), "486.00"));
 
         List<VehicleDTO> vehicles = new ArrayList();
-        vehicles.add(new VehicleDTO(new String(Base64.getEncoder().encode("68JFSF".getBytes())), journeys1, inv1));
-        vehicles.add(new VehicleDTO(new String(Base64.getEncoder().encode("54HSHS".getBytes())), journeys2, inv2));
+        vehicles.add(new VehicleDTO(new String(Base64.getEncoder().encode(BCrypt.hashpw("68JFSF", BCrypt.gensalt(12)).getBytes())), journeys1, inv1));
+        vehicles.add(new VehicleDTO(new String(Base64.getEncoder().encode(BCrypt.hashpw("54HSHS", BCrypt.gensalt(12)).getBytes())), journeys2, inv2));
 
-        List<Vehicle> domainVehicles = VEHICLE_EU_DTO_TO_DOMAIN(vehicles);
+        List<Vehicle> domainVehicles = VEHICLE_DTO_TO_DOMAIN(vehicles);
 
         /*
         //|||||||||||||||||||||||||||||||||||||||||

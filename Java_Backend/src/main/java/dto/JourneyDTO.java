@@ -10,21 +10,19 @@ import java.util.List;
  */
 public class JourneyDTO implements Serializable {
 
-    private List<TransLocationDTO> translocationDtos;
+    private final Long id;
+    private final List<TransLocationDTO> translocationDtos;
 
-    public JourneyDTO() {
+    public JourneyDTO(Long id, List<TransLocationDTO> translocationDtos) {
+        this.id = id;
+        this.translocationDtos = translocationDtos;
     }
 
-    public JourneyDTO(List<TransLocationDTO> translocationDtos) {
-        this.translocationDtos = translocationDtos;
+    public Long getId() {
+        return id;
     }
 
     public List<TransLocationDTO> getTranslocationDtos() {
         return Collections.unmodifiableList(translocationDtos);
     }
-
-    public void setTranslocationDtos(List<TransLocationDTO> translocationDtos) {
-        this.translocationDtos = translocationDtos;
-    }
-
 }

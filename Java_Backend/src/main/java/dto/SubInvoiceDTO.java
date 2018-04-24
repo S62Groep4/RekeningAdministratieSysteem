@@ -8,11 +8,11 @@ import java.io.Serializable;
  */
 public class SubInvoiceDTO implements Serializable {
 
-    private String invoiceNumber;
-    private String country;
-    private String paymentStatus;
-    private String invoiceDate;
-    private String price;
+    private final String invoiceNumber;
+    private final String country;
+    private final String paymentStatus;
+    private final String invoiceDate;
+    private final String price;
 
     public SubInvoiceDTO(String invoiceNumber, String country, String paymentStatus, String invoiceDate, String price) {
         this.invoiceNumber = invoiceNumber;

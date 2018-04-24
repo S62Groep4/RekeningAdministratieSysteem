@@ -4,7 +4,7 @@ import domain.Journey;
 import domain.SubInvoice;
 import domain.TransLocation;
 import domain.Vehicle;
-import dto.hateoas.*;
+import dto.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +12,7 @@ import java.util.List;
  *
  * @author Teun
  */
-public class DomainToHATEOASDto {
-
-    static final String APIURL = "http://localhost:8080/Java_Backend/api/";
+public class DomainToDto {
 
     public static List<VehicleDTO> VEHICLESTODTOS(List<Vehicle> vehicles) {
         List<VehicleDTO> VehicleDTOs = new ArrayList<>();
@@ -25,11 +23,8 @@ public class DomainToHATEOASDto {
         for (Vehicle v : vehicles) {
             VehicleDTO vehicle = new VehicleDTO(
                     v.getHashedLicencePlate(),
-                    APIURL + "/vehicles/" + v.getHashedLicencePlate() + "/journeys",
-                    v.getJourneys().size(),
-                    APIURL + "/vehicles/" + v.getHashedLicencePlate() + "/invoices",
-                    v.getSubInvoices().size());
-
+                    JOURNEYSTODTOS(v.getJourneys()),
+                    SUBINVOICESSTODTOS(v.getSubInvoices()));
             VehicleDTOs.add(vehicle);
         }
         return VehicleDTOs;
@@ -47,7 +42,7 @@ public class DomainToHATEOASDto {
                     s.getCountry(),
                     s.getPaymentStatus(),
                     s.getInvoiceDate(),
-                    s.getPrice());
+                    s.getPrice() + "");
             SubInvoiceDTOs.add(invoice);
         }
         return SubInvoiceDTOs;
@@ -62,9 +57,7 @@ public class DomainToHATEOASDto {
         for (Journey j : journeys) {
             JourneyDTO journey = new JourneyDTO(
                     j.getId(),
-                    APIURL + "/translocations/journeyid/" + j.getId(),
-                    j.getTransLocations().size());
-
+                    TRANSLOCATIONSSTODTOS(j.getTransLocations()));
             JourneyDTOs.add(journey);
         }
         return JourneyDTOs;
@@ -78,13 +71,11 @@ public class DomainToHATEOASDto {
 
         for (TransLocation t : locations) {
             TransLocationDTO vehicle = new TransLocationDTO(
-                    t.getId(),
-                    t.getLat(),
-                    t.getLon(),
+                    t.getLat() + "",
+                    t.getLon() + "",
                     t.getDateTime(),
                     t.getSerialNumber(),
                     t.getCountryCode());
-
             TransLocationDTOs.add(vehicle);
         }
         return TransLocationDTOs;

@@ -9,15 +9,9 @@ import java.util.List;
  */
 public class VehicleDTO implements Serializable {
 
-    private String HashedLicensePlate;
-    /**
-     * List of all journeys this car made.
-     */
-    private List<JourneyDTO> Journeys;
-    /**
-     * List of all sub invoices this car made.
-     */
-    private List<SubInvoiceDTO> SubInvoices;
+    private final String HashedLicensePlate;
+    private final List<JourneyDTO> Journeys;
+    private final List<SubInvoiceDTO> SubInvoices;
 
     public VehicleDTO(String hashedLicensePlate, List<JourneyDTO> journeys, List<SubInvoiceDTO> subInvoices) {
         HashedLicensePlate = hashedLicensePlate;

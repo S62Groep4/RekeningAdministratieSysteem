@@ -56,6 +56,7 @@ public class Journey implements Serializable {
     public boolean addTransLocation(TransLocation loc) {
         if (loc != null) {
             locations.add(loc);
+            loc.setJourney(this);
             return true;
         }
         return false;
@@ -64,6 +65,9 @@ public class Journey implements Serializable {
     public boolean addTransLocation(List<TransLocation> loc) {
         if (loc != null) {
             locations.addAll(loc);
+            for (TransLocation l : loc){
+                l.setJourney(this);
+            }
             return true;
         }
         return false;
