@@ -1,6 +1,7 @@
 package util;
 
 import domain.Journey;
+import domain.Road;
 import domain.SubInvoice;
 import domain.TransLocation;
 import domain.Vehicle;
@@ -135,5 +136,32 @@ public class DomainToDto {
                 location.getSerialNumber(),
                 location.getCountryCode());
         return transLocationDTO;
+    }
+
+    public static List<RoadDTO> ROADSTODTOS(List<Road> road) {
+        List<RoadDTO> roadDtos = new ArrayList<>();
+        if (road == null || road.isEmpty()) {
+            return roadDtos;
+        }
+
+        for (Road r : road) {
+            RoadDTO roadDto = new RoadDTO(
+                    r.getId(),
+                    r.getName(),
+                    r.getRate());
+            roadDtos.add(roadDto);
+        }
+        return roadDtos;
+    }
+
+    public static RoadDTO ROADSTODTOS(Road road) {
+        if (road == null) {
+            return new RoadDTO();
+        }
+
+        return new RoadDTO(
+                road.getId(),
+                road.getName(),
+                road.getRate());
     }
 }

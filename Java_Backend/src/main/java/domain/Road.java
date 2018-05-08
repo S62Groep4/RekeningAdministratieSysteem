@@ -6,12 +6,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author Teun
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Road.findAll", query = "SELECT r FROM Road r")
+    ,@NamedQuery(name = "Road.findById", query = "SELECT r FROM Road r WHERE r.id = :roadId")
+    ,@NamedQuery(name = "Road.findByName", query = "SELECT r FROM Road r WHERE r.name = :roadName")})
 public class Road implements Serializable {
 
     @Id

@@ -7,6 +7,8 @@ import {AppRoutingModule} from './app-routing.module';
 import {HomeComponent} from './home/home.component';
 import {RoadsComponent} from './roads/roads.component';
 import {FormsModule} from '@angular/forms';
+import {RoadService} from './services/road.service';
+import {HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -20,9 +22,12 @@ import {FormsModule} from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    HttpClientModule,
     NgbModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    RoadService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
