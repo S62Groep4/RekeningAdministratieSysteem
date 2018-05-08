@@ -105,7 +105,6 @@ public class SubInvoice implements Serializable {
         hash = 97 * hash + Objects.hashCode(this.paymentStatus);
         hash = 97 * hash + Objects.hashCode(this.invoiceDate);
         hash = 97 * hash + (int) (Double.doubleToLongBits(this.price) ^ (Double.doubleToLongBits(this.price) >>> 32));
-        hash = 97 * hash + Objects.hashCode(this.vehicle);
         return hash;
     }
 
