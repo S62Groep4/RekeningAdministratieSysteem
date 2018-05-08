@@ -8,25 +8,48 @@ import java.io.Serializable;
  */
 public class TransLocationDTO implements Serializable {
 
-    private final String lat;
-    private final String lon;
-    private final String dateTime;
-    private final String serialNumber;
-    private final String countryCode;
+    private Long lat;
+    private Long lon;
+    private String dateTime;
+    private String serialNumber;
+    private String countryCode;
 
-    public TransLocationDTO(String lat, String lon, String dateTime, String serialNumber, String countryCode) {
-        this.lat = lat;
-        this.lon = lon;
+    public TransLocationDTO() {
+    }
+
+    public TransLocationDTO(Double lat, Double lon, String dateTime, String serialNumber, String countryCode) {
+        this.lat = lat.longValue();
+        this.lon = lon.longValue();
         this.dateTime = dateTime;
         this.serialNumber = serialNumber;
         this.countryCode = countryCode;
     }
 
-    public String getLat() {
+    public void setLat(Long lat) {
+        this.lat = lat;
+    }
+
+    public void setLon(Long lon) {
+        this.lon = lon;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    public Long getLat() {
         return lat;
     }
 
-    public String getLon() {
+    public Long getLon() {
         return lon;
     }
 

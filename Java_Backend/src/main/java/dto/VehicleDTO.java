@@ -1,7 +1,6 @@
 package dto;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  *
@@ -9,25 +8,40 @@ import java.util.List;
  */
 public class VehicleDTO implements Serializable {
 
-    private final String HashedLicensePlate;
-    private final List<JourneyDTO> Journeys;
-    private final List<SubInvoiceDTO> SubInvoices;
+    private String hashedLicensePlate;
+    private String journeyUri;
+    private String subInvoiceUri;
 
-    public VehicleDTO(String hashedLicensePlate, List<JourneyDTO> journeys, List<SubInvoiceDTO> subInvoices) {
-        HashedLicensePlate = hashedLicensePlate;
-        Journeys = journeys;
-        SubInvoices = subInvoices;
+    public VehicleDTO() {
+    }
+
+    public VehicleDTO(String hashedLicensePlate, String journeyUri, String subInvoiceUri) {
+        this.hashedLicensePlate = hashedLicensePlate;
+        this.journeyUri = journeyUri;
+        this.subInvoiceUri = subInvoiceUri;
+    }
+
+    public void setHashedLicensePlate(String hashedLicensePlate) {
+        this.hashedLicensePlate = hashedLicensePlate;
+    }
+
+    public void setJourneyUri(String journeyUri) {
+        this.journeyUri = journeyUri;
+    }
+
+    public void setSubInvoiceUri(String subInvoiceUri) {
+        this.subInvoiceUri = subInvoiceUri;
     }
 
     public String getHashedLicensePlate() {
-        return HashedLicensePlate;
+        return hashedLicensePlate;
     }
 
-    public List<JourneyDTO> getJourneys() {
-        return Journeys;
+    public String getJourneyUri() {
+        return journeyUri;
     }
 
-    public List<SubInvoiceDTO> getSubInvoices() {
-        return SubInvoices;
+    public String getSubInvoiceUri() {
+        return subInvoiceUri;
     }
 }

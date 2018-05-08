@@ -1,6 +1,7 @@
 package rest;
 
 import domain.SubInvoice;
+import dto.SubInvoiceDTO;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -15,6 +16,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import service.SubInvoiceService;
+import util.DomainToDto;
+import util.DtoToDomain;
 
 /**
  *
@@ -30,29 +33,36 @@ public class SubInvoiceResource {
     SubInvoiceService subInvoiceService;
 
     @POST
-    public SubInvoice insertTransLocation(SubInvoice invoice) {
-        return subInvoiceService.insertSubInvoice(invoice);
+    public Response insertSubInvoice(SubInvoiceDTO invoice) {
+        SubInvoice invoiceToInsert = DtoToDomain.SUBINVOICE_DTO_TO_DOMAIN(invoice);
+        SubInvoiceDTO dto = DomainToDto.SUBINVOICESTODTOS(subInvoiceService.insertSubInvoice(invoiceToInsert));
+        return Response.ok(dto).build();
     }
 
     @PUT
-    public SubInvoice updateJourney(SubInvoice invoice) {
-        return subInvoiceService.updateSubInvoice(invoice);
+    public Response updateSubInvoice(SubInvoiceDTO invoice) {
+        SubInvoice invoiceToUpdate = DtoToDomain.SUBINVOICE_DTO_TO_DOMAIN(invoice);
+        SubInvoiceDTO dto = DomainToDto.SUBINVOICESTODTOS(subInvoiceService.updateSubInvoice(invoiceToUpdate));
+        return Response.ok(dto).build();
     }
 
     @DELETE
     @Path("{invoiceNumber}")
-    public void removeJourney(@PathParam("invoiceNumber") String invoiceNumber) {
+    public Response removeSubInvoice(@PathParam("invoiceNumber") String invoiceNumber) {
         subInvoiceService.removeSubInvoice(invoiceNumber);
+        return Response.ok().build();
     }
 
     @GET
     @Path("{invoiceNumber}")
-    public SubInvoice getJourney(@PathParam("invoiceNumber") String invoiceNumber) {
-        return subInvoiceService.getSubInvoice(invoiceNumber);
+    public Response getSubInvoice(@PathParam("invoiceNumber") String invoiceNumber) {
+        SubInvoiceDTO dto = DomainToDto.SUBINVOICESTODTOS(subInvoiceService.getSubInvoice(invoiceNumber));
+        return Response.ok(dto).build();
     }
 
     @GET
-    public List<SubInvoice> getAllTransLocations() {
-        return subInvoiceService.getAllSubInvoices();
+    public Response getAllSubInvoices() {
+        List<SubInvoiceDTO> dto = DomainToDto.SUBINVOICESTODTOS(subInvoiceService.getAllSubInvoices());
+        return Response.ok(dto).build();
     }
 }

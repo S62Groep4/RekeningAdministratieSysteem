@@ -1,6 +1,7 @@
 package rest;
 
 import domain.TransLocation;
+import dto.TransLocationDTO;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -13,7 +14,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import service.TransLocationService;
+import util.DomainToDto;
+import util.DtoToDomain;
 
 /**
  *
@@ -29,35 +33,43 @@ public class TransLocationResource {
     TransLocationService transLocationService;
 
     @POST
-    public TransLocation insertTransLocation(TransLocation location) {
-        return transLocationService.insertTransLocation(location);
+    public Response insertTransLocation(TransLocationDTO location) {
+        TransLocation locationToInsert = DtoToDomain.TRANSLOCATION_DTO_TO_DOMAIN(location);
+        TransLocationDTO dto = DomainToDto.TRANSLOCATIONSTODTOS(transLocationService.insertTransLocation(locationToInsert));
+        return Response.ok(dto).build();
     }
 
     @PUT
-    public TransLocation updateJourney(TransLocation location) {
-        return transLocationService.updateTransLocation(location);
+    public Response updateTransLocation(TransLocationDTO location) {
+        TransLocation locationToUpdate = DtoToDomain.TRANSLOCATION_DTO_TO_DOMAIN(location);
+        TransLocationDTO dto = DomainToDto.TRANSLOCATIONSTODTOS(transLocationService.updateTransLocation(locationToUpdate));
+        return Response.ok(dto).build();
     }
 
     @DELETE
     @Path("{serialNumber}")
-    public void removeJourney(@PathParam("serialNumber") String serialNumber) {
+    public Response removeTransLocation(@PathParam("serialNumber") String serialNumber) {
         transLocationService.removeTransLocation(serialNumber);
+        return Response.ok().build();
     }
 
     @GET
     @Path("{serialNumber}")
-    public TransLocation getJourney(@PathParam("serialNumber") String serialNumber) {
-        return transLocationService.getTransLocation(serialNumber);
+    public Response getTransLocation(@PathParam("serialNumber") String serialNumber) {
+        TransLocationDTO dto = DomainToDto.TRANSLOCATIONSTODTOS(transLocationService.getTransLocation(serialNumber));
+        return Response.ok(dto).build();
     }
 
     @GET
     @Path("journeyid/{journeyId}")
-    public List<TransLocation> getAllTransLocationsByJourney(@PathParam("journeyId") long id) {
-        return transLocationService.getAllTransLocationsByJourney(id);
+    public Response getAllTransLocationsByJourney(@PathParam("journeyId") long id) {
+        List<TransLocationDTO> dto = DomainToDto.TRANSLOCATIONSTODTOS(transLocationService.getAllTransLocationsByJourney(id));
+        return Response.ok(dto).build();
     }
 
     @GET
-    public List<TransLocation> getAllTransLocations() {
-        return transLocationService.getAllTransLocations();
+    public Response getAllTransLocations() {
+        List<TransLocationDTO> dto = DomainToDto.TRANSLOCATIONSTODTOS(transLocationService.getAllTransLocations());
+        return Response.ok(dto).build();
     }
 }

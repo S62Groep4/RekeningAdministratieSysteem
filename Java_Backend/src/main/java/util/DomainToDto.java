@@ -6,6 +6,7 @@ import domain.TransLocation;
 import domain.Vehicle;
 import dto.*;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -14,26 +15,41 @@ import java.util.List;
  */
 public class DomainToDto {
 
+    private static String apiUri = "http://localhost:8080/Java_Backend/api/";
+
     public static List<VehicleDTO> VEHICLESTODTOS(List<Vehicle> vehicles) {
-        List<VehicleDTO> VehicleDTOs = new ArrayList<>();
+        List<VehicleDTO> vehicleDTOs = new ArrayList<>();
         if (vehicles == null || vehicles.isEmpty()) {
-            return VehicleDTOs;
+            return vehicleDTOs;
         }
 
-        for (Vehicle v : vehicles) {
-            VehicleDTO vehicle = new VehicleDTO(
-                    v.getHashedLicencePlate(),
-                    JOURNEYSTODTOS(v.getJourneys()),
-                    SUBINVOICESSTODTOS(v.getSubInvoices()));
-            VehicleDTOs.add(vehicle);
+        for (Vehicle vehicle : vehicles) {
+            VehicleDTO vehicleDTO = new VehicleDTO(
+                    vehicle.getHashedLicencePlate(),
+                    apiUri + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/journeys",
+                    apiUri + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/invoices");
+            vehicleDTOs.add(vehicleDTO);
         }
-        return VehicleDTOs;
+        return vehicleDTOs;
     }
 
-    public static List<SubInvoiceDTO> SUBINVOICESSTODTOS(List<SubInvoice> invoices) {
-        List<SubInvoiceDTO> SubInvoiceDTOs = new ArrayList<>();
+    public static VehicleDTO VEHICLESTODTOS(Vehicle vehicle) {
+        VehicleDTO vehicleDTO = new VehicleDTO(null, null, null);
+        if (vehicle == null) {
+            return vehicleDTO;
+        }
+
+        vehicleDTO = new VehicleDTO(
+                vehicle.getHashedLicencePlate(),
+                apiUri + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/journeys",
+                apiUri + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/invoices");
+        return vehicleDTO;
+    }
+
+    public static List<SubInvoiceDTO> SUBINVOICESTODTOS(List<SubInvoice> invoices) {
+        List<SubInvoiceDTO> subInvoiceDTOs = new ArrayList<>();
         if (invoices == null || invoices.isEmpty()) {
-            return SubInvoiceDTOs;
+            return subInvoiceDTOs;
         }
 
         for (SubInvoice s : invoices) {
@@ -43,41 +59,81 @@ public class DomainToDto {
                     s.getPaymentStatus(),
                     s.getInvoiceDate(),
                     s.getPrice() + "");
-            SubInvoiceDTOs.add(invoice);
+            subInvoiceDTOs.add(invoice);
         }
-        return SubInvoiceDTOs;
+        return subInvoiceDTOs;
+    }
+
+    public static SubInvoiceDTO SUBINVOICESTODTOS(SubInvoice subInvoice) {
+        SubInvoiceDTO subInvoiceDTO = new SubInvoiceDTO(null, null, null, null, null);
+        if (subInvoice == null) {
+            return subInvoiceDTO;
+        }
+
+        subInvoiceDTO = new SubInvoiceDTO(subInvoice.getInvoiceNumber(),
+                subInvoice.getCountry(),
+                subInvoice.getPaymentStatus(),
+                subInvoice.getInvoiceDate(),
+                subInvoice.getPrice() + "");
+        return subInvoiceDTO;
     }
 
     public static List<JourneyDTO> JOURNEYSTODTOS(List<Journey> journeys) {
-        List<JourneyDTO> JourneyDTOs = new ArrayList<>();
+        List<JourneyDTO> journeyDTOs = new ArrayList<>();
         if (journeys == null || journeys.isEmpty()) {
-            return JourneyDTOs;
+            return journeyDTOs;
         }
 
         for (Journey j : journeys) {
             JourneyDTO journey = new JourneyDTO(
                     j.getId(),
-                    TRANSLOCATIONSSTODTOS(j.getTransLocations()));
-            JourneyDTOs.add(journey);
+                    apiUri + "translocations/journeyid/" + j.getId());
+            journeyDTOs.add(journey);
         }
-        return JourneyDTOs;
+        return journeyDTOs;
     }
 
-    public static List<TransLocationDTO> TRANSLOCATIONSSTODTOS(List<TransLocation> locations) {
-        List<TransLocationDTO> TransLocationDTOs = new ArrayList<>();
+    public static JourneyDTO JOURNEYSTODTOS(Journey journey) {
+        JourneyDTO journeyDTO = new JourneyDTO(null, null);
+        if (journey == null) {
+            return journeyDTO;
+        }
+
+        journeyDTO = new JourneyDTO(journey.getId(),
+                apiUri + "translocations/journeyid/" + journey.getId());
+        return journeyDTO;
+    }
+
+    public static List<TransLocationDTO> TRANSLOCATIONSTODTOS(List<TransLocation> locations) {
+        List<TransLocationDTO> transLocationDTOs = new ArrayList<>();
         if (locations == null || locations.isEmpty()) {
-            return TransLocationDTOs;
+            return transLocationDTOs;
         }
 
         for (TransLocation t : locations) {
-            TransLocationDTO vehicle = new TransLocationDTO(
-                    t.getLat() + "",
-                    t.getLon() + "",
+            TransLocationDTO transLocation = new TransLocationDTO(
+                    t.getLat(),
+                    t.getLon(),
                     t.getDateTime(),
                     t.getSerialNumber(),
                     t.getCountryCode());
-            TransLocationDTOs.add(vehicle);
+            transLocationDTOs.add(transLocation);
         }
-        return TransLocationDTOs;
+        return transLocationDTOs;
+    }
+
+    public static TransLocationDTO TRANSLOCATIONSTODTOS(TransLocation location) {
+        TransLocationDTO transLocationDTO = new TransLocationDTO(null, null, null, null, null);
+        if (location == null) {
+            return transLocationDTO;
+        }
+
+        transLocationDTO = new TransLocationDTO(
+                location.getLat(),
+                location.getLon(),
+                location.getDateTime(),
+                location.getSerialNumber(),
+                location.getCountryCode());
+        return transLocationDTO;
     }
 }

@@ -8,13 +8,16 @@ import java.io.Serializable;
  */
 public class SubInvoiceDTO implements Serializable {
 
-    private final String invoiceNumber;
-    private final String country;
-    private final String paymentStatus;
-    private final String invoiceDate;
-    private final String price;
+    private Long invoiceNumber;
+    private String country;
+    private String paymentStatus;
+    private String invoiceDate;
+    private String price;
 
-    public SubInvoiceDTO(String invoiceNumber, String country, String paymentStatus, String invoiceDate, String price) {
+    public SubInvoiceDTO() {
+    }
+
+    public SubInvoiceDTO(Long invoiceNumber, String country, String paymentStatus, String invoiceDate, String price) {
         this.invoiceNumber = invoiceNumber;
         this.country = country;
         this.paymentStatus = paymentStatus;
@@ -22,7 +25,27 @@ public class SubInvoiceDTO implements Serializable {
         this.price = price;
     }
 
-    public String getInvoiceNumber() {
+    public void setInvoiceNumber(Long invoiceNumber) {
+        this.invoiceNumber = invoiceNumber;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public void setInvoiceDate(String invoiceDate) {
+        this.invoiceDate = invoiceDate;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public Long getInvoiceNumber() {
         return invoiceNumber;
     }
 

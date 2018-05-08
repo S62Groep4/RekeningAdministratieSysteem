@@ -20,7 +20,7 @@ import javax.persistence.NamedQuery;
 public class SubInvoice implements Serializable {
 
     @Id
-    private String invoiceNumber;
+    private Long invoiceNumber;
     private String country;
     private String paymentStatus;
     private String invoiceDate;
@@ -31,14 +31,15 @@ public class SubInvoice implements Serializable {
     public SubInvoice() {
     }
 
-    public SubInvoice(String invoiceNumber, String country, double price) {
+    public SubInvoice(Long invoiceNumber, String country, double price) {
         this.invoiceNumber = invoiceNumber;
         this.country = country;
         this.price = price;
         this.invoiceDate = new Date(System.currentTimeMillis()).toString();
+        this.paymentStatus = "open";
     }
 
-    public SubInvoice(String invoiceNumber, String country, double price, String invoiceDate, String paymentStatus) {
+    public SubInvoice(Long invoiceNumber, String country, double price, String invoiceDate, String paymentStatus) {
         this.invoiceNumber = invoiceNumber;
         this.country = country;
         this.price = price;
@@ -59,11 +60,27 @@ public class SubInvoice implements Serializable {
         this.vehicle = vehicle;
     }
 
+    public void setInvoiceNumber(Long invoiceNumber) {
+        this.invoiceNumber = invoiceNumber;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setInvoiceDate(String invoiceDate) {
+        this.invoiceDate = invoiceDate;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     public Vehicle getVehicle() {
         return vehicle;
     }
 
-    public String getInvoiceNumber() {
+    public Long getInvoiceNumber() {
         return invoiceNumber;
     }
 
@@ -81,20 +98,8 @@ public class SubInvoice implements Serializable {
     // </editor-fold>
 
     @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof SubInvoice)) {
-            return false;
-        }
-        SubInvoice otherUser = (SubInvoice) obj;
-        if (this.invoiceNumber == null || otherUser.invoiceNumber == null) {
-            return false;
-        }
-        return this.invoiceNumber.equals(otherUser.invoiceNumber);
-    }
-
-    @Override
     public int hashCode() {
-        int hash = 7;
+        int hash = 3;
         hash = 97 * hash + Objects.hashCode(this.invoiceNumber);
         hash = 97 * hash + Objects.hashCode(this.country);
         hash = 97 * hash + Objects.hashCode(this.paymentStatus);
@@ -102,5 +107,35 @@ public class SubInvoice implements Serializable {
         hash = 97 * hash + (int) (Double.doubleToLongBits(this.price) ^ (Double.doubleToLongBits(this.price) >>> 32));
         hash = 97 * hash + Objects.hashCode(this.vehicle);
         return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final SubInvoice other = (SubInvoice) obj;
+        if (Double.doubleToLongBits(this.price) != Double.doubleToLongBits(other.price)) {
+            return false;
+        }
+        if (!Objects.equals(this.country, other.country)) {
+            return false;
+        }
+        if (!Objects.equals(this.paymentStatus, other.paymentStatus)) {
+            return false;
+        }
+        if (!Objects.equals(this.invoiceDate, other.invoiceDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.invoiceNumber, other.invoiceNumber)) {
+            return false;
+        }
+        return Objects.equals(this.vehicle, other.vehicle);
     }
 }

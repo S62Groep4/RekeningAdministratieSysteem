@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
@@ -18,6 +20,9 @@ import javax.persistence.OneToMany;
  * @author Teun
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Journey.findAll", query = "SELECT j FROM Journey j")
+    ,@NamedQuery(name = "Journey.findById", query = "SELECT j FROM Journey j WHERE j.id = :journeyId")})
 public class Journey implements Serializable {
 
     @Id
@@ -65,7 +70,7 @@ public class Journey implements Serializable {
     public boolean addTransLocation(List<TransLocation> loc) {
         if (loc != null) {
             locations.addAll(loc);
-            for (TransLocation l : loc){
+            for (TransLocation l : loc) {
                 l.setJourney(this);
             }
             return true;
