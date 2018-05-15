@@ -9,6 +9,8 @@ import {RoadsComponent} from './roads/roads.component';
 import {FormsModule} from '@angular/forms';
 import {RoadService} from './services/road.service';
 import {HttpClientModule} from '@angular/common/http';
+import {InvoicesComponent} from './invoices/invoices.component';
+import {InvoiceService} from './services/invoice.service';
 
 
 @NgModule({
@@ -16,7 +18,8 @@ import {HttpClientModule} from '@angular/common/http';
     AppComponent,
     PageNotFoundComponent,
     HomeComponent,
-    RoadsComponent
+    RoadsComponent,
+    InvoicesComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,8 @@ import {HttpClientModule} from '@angular/common/http';
     NgbModule.forRoot()
   ],
   providers: [
-    RoadService
+    RoadService,
+    InvoiceService
   ],
   bootstrap: [AppComponent]
 })
