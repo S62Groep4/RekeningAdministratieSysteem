@@ -6,6 +6,7 @@ import domain.SubInvoice;
 import domain.TransLocation;
 import domain.Vehicle;
 import dto.*;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public class DomainToDto {
 
-    private static String apiUri = "http://localhost:8080/Java_Backend/api/";
+    private static final String APIURI = "http://localhost:8080/Java_Backend/api/";
 
     public static List<VehicleDTO> VEHICLESTODTOS(List<Vehicle> vehicles) {
         List<VehicleDTO> vehicleDTOs = new ArrayList<>();
@@ -27,8 +28,8 @@ public class DomainToDto {
         for (Vehicle vehicle : vehicles) {
             VehicleDTO vehicleDTO = new VehicleDTO(
                     vehicle.getHashedLicencePlate(),
-                    apiUri + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/journeys",
-                    apiUri + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/invoices");
+                    APIURI + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/journeys",
+                    APIURI + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/invoices");
             vehicleDTOs.add(vehicleDTO);
         }
         return vehicleDTOs;
@@ -42,8 +43,8 @@ public class DomainToDto {
 
         vehicleDTO = new VehicleDTO(
                 vehicle.getHashedLicencePlate(),
-                apiUri + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/journeys",
-                apiUri + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/invoices");
+                APIURI + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/journeys",
+                APIURI + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/invoices");
         return vehicleDTO;
     }
 
@@ -88,7 +89,7 @@ public class DomainToDto {
         for (Journey j : journeys) {
             JourneyDTO journey = new JourneyDTO(
                     j.getId(),
-                    apiUri + "translocations/journeyid/" + j.getId());
+                    APIURI + "translocations/journeyid/" + j.getId());
             journeyDTOs.add(journey);
         }
         return journeyDTOs;
@@ -101,7 +102,7 @@ public class DomainToDto {
         }
 
         journeyDTO = new JourneyDTO(journey.getId(),
-                apiUri + "translocations/journeyid/" + journey.getId());
+                APIURI + "translocations/journeyid/" + journey.getId());
         return journeyDTO;
     }
 

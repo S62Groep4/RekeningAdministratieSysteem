@@ -1,6 +1,8 @@
 package domain;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -21,6 +23,8 @@ import javax.persistence.NamedQuery;
     ,@NamedQuery(name = "SubInvoice.findByInvoiceNumber", query = "SELECT s FROM SubInvoice s WHERE s.invoiceNumber = :invoiceNumber")})
 public class SubInvoice implements Serializable {
 
+    private static final DateFormat DF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long invoiceNumber;
@@ -38,7 +42,7 @@ public class SubInvoice implements Serializable {
         this.invoiceNumber = invoiceNumber;
         this.country = country;
         this.price = price;
-        this.invoiceDate = new Date(System.currentTimeMillis()).toString();
+        this.invoiceDate = DF.format(new Date());
         this.paymentStatus = "open";
     }
 

@@ -1,0 +1,7 @@
+.clickable-tr {
+  cursor: pointer;
+}
+
+.selected-tr {
+  background-color: rgba(0, 0, 0, .075);
+}
