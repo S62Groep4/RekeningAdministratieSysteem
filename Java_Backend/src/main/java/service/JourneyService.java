@@ -28,7 +28,7 @@ public class JourneyService {
         try {
             return journeyDao.getJourney(id);
         } catch (PersistenceException pe) {
-            LOGGER.log(Level.FINE, "ERROR while performing getVehicle operation; {0}", pe.getMessage());
+            LOGGER.log(Level.FINE, "ERROR while performing getJourney operation; {0}", pe.getMessage());
             return null;
         }
     }
@@ -37,7 +37,7 @@ public class JourneyService {
         try {
             return journeyDao.getAllJourneys();
         } catch (PersistenceException pe) {
-            LOGGER.log(Level.FINE, "ERROR while performing getAllVehicles operation; {0}", pe.getMessage());
+            LOGGER.log(Level.FINE, "ERROR while performing getAllJourneys operation; {0}", pe.getMessage());
             return null;
         }
     }
@@ -46,7 +46,7 @@ public class JourneyService {
         try {
             return journeyDao.updateJourney(journey);
         } catch (PersistenceException pe) {
-            LOGGER.log(Level.FINE, "ERROR while performing updateVehicle operation; {0}", pe.getMessage());
+            LOGGER.log(Level.FINE, "ERROR while performing updateJourney operation; {0}", pe.getMessage());
             return null;
         }
     }
@@ -55,7 +55,7 @@ public class JourneyService {
         try {
             journeyDao.removeJourney(id);
         } catch (PersistenceException pe) {
-            LOGGER.log(Level.FINE, "ERROR while performing removeVehicle operation; {0}", pe.getMessage());
+            LOGGER.log(Level.FINE, "ERROR while performing removeJourney operation; {0}", pe.getMessage());
         }
     }
 
@@ -63,7 +63,7 @@ public class JourneyService {
         try {
             return journeyDao.insertJourney(journey);
         } catch (PersistenceException pe) {
-            LOGGER.log(Level.FINE, "ERROR while performing insertVehicle operation; {0}", pe.getMessage());
+            LOGGER.log(Level.FINE, "ERROR while performing insertJourney operation; {0}", pe.getMessage());
             return null;
         }
     }

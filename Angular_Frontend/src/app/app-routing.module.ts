@@ -4,11 +4,16 @@ import {RouterModule, Routes} from '@angular/router';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {HomeComponent} from './home/home.component';
 import {RoadsComponent} from './roads/roads.component';
+import {InvoicesComponent} from './invoices/invoices.component';
 
 const appRoutes: Routes = [
   {
     path: 'home',
     component: HomeComponent
+  },
+  {
+    path: 'invoices',
+    component: InvoicesComponent
   },
   {
     path: 'roads',

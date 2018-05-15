@@ -1,10 +1,13 @@
 package util;
 
 import domain.Journey;
+import domain.Road;
 import domain.SubInvoice;
 import domain.TransLocation;
 import domain.Vehicle;
 import dto.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -113,5 +116,32 @@ public class DtoToDomain {
                 Double.longBitsToDouble(locationDTO.getLon()),
                 locationDTO.getSerialNumber(),
                 locationDTO.getCountryCode());
+    }
+
+    public static List<Road> ROAD_DTO_TO_DOMAIN(List<RoadDTO> roadDTOs) {
+        List<Road> roads = new ArrayList<>();
+        if (roadDTOs == null || roadDTOs.isEmpty()) {
+            return roads;
+        }
+
+        for (RoadDTO r : roadDTOs) {
+            Road road = new Road(
+                    r.getId(),
+                    r.getName(),
+                    r.getRate());
+            roads.add(road);
+        }
+        return roads;
+    }
+
+    public static Road ROAD_DTO_TO_DOMAIN(RoadDTO roadDTO) {
+        if (roadDTO == null) {
+            return new Road();
+        }
+
+        return new Road(
+                roadDTO.getId(),
+                roadDTO.getName(),
+                roadDTO.getRate());
     }
 }

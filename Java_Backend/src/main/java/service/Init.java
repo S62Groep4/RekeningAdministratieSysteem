@@ -1,6 +1,7 @@
 package service;
 
 import domain.Journey;
+import domain.Road;
 import domain.SubInvoice;
 import domain.TransLocation;
 import domain.Vehicle;
@@ -39,6 +40,9 @@ public class Init {
     @Inject
     JourneyService journeyService;
 
+    @Inject
+    RoadService roadService;
+
     @PostConstruct
     public void init() {
 
@@ -73,13 +77,13 @@ public class Init {
         List<Vehicle> domainVehicles = VEHICLE_DTO_TO_DOMAIN(vehicles);
          */
 
-         /*
+ /*
         //|||||||||||||||||||||||||||||||||||||||||
         //||     PERSISTING DOMAIN OBJECTS       ||
         //|||||||||||||||||||||||||||||||||||||||||
          */
-        Journey j1 = new Journey(1L);
-        Journey j2 = new Journey(2L);
+        Journey j1 = new Journey(null);
+        Journey j2 = new Journey(null);
         TransLocation loc1 = new TransLocation(51.855305, 9.623518, "654161", "31");
         TransLocation loc2 = new TransLocation(51.735719, 9.579573, "654162", "31");
         TransLocation loc3 = new TransLocation(51.626728, 9.689436, "654163", "31");
@@ -104,11 +108,23 @@ public class Init {
         veh2.setUnHashedLicencePlate("54HSHS");
         veh2.addJourney(j2);
 
-        SubInvoice inv1 = new SubInvoice(1L, "31", 165.00);
+        SubInvoice inv1 = new SubInvoice(null, "31", 165.00);
         veh1.addInvoice(inv1);
 
-        SubInvoice inv2 = new SubInvoice(2L, "31", 486.00);
+        SubInvoice inv2 = new SubInvoice(null, "31", 486.00);
         veh2.addInvoice(inv2);
+
+        Road r1 = new Road(null, "A2", 1.2);
+        Road r2 = new Road(null, "A55", 1.1);
+        Road r3 = new Road(null, "A50", 1.15);
+        Road r4 = new Road(null, "A73", 1.08);
+        Road r5 = new Road(null, "A1", 1.18);
+
+        roadService.insertRoad(r1);
+        roadService.insertRoad(r2);
+        roadService.insertRoad(r3);
+        roadService.insertRoad(r4);
+        roadService.insertRoad(r5);
 
         transLocationService.insertTransLocation(loc1);
         transLocationService.insertTransLocation(loc2);
