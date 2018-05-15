@@ -21,6 +21,11 @@ export class RoadService {
     return this.http.get(this.apiUri).map(res => res as Road[]);
   }
 
+  searchRoad(roadName: string): Observable<Road[]> {
+    const url = `${this.apiUri}/${roadName}`;
+    return this.http.get<Road[]>(url);
+  }
+
   updateRoad(road: Road): Observable<Road> {
     return this.http.put<Road>(this.apiUri, road, httpOptions);
   }

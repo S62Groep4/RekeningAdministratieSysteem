@@ -60,14 +60,13 @@ public class RoadResource {
     public Response getRoad(
             @PathParam("query") String query,
             @DefaultValue("name") @QueryParam("searchtype") String searchtype) {
-        Road road;
         if (searchtype.equals("id")) {
-            road = roadService.getRoad(new Long(query));
+            RoadDTO dto = DomainToDto.ROADSTODTOS(roadService.getRoad(new Long(query)));
+            return Response.ok(dto).build();
         } else {
-            road = roadService.getRoad(query);
+            List<RoadDTO> dtos = DomainToDto.ROADSTODTOS(roadService.searchRoad(query));
+            return Response.ok(dtos).build();
         }
-        RoadDTO dto = DomainToDto.ROADSTODTOS(road);
-        return Response.ok(dto).build();
     }
 
     @GET

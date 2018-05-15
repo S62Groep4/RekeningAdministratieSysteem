@@ -115,14 +115,16 @@ public class Init {
         veh2.addInvoice(inv2);
 
         Road r1 = new Road(null, "A2", 1.2);
-        Road r2 = new Road(null, "A50", 1.15);
-        Road r3 = new Road(null, "A73", 1.08);
-        Road r4 = new Road(null, "A1", 1.18);
+        Road r2 = new Road(null, "A55", 1.1);
+        Road r3 = new Road(null, "A50", 1.15);
+        Road r4 = new Road(null, "A73", 1.08);
+        Road r5 = new Road(null, "A1", 1.18);
 
         roadService.insertRoad(r1);
         roadService.insertRoad(r2);
         roadService.insertRoad(r3);
         roadService.insertRoad(r4);
+        roadService.insertRoad(r5);
 
         transLocationService.insertTransLocation(loc1);
         transLocationService.insertTransLocation(loc2);

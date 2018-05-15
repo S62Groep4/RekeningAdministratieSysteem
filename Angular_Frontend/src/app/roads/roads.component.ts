@@ -19,6 +19,16 @@ export class RoadsComponent implements OnInit {
     this.getRoads();
   }
 
+  searchStringChanged(searchTerm: string): void {
+    if (searchTerm.length === 0) {
+      this.getRoads();
+      return;
+    }
+    this.roadService.searchRoad(searchTerm).subscribe(res => {
+      this.roads = res;
+    });
+  }
+
   getRoads(): void {
     this.roadService.getAllRoads().subscribe(res => this.roads = res);
   }

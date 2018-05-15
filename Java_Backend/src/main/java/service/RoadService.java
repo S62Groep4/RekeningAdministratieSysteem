@@ -32,10 +32,19 @@ public class RoadService {
             return null;
         }
     }
-    
+
     public Road getRoad(String name) throws PersistenceException {
         try {
             return roadDao.getRoad(name);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing getRoad operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
+
+    public List<Road> searchRoad(String name) throws PersistenceException {
+        try {
+            return roadDao.searchRoad(name);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing getRoad operation; {0}", pe.getMessage());
             return null;
