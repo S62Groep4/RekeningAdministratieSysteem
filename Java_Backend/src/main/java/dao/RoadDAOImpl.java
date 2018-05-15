@@ -1,8 +1,6 @@
 package dao;
 
-import domain.Journey;
 import domain.Road;
-import domain.TransLocation;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -56,6 +54,7 @@ public class RoadDAOImpl implements RoadDAO {
     @Override
     public Road insertRoad(Road road) throws PersistenceException {
         em.persist(road);
+        em.flush();
         return road;
     }
 }

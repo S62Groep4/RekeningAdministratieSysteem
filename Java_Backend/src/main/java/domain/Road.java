@@ -2,6 +2,7 @@ package domain;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +24,7 @@ public class Road implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    @Column(unique = true)
     private String name;
     private Double rate;
 
@@ -35,6 +37,7 @@ public class Road implements Serializable {
         this.rate = rate;
     }
 
+    // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
     public Long getId() {
         return id;
     }
@@ -58,6 +61,7 @@ public class Road implements Serializable {
     public void setRate(Double rate) {
         this.rate = rate;
     }
+    // </editor-fold>
 
     @Override
     public int hashCode() {

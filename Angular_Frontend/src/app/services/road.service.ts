@@ -12,14 +12,13 @@ const httpOptions = {
 @Injectable()
 export class RoadService {
 
-  private apiUri = 'http://localhost:8080/Java_Backend/api/';
+  private apiUri = 'http://localhost:8080/Java_Backend/api/roads';
 
   constructor(private http: HttpClient) {
   }
 
   getAllRoads(): Observable<Road[]> {
-    const url = `${this.apiUri}roads`;
-    return this.http.get(url).map(res => res as Road[]);
+    return this.http.get(this.apiUri).map(res => res as Road[]);
   }
 
   updateRoad(road: Road): Observable<Road> {

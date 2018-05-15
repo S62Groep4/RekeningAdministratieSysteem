@@ -60,7 +60,7 @@ public class RoadResource {
     public Response getRoad(
             @PathParam("query") String query,
             @DefaultValue("name") @QueryParam("searchtype") String searchtype) {
-        Road road = null;
+        Road road;
         if (searchtype.equals("id")) {
             road = roadService.getRoad(new Long(query));
         } else {

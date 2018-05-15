@@ -25,13 +25,13 @@ export class RoadsComponent implements OnInit {
 
   onAdd(): void {
     this.roadService.insertRoad(this.selectedRoad).subscribe(res => {
-      this.roads.unshift(res);
+      this.roads.push(res);
     });
   }
 
   onSave(): void {
     this.roadService.updateRoad(this.selectedRoad).subscribe(res => {
-      this.roads.unshift(res);
+      // this.roads.push(res);
     });
   }
 
