@@ -20,22 +20,27 @@ import org.mindrot.jbcrypt.BCrypt;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Vehicle.findAll", query = "SELECT v FROM Vehicle v")
-    ,@NamedQuery(name = "Vehicle.findByLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.hashedLicencePlate = :hashedLicencePlate")
+    ,@NamedQuery(name = "Vehicle.findByHashedLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.hashedLicencePlate = :hashedLicencePlate ")
+    ,@NamedQuery(name = "Vehicle.findByLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.licensePlate = :licenseplate")
     ,@NamedQuery(name = "Vehicle.findJourneys", query = "SELECT j FROM Journey j WHERE j.vehicle.hashedLicencePlate IN (SELECT v.hashedLicencePlate FROM Vehicle v WHERE v.hashedLicencePlate = :hashedLicencePlate)")
     ,@NamedQuery(name = "Vehicle.findInvoices", query = "SELECT i FROM SubInvoice i WHERE i.vehicle.hashedLicencePlate IN (SELECT v.hashedLicencePlate FROM Vehicle v WHERE v.hashedLicencePlate = :hashedLicencePlate)")})
 public class Vehicle implements Serializable {
 
     @Id
     private String hashedLicencePlate;
+
+    private String licensePlate;
     @OneToMany(mappedBy = "vehicle", cascade = ALL)
     private final List<Journey> journeys = new ArrayList<>();
     @OneToMany(mappedBy = "vehicle", cascade = ALL)
     private final List<SubInvoice> subInvoices = new ArrayList<>();
 
+
     public Vehicle() {
     }
 
     public Vehicle(String licencePlate) {
+        this.licensePlate = licencePlate;
         this.hashedLicencePlate = licencePlate;
     }
 
@@ -45,6 +50,7 @@ public class Vehicle implements Serializable {
     }
 
     public void setUnHashedLicencePlate(String licencePlate) {
+        this.licensePlate = licencePlate;
         this.hashedLicencePlate = BCrypt.hashpw(licencePlate, BCrypt.gensalt(12));
     }
 
@@ -59,6 +65,15 @@ public class Vehicle implements Serializable {
     public List<SubInvoice> getSubInvoices() {
         return Collections.unmodifiableList(subInvoices);
     }
+
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
+    }
+
     // </editor-fold>
 
     public boolean addJourney(Journey j) {
