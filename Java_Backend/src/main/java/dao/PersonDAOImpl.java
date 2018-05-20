@@ -49,6 +49,4 @@ public class PersonDAOImpl implements PersonDAO {
         return em.createNamedQuery("Person.GetPersonByCar", Person.class)
                 .setParameter("vehicle", vehicle).getSingleResult();
     }
-
-
 }

@@ -100,12 +100,12 @@ public class SubInvoice implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 97 * hash + Objects.hashCode(this.invoiceNumber);
-        hash = 97 * hash + Objects.hashCode(this.country);
-        hash = 97 * hash + Objects.hashCode(this.paymentStatus);
-        hash = 97 * hash + Objects.hashCode(this.invoiceDate);
-        hash = 97 * hash + (int) (Double.doubleToLongBits(this.price) ^ (Double.doubleToLongBits(this.price) >>> 32));
-        hash = 97 * hash + Objects.hashCode(this.vehicle);
+        //hash = 97 * hash + Objects.hashCode(this.invoiceNumber);
+        //hash = 97 * hash + Objects.hashCode(this.country);
+        //hash = 97 * hash + Objects.hashCode(this.paymentStatus);
+        //hash = 97 * hash + Objects.hashCode(this.invoiceDate);
+        //hash = 97 * hash + (int) (Double.doubleToLongBits(this.price) ^ (Double.doubleToLongBits(this.price) >>> 32));
+        //hash = 97 * hash + Objects.hashCode(this.vehicle);
         return hash;
     }
 

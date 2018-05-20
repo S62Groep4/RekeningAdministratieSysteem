@@ -37,22 +37,19 @@ public class PersonResource {
     public Response getPersons() {
         List<Person> persons = personService.getAllPersons();
         List<PersonDTO> personDTOS = new ArrayList<>();
-        for (Person person: persons) {
+        for (Person person : persons) {
             personDTOS.add(new PersonDTO(person.getId(), person.getFirstName(), person.getLastName()));
         }
         return Response.ok(personDTOS).build();
     }
 
-
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updatePerson(PersonDTO person) {
-        personService.updatePerson(new Person(person.getId(),person.getFirstName(), person.getLastName()));
+        personService.updatePerson(new Person(person.getId(), person.getFirstName(), person.getLastName()));
         return Response.ok().build();
     }
-
-
 
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
@@ -62,8 +59,14 @@ public class PersonResource {
             @PathParam("identifier") int id) {
         Person person = personService.getPerson(id);
         List<VehicleDTO> vehicleDTOS = new ArrayList<>();
-        for(Vehicle vehicle : person.getVehicles()){
+        for (Vehicle vehicle : person.getVehicles()) {
+            System.out.println("Collecting a vehicle from person: " + person.getFirstName() + " with ID: " + person.getId());
+            System.out.println("Collecting vehicle licence: " + vehicle.getLicencePlate() + " and hashedlicence: " + vehicle.getHashedLicencePlate());
             vehicleDTOS.add(DomainToDto.VEHICLESTODTOS(vehicle));
+        }
+        System.out.println("List size: " + vehicleDTOS.size());
+        for (int i = 0; i < vehicleDTOS.size(); i++) {
+            System.out.println("List content: " + vehicleDTOS.get(i).getHashedLicensePlate());
         }
         return Response.ok().build();
     }
@@ -76,11 +79,10 @@ public class PersonResource {
             @PathParam("identifier") int id,
             @PathParam("vehicleId") String vehicleId) {
         Vehicle vehicle = null;
-        if(vehicleId.length() > 15){
-            vehicle = vehicleService.getVehicle(vehicleId,true);
-        }
-        else{
-            vehicle = vehicleService.getVehicle(vehicleId,false);
+        if (vehicleId.length() > 15) {
+            vehicle = vehicleService.getVehicle(vehicleId, true);
+        } else {
+            vehicle = vehicleService.getVehicle(vehicleId, false);
         }
         Person person = personService.getPerson(id);
         person.addVehicle(vehicle);
@@ -97,10 +99,9 @@ public class PersonResource {
             @PathParam("vehicleId") String vehicleId) {
         Person person = personService.getPerson(id);
         Vehicle vehicle = null;
-        if(vehicleId.length() > 15) {
+        if (vehicleId.length() > 15) {
             vehicle = vehicleService.getVehicle(vehicleId, true);
-        }else
-        {
+        } else {
             vehicle = vehicleService.getVehicle(vehicleId, false);
         }
 
@@ -125,8 +126,7 @@ public class PersonResource {
             Person person = personService.getPerson(Integer.parseInt(identifier));
             PersonDTO personDTO = new PersonDTO(person.getId(), person.getFirstName(), person.getLastName());
             return Response.ok(personDTO).build();
-        }
-        else if (identifierType.equals("hashedplate")){
+        } else if (identifierType.equals("hashedplate")) {
             Person person = personService.getPerson(Integer.parseInt(identifier));
             PersonDTO personDTO = new PersonDTO(person.getId(), person.getFirstName(), person.getLastName());
             return Response.ok(personDTO).build();
@@ -134,14 +134,24 @@ public class PersonResource {
         return Response.status(Response.Status.BAD_REQUEST.getStatusCode(), "Invalid type! [ null / id / plainplate / hashedplate]").build();
     }
 
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("licenceplate/{licenceplate}")
+    public Response getPersonByLicenceplate(@PathParam("licenceplate") String licenceplate) {
+
+        Person person = personService.getPersonByLicensePlate(licenceplate, false);
+        PersonDTO personDTO = new PersonDTO(person.getId(), person.getFirstName(), person.getLastName());
+        return Response.ok(personDTO).build();
+    }
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createPerson(PersonDTO person){
-        Person createPerson = new Person(person.getId(),person.getFirstName(), person.getLastName());
+    public Response createPerson(PersonDTO person) {
+        Person createPerson = new Person(person.getId(), person.getFirstName(), person.getLastName());
         createPerson = personService.createPerson(createPerson);
         return Response.ok(createPerson).build();
     }
-
 
 }

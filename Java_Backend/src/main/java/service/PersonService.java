@@ -49,7 +49,7 @@ public class PersonService {
         }
     }
 
-    public Person createPerson(Person person){
+    public Person createPerson(Person person) {
         try {
             return personDAO.createPerson(person);
         } catch (PersistenceException pe) {
@@ -58,7 +58,7 @@ public class PersonService {
         }
     }
 
-    public Person updatePerson(Person person){
+    public Person updatePerson(Person person) {
         try {
             return personDAO.updatePerson(person);
         } catch (PersistenceException pe) {
@@ -67,7 +67,7 @@ public class PersonService {
         }
     }
 
-    public Person getPersonByVehicle(Vehicle vehicle){
+    public Person getPersonByVehicle(Vehicle vehicle) {
         try {
             return personDAO.getPersonByVehicle(vehicle);
         } catch (PersistenceException pe) {
@@ -76,7 +76,7 @@ public class PersonService {
         }
     }
 
-    public Person getPersonByLicensePlate(String licenseplate, boolean hashed){
+    public Person getPersonByLicensePlate(String licenseplate, boolean hashed) {
         try {
             Vehicle vehicle = vehicleDAO.getVehicle(licenseplate, hashed);
             return personDAO.getPersonByVehicle(vehicle);
@@ -85,6 +85,5 @@ public class PersonService {
             return null;
         }
     }
-
 
 }

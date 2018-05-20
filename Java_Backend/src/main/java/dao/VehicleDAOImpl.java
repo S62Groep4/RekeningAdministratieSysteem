@@ -25,11 +25,11 @@ public class VehicleDAOImpl implements VehicleDAO {
     }
 
     @Override
-    public Vehicle getVehicle(String Licenceplate, boolean hashed) throws PersistenceException {
+    public Vehicle getVehicle(String licencePlate, boolean hashed) throws PersistenceException {
         if(hashed){
-            return (Vehicle) em.createNamedQuery("Vehicle.findByHashedLicenceplate").setParameter("hashedLicencePlate", Licenceplate).getSingleResult();
+            return (Vehicle) em.createNamedQuery("Vehicle.findByHashedLicenceplate").setParameter("hashedLicencePlate", licencePlate).getSingleResult();
         } else {
-            return (Vehicle) em.createNamedQuery("Vehicle.findByLicenceplate").setParameter("licenseplate", Licenceplate).getSingleResult();
+            return (Vehicle) em.createNamedQuery("Vehicle.findByLicenceplate").setParameter("licencePlate", licencePlate).getSingleResult();
         }
     }
 
