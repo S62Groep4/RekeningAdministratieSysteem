@@ -1,24 +1,15 @@
 package service;
 
 import domain.Journey;
+import domain.Person;
 import domain.Road;
 import domain.SubInvoice;
 import domain.TransLocation;
 import domain.Vehicle;
-import dto.JourneyDTO;
-import dto.SubInvoiceDTO;
-import dto.TransLocationDTO;
-import dto.VehicleDTO;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
-import org.mindrot.jbcrypt.BCrypt;
-import static util.DtoToDomain.VEHICLE_DTO_TO_DOMAIN;
 
 /**
  *
@@ -39,6 +30,9 @@ public class Init {
 
     @Inject
     JourneyService journeyService;
+    
+    @Inject
+    PersonService personService;
 
     @Inject
     RoadService roadService;
@@ -81,9 +75,13 @@ public class Init {
         //|||||||||||||||||||||||||||||||||||||||||
         //||     PERSISTING DOMAIN OBJECTS       ||
         //|||||||||||||||||||||||||||||||||||||||||
-         */
-        Journey j1 = new Journey(null);
-        Journey j2 = new Journey(null);
+         */     
+        Person person1 = new Person(1L, "Peter", "Fritssens");
+        Person person2 = new Person(2L, "Freek", "Jannssen");
+        Person person3 = new Person(3L, "Robert", "de Graaf");
+         
+        Journey j1 = new Journey(1L);
+        Journey j2 = new Journey(2L);
         TransLocation loc1 = new TransLocation(51.855305, 9.623518, "654161", "31");
         TransLocation loc2 = new TransLocation(51.735719, 9.579573, "654162", "31");
         TransLocation loc3 = new TransLocation(51.626728, 9.689436, "654163", "31");
@@ -100,11 +98,11 @@ public class Init {
         j2.addTransLocation(loc6);
         j2.addTransLocation(loc7);
 
-        Vehicle veh1 = new Vehicle();
+        Vehicle veh1 = new Vehicle("68JFSF", "68JFSF");
         veh1.setUnHashedLicencePlate("68JFSF");
         veh1.addJourney(j1);
 
-        Vehicle veh2 = new Vehicle();
+        Vehicle veh2 = new Vehicle("54HSHS", "54HSHS");
         veh2.setUnHashedLicencePlate("54HSHS");
         veh2.addJourney(j2);
 
@@ -113,6 +111,9 @@ public class Init {
 
         SubInvoice inv2 = new SubInvoice(null, "31", 486.00);
         veh2.addInvoice(inv2);
+        
+        person1.addVehicle(veh1);
+        person2.addVehicle(veh2);
 
         Road r1 = new Road(null, "A2", 1.2);
         Road r2 = new Road(null, "A55", 1.1);
@@ -142,5 +143,9 @@ public class Init {
 
         vehicleService.insertVehicle(veh1);
         vehicleService.insertVehicle(veh2);
+        
+        personService.createPerson(person1);
+        personService.createPerson(person2);
+        personService.createPerson(person3);
     }
 }

@@ -36,15 +36,18 @@ public class DomainToDto {
     }
 
     public static VehicleDTO VEHICLESTODTOS(Vehicle vehicle) {
-        VehicleDTO vehicleDTO = new VehicleDTO(null, null, null);
+        VehicleDTO vehicleDTO = new VehicleDTO(vehicle.getHashedLicencePlate(), null, null);
         if (vehicle == null) {
             return vehicleDTO;
         }
-
+        
+        System.out.println("DTO: Vehicle retrieved: " + vehicle.getLicencePlate() + " hashedlicence: " + vehicle.getHashedLicencePlate());
+        
         vehicleDTO = new VehicleDTO(
                 vehicle.getHashedLicencePlate(),
                 APIURI + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/journeys",
                 APIURI + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/invoices");
+
         return vehicleDTO;
     }
 
@@ -67,7 +70,9 @@ public class DomainToDto {
     }
 
     public static SubInvoiceDTO SUBINVOICESTODTOS(SubInvoice subInvoice) {
-        SubInvoiceDTO subInvoiceDTO = new SubInvoiceDTO(null, null, null, null, null);
+        SubInvoiceDTO subInvoiceDTO = new SubInvoiceDTO(subInvoice.getInvoiceNumber(), 
+                subInvoice.getCountry(), subInvoice.getPaymentStatus(), 
+                subInvoice.getInvoiceDate(), String.valueOf(subInvoice.getPrice()));
         if (subInvoice == null) {
             return subInvoiceDTO;
         }
@@ -96,7 +101,7 @@ public class DomainToDto {
     }
 
     public static JourneyDTO JOURNEYSTODTOS(Journey journey) {
-        JourneyDTO journeyDTO = new JourneyDTO(null, null);
+        JourneyDTO journeyDTO = new JourneyDTO(journey.getId(), null);
         if (journey == null) {
             return journeyDTO;
         }
@@ -125,7 +130,8 @@ public class DomainToDto {
     }
 
     public static TransLocationDTO TRANSLOCATIONSTODTOS(TransLocation location) {
-        TransLocationDTO transLocationDTO = new TransLocationDTO(null, null, null, null, null);
+        TransLocationDTO transLocationDTO = new TransLocationDTO(location.getLat(), 
+                location.getLon(), location.getDateTime(), location.getSerialNumber(), location.getCountryCode());
         if (location == null) {
             return transLocationDTO;
         }
