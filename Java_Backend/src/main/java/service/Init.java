@@ -77,6 +77,7 @@ public class Init {
         Person person1 = new Person(1L, "Peter", "Fritssens");
         Person person2 = new Person(2L, "Freek", "Jannssen");
         Person person3 = new Person(3L, "Robert", "de Graaf");
+        Person person4 = new Person(1L, "Rickert", "Fruitboom");
          
         Journey j1 = new Journey(1L);
         Journey j2 = new Journey(2L);
