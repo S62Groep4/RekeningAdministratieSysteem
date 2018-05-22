@@ -7,6 +7,10 @@ import {AppRoutingModule} from './app-routing.module';
 import {HomeComponent} from './home/home.component';
 import {RoadsComponent} from './roads/roads.component';
 import {FormsModule} from '@angular/forms';
+import {RoadService} from './services/road.service';
+import {HttpClientModule} from '@angular/common/http';
+import {InvoicesComponent} from './invoices/invoices.component';
+import {InvoiceService} from './services/invoice.service';
 
 
 @NgModule({
@@ -14,15 +18,20 @@ import {FormsModule} from '@angular/forms';
     AppComponent,
     PageNotFoundComponent,
     HomeComponent,
-    RoadsComponent
+    RoadsComponent,
+    InvoicesComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    HttpClientModule,
     NgbModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    RoadService,
+    InvoiceService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

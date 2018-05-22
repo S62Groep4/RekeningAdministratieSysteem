@@ -24,7 +24,7 @@ public class SubInvoiceService {
     public SubInvoiceService() {
     }
 
-    public SubInvoice getSubInvoice(String invoiceNumber) throws PersistenceException {
+    public SubInvoice getSubInvoice(Long invoiceNumber) throws PersistenceException {
         try {
             return subinvoiceDao.getSubInvoice(invoiceNumber);
         } catch (PersistenceException pe) {
@@ -51,7 +51,7 @@ public class SubInvoiceService {
         }
     }
 
-    public void removeSubInvoice(String invoiceNumber) throws PersistenceException {
+    public void removeSubInvoice(Long invoiceNumber) throws PersistenceException {
         try {
             subinvoiceDao.removeSubInvoice(invoiceNumber);
         } catch (PersistenceException pe) {

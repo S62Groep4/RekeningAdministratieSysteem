@@ -10,13 +10,13 @@ import javax.persistence.PersistenceException;
  */
 public interface SubInvoiceDAO {
 
-    SubInvoice getSubInvoice(String invoiceNumber) throws PersistenceException;
+    SubInvoice getSubInvoice(Long invoiceNumber) throws PersistenceException;
 
     List<SubInvoice> getAllSubInvoices() throws PersistenceException;
 
     SubInvoice updateSubInvoice(SubInvoice invoice) throws PersistenceException;
 
-    void removeSubInvoice(String invoiceNumber) throws PersistenceException;
+    void removeSubInvoice(Long invoiceNumber) throws PersistenceException;
 
     SubInvoice insertSubInvoice(SubInvoice invoice) throws PersistenceException;
 

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Road} from '../road';
+import {RoadService} from '../services/road.service';
 
 @Component({
   selector: 'app-roads',
@@ -11,24 +12,37 @@ export class RoadsComponent implements OnInit {
   selectedRoad: Road = new Road(null, '', 0);
   roads: Road[] = [];
 
-  constructor() {
-    const road1 = new Road(1, 'A1', 1.20);
-    const road2 = new Road(2, 'A2', 1.21);
-    const road3 = new Road(3, 'A3', 1.18);
-    this.roads.push(road1);
-    this.roads.push(road2);
-    this.roads.push(road3);
+  constructor(private roadService: RoadService) {
   }
 
   ngOnInit() {
+    this.getRoads();
+  }
+
+  searchStringChanged(searchTerm: string): void {
+    if (searchTerm.length === 0) {
+      this.getRoads();
+      return;
+    }
+    this.roadService.searchRoad(searchTerm).subscribe(res => {
+      this.roads = res;
+    });
+  }
+
+  getRoads(): void {
+    this.roadService.getAllRoads().subscribe(res => this.roads = res);
   }
 
   onAdd(): void {
-    this.roads.push(new Road(this.selectedRoad.id, this.selectedRoad.name, this.selectedRoad.rate));
+    this.roadService.insertRoad(this.selectedRoad).subscribe(res => {
+      this.roads.push(res);
+    });
   }
 
   onSave(): void {
-    // Save to rest api
+    this.roadService.updateRoad(this.selectedRoad).subscribe(res => {
+      // this.roads.push(res);
+    });
   }
 
   onItemClick(road: Road) {

@@ -25,7 +25,11 @@ public class JourneyDAOImpl implements JourneyDAO {
 
     @Override
     public Journey getJourney(Long id) throws PersistenceException {
-        return (Journey) em.createNamedQuery("Journey.findById").setParameter("journeyId", id).getSingleResult();
+        Journey journey = (Journey) em.createNamedQuery("Journey.findById").setParameter("journeyId", id).getSingleResult();
+        if (journey != null) {
+            return journey;
+        }
+        return new Journey();
     }
 
     @Override
