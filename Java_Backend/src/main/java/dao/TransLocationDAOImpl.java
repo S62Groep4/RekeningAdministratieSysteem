@@ -19,7 +19,11 @@ public class TransLocationDAOImpl implements TransLocationDAO {
 
     @Override
     public TransLocation getTransLocation(String serialNumber) throws PersistenceException {
-        return (TransLocation) em.createNamedQuery("TransLocation.findBySerialNumber").setParameter("serialNumber", serialNumber).getSingleResult();
+        TransLocation location = (TransLocation) em.createNamedQuery("TransLocation.findBySerialNumber").setParameter("serialNumber", serialNumber).getSingleResult();
+        if (location != null) {
+            return location;
+        }
+        return new TransLocation();
     }
 
     @Override

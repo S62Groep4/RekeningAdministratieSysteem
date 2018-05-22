@@ -48,14 +48,14 @@ public class SubInvoiceResource {
 
     @DELETE
     @Path("{invoiceNumber}")
-    public Response removeSubInvoice(@PathParam("invoiceNumber") String invoiceNumber) {
+    public Response removeSubInvoice(@PathParam("invoiceNumber") Long invoiceNumber) {
         subInvoiceService.removeSubInvoice(invoiceNumber);
         return Response.ok().build();
     }
 
     @GET
     @Path("{invoiceNumber}")
-    public Response getSubInvoice(@PathParam("invoiceNumber") String invoiceNumber) {
+    public Response getSubInvoice(@PathParam("invoiceNumber") Long invoiceNumber) {
         SubInvoiceDTO dto = DomainToDto.SUBINVOICESTODTOS(subInvoiceService.getSubInvoice(invoiceNumber));
         return Response.ok(dto).build();
     }

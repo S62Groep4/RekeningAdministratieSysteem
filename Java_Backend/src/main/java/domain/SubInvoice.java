@@ -1,9 +1,13 @@
 package domain;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -19,7 +23,10 @@ import javax.persistence.NamedQuery;
     ,@NamedQuery(name = "SubInvoice.findByInvoiceNumber", query = "SELECT s FROM SubInvoice s WHERE s.invoiceNumber = :invoiceNumber")})
 public class SubInvoice implements Serializable {
 
+    private static final DateFormat DF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long invoiceNumber;
     private String country;
     private String paymentStatus;
@@ -35,7 +42,7 @@ public class SubInvoice implements Serializable {
         this.invoiceNumber = invoiceNumber;
         this.country = country;
         this.price = price;
-        this.invoiceDate = new Date(System.currentTimeMillis()).toString();
+        this.invoiceDate = DF.format(new Date());
         this.paymentStatus = "open";
     }
 
@@ -100,12 +107,11 @@ public class SubInvoice implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        //hash = 97 * hash + Objects.hashCode(this.invoiceNumber);
-        //hash = 97 * hash + Objects.hashCode(this.country);
-        //hash = 97 * hash + Objects.hashCode(this.paymentStatus);
-        //hash = 97 * hash + Objects.hashCode(this.invoiceDate);
-        //hash = 97 * hash + (int) (Double.doubleToLongBits(this.price) ^ (Double.doubleToLongBits(this.price) >>> 32));
-        //hash = 97 * hash + Objects.hashCode(this.vehicle);
+        hash = 97 * hash + Objects.hashCode(this.invoiceNumber);
+        hash = 97 * hash + Objects.hashCode(this.country);
+        hash = 97 * hash + Objects.hashCode(this.paymentStatus);
+        hash = 97 * hash + Objects.hashCode(this.invoiceDate);
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.price) ^ (Double.doubleToLongBits(this.price) >>> 32));
         return hash;
     }
 
