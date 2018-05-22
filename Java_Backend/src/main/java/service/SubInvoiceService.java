@@ -1,7 +1,10 @@
 package service;
 
 import dao.SubInvoiceDAO;
+import dao.VehicleDAO;
 import domain.SubInvoice;
+import domain.Vehicle;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,9 +22,23 @@ public class SubInvoiceService {
     @Inject
     SubInvoiceDAO subinvoiceDao;
 
+    @Inject
+    VehicleDAO vehicleDao;
+
     private static final Logger LOGGER = Logger.getLogger(SubInvoiceService.class.getName());
 
     public SubInvoiceService() {
+    }
+
+    public void generateSubInvoices() {
+        try {
+            List<Vehicle> vehicles = vehicleDao.getAllVehicles();
+            for (Vehicle v : vehicles) {
+                v.generateInvoices();
+            }
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing getSubInvoice operation; {0}", pe.getMessage());
+        }
     }
 
     public SubInvoice getSubInvoice(Long invoiceNumber) throws PersistenceException {

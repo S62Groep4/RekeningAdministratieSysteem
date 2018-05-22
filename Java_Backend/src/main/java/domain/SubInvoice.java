@@ -43,15 +43,15 @@ public class SubInvoice implements Serializable {
         this.country = country;
         this.price = price;
         this.invoiceDate = DF.format(new Date());
-        this.paymentStatus = "open";
+        this.paymentStatus = "OPEN";
     }
 
-    public SubInvoice(Long invoiceNumber, String country, double price, String invoiceDate, String paymentStatus) {
+    public SubInvoice(Long invoiceNumber, String country, double price, String invoiceDate) {
         this.invoiceNumber = invoiceNumber;
         this.country = country;
         this.price = price;
-        this.paymentStatus = paymentStatus;
         this.invoiceDate = invoiceDate;
+        this.paymentStatus = "OPEN";
     }
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">

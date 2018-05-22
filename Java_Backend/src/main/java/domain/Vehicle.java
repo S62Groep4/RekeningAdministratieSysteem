@@ -3,10 +3,11 @@ package domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import static javax.persistence.CascadeType.ALL;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -61,6 +62,40 @@ public class Vehicle implements Serializable {
         return Collections.unmodifiableList(subInvoices);
     }
     // </editor-fold>
+
+    public void generateInvoices() {
+        Map<String, List<Journey>> journeysPerMonth = new HashMap();
+        List<TransLocation> locations;
+
+        //lijst splitten per maand
+        //hashmap is <"yyyy-MM", lijst van journeys in deze maand>
+        //in welke maand een journey valt hangt af van de datetime string van 
+        //de eerste translocation binnen deze journey
+        for (Journey j : this.journeys) {
+            locations = j.getTransLocations();
+            if (!journeysPerMonth.containsKey(locations.get(0).getDateTime().substring(0, 7))) {
+                journeysPerMonth.put(locations.get(0).getDateTime().substring(0, 7), new ArrayList());
+            }
+            journeysPerMonth.get(locations.get(0).getDateTime().substring(0, 7)).add(j);
+        }
+
+        //beide kanten van de bidirectionele relatie opruimen
+        //zodat de lijst leegemaakt kan worden om dubbele invoices te voorkomen
+        for (SubInvoice inv : this.subInvoices) {
+            inv.setVehicle(null);
+        }
+        this.subInvoices.clear();
+
+        for (Map.Entry<String, List<Journey>> entry : journeysPerMonth.entrySet()) {
+            SubInvoice invoice = new SubInvoice(null, "49", 0, entry.getKey());
+            double price = 0;
+            //calculate price
+            List<Journey> journeysOfCurrentMonth = entry.getValue();
+
+            invoice.setPrice(price);
+            this.subInvoices.add(invoice);
+        }
+    }
 
     public boolean addJourney(Journey j) {
         if (j != null) {

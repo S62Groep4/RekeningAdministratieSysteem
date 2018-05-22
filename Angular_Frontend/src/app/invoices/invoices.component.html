@@ -1,3 +1,28 @@
+<form class="form-inline">
+  <div class="mr-auto">
+    <button type="submit" class="btn btn-success" (click)="generateInvoices()" *ngIf="!selectedInvoice.invoiceNumber">
+      Rechnungen erstellen
+    </button>
+    <button type="submit" class="btn btn-success" (click)="recalculateInvoice(selectedInvoice.invoiceNumber)"
+            *ngIf="selectedInvoice.invoiceNumber">Rechnung {{selectedInvoice.invoiceNumber}} neu berechnen
+    </button>
+  </div>
+
+  <div class="form-group">
+    <div class="input-group">
+      <label class="mr-2" for="calendar">Rechnungen nach Datum suchen</label>
+      <input id="calendar" class="form-control" placeholder="yyyy-mm-dd"
+             name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary mr-2" (click)="d.toggle()" type="button">
+          <i class="far fa-calendar-alt"></i>
+        </button>
+      </div>
+      <button type="button" class="btn btn-success" (click)="clearCalendar()">Clear</button>
+    </div>
+  </div>
+</form>
+
 <table class="table table-hover mt-3">
   <thead>
   <tr>
