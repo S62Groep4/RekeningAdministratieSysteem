@@ -92,6 +92,7 @@ public class Vehicle implements Serializable {
             //calculate price
             List<Journey> journeysOfCurrentMonth = entry.getValue();
 
+            invoice.setVehicle(this);
             invoice.setPrice(price);
             this.subInvoices.add(invoice);
         }

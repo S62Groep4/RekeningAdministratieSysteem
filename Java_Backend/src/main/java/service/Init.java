@@ -77,7 +77,7 @@ public class Init {
         List<Vehicle> domainVehicles = VEHICLE_DTO_TO_DOMAIN(vehicles);
          */
 
- /*
+        /*
         //|||||||||||||||||||||||||||||||||||||||||
         //||     PERSISTING DOMAIN OBJECTS       ||
         //|||||||||||||||||||||||||||||||||||||||||
@@ -93,31 +93,31 @@ public class Init {
         TransLocation loc5 = new TransLocation(48.058089, 11.359358, "188654", "49");
         TransLocation loc6 = new TransLocation(48.014012, 11.139631, "188654", "49");
         TransLocation loc7 = new TransLocation(48.028709, 10.985823, "188654", "49");
-        
+
         TransLocation loc8 = new TransLocation(48.087453, 11.535139, "188654", "49");
-        loc8.setDateTime("2018-04-01 02:00");
+        loc8.setDateTime("2018-04-01T12:00:00+0200");
         j3.addTransLocation(loc8);
         TransLocation loc9 = new TransLocation(48.058089, 11.359358, "188654", "49");
-        loc9.setDateTime("2018-03-28 02:00");
+        loc9.setDateTime("2018-04-02T12:00:00+0200");
         j3.addTransLocation(loc9);
         TransLocation loc10 = new TransLocation(48.014012, 11.139631, "188654", "49");
-        loc10.setDateTime("2018-03-27 02:00");
+        loc10.setDateTime("2018-04-03T12:00:00+0200");
         j3.addTransLocation(loc10);
         TransLocation loc11 = new TransLocation(48.028709, 10.985823, "188654", "49");
-        loc11.setDateTime("2018-04-02 02:00");
+        loc11.setDateTime("2018-04-04T12:00:00+0200");
         j3.addTransLocation(loc11);
-        
+
         TransLocation loc12 = new TransLocation(48.087453, 11.535139, "188654", "49");
-        loc12.setDateTime("2018-05-01 02:00");
+        loc12.setDateTime("2018-05-01T12:00:00+0200");
         j4.addTransLocation(loc12);
         TransLocation loc13 = new TransLocation(48.058089, 11.359358, "188654", "49");
-        loc13.setDateTime("2018-05-03 02:00");
+        loc13.setDateTime("2018-05-02T12:00:00+0200");
         j4.addTransLocation(loc13);
         TransLocation loc14 = new TransLocation(48.014012, 11.139631, "188654", "49");
-        loc14.setDateTime("2018-05-01 02:00");
+        loc14.setDateTime("2018-05-03T12:00:00+0200");
         j4.addTransLocation(loc14);
         TransLocation loc15 = new TransLocation(48.028709, 10.985823, "188654", "49");
-        loc15.setDateTime("2018-05-02 02:00");
+        loc15.setDateTime("2018-05-04T12:00:00+0200");
         j4.addTransLocation(loc15);
 
         j1.addTransLocation(loc1);
@@ -135,18 +135,11 @@ public class Init {
         Vehicle veh2 = new Vehicle();
         veh2.setUnHashedLicencePlate("54HSHS");
         veh2.addJourney(j2);
-        
-        
+
         Vehicle veh3 = new Vehicle();
         veh3.setUnHashedLicencePlate("33DSVL");
         veh3.addJourney(j3);
         veh3.addJourney(j4);
-
-        SubInvoice inv1 = new SubInvoice(null, "49", 165.00, "2018-03");
-        veh1.addInvoice(inv1);
-
-        SubInvoice inv2 = new SubInvoice(null, "49", 486.00, "2018-04");
-        veh2.addInvoice(inv2);
 
         Road r1 = new Road(null, "A2", 1.2);
         Road r2 = new Road(null, "A55", 1.1);
@@ -179,9 +172,6 @@ public class Init {
         journeyService.insertJourney(j2);
         journeyService.insertJourney(j3);
         journeyService.insertJourney(j4);
-
-        subInvoiceService.insertSubInvoice(inv1);
-        subInvoiceService.insertSubInvoice(inv2);
 
         vehicleService.insertVehicle(veh1);
         vehicleService.insertVehicle(veh2);
