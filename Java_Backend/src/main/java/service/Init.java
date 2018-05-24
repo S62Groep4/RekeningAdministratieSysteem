@@ -30,7 +30,7 @@ public class Init {
 
     @Inject
     JourneyService journeyService;
-    
+
     @Inject
     PersonService personService;
 
@@ -71,7 +71,7 @@ public class Init {
         List<Vehicle> domainVehicles = VEHICLE_DTO_TO_DOMAIN(vehicles);
          */
 
-        /*
+ /*
         //|||||||||||||||||||||||||||||||||||||||||
         //||     PERSISTING DOMAIN OBJECTS       ||
         //|||||||||||||||||||||||||||||||||||||||||
@@ -127,33 +127,28 @@ public class Init {
         j2.addTransLocation(loc6);
         j2.addTransLocation(loc7);
 
-        Vehicle veh1 = new Vehicle("68JFSF", "68JFSF");
+        Vehicle veh1 = new Vehicle();
         veh1.setUnHashedLicencePlate("68JFSF");
         veh1.addJourney(j1);
 
-        Vehicle veh2 = new Vehicle("54HSHS", "54HSHS");
+        Vehicle veh2 = new Vehicle();
         veh2.setUnHashedLicencePlate("54HSHS");
         veh2.addJourney(j2);
-      
+
         Vehicle veh3 = new Vehicle();
         veh3.setUnHashedLicencePlate("33DSVL");
         veh3.addJourney(j3);
         veh3.addJourney(j4);
-      
-        SubInvoice inv1 = new SubInvoice(null, "31", 165.00);
-        veh1.addInvoice(inv1);
 
-        SubInvoice inv2 = new SubInvoice(null, "31", 486.00);
-        veh2.addInvoice(inv2);
-        
         person1.addVehicle(veh1);
         person2.addVehicle(veh2);
+        person3.addVehicle(veh3);
 
-        Road r1 = new Road(null, "A2", 1.2);
-        Road r2 = new Road(null, "A55", 1.1);
-        Road r3 = new Road(null, "A50", 1.15);
-        Road r4 = new Road(null, "A73", 1.08);
-        Road r5 = new Road(null, "A1", 1.18);
+        Road r1 = new Road("A2", 1.2);
+        Road r2 = new Road("A55", 1.1);
+        Road r3 = new Road("A50", 1.15);
+        Road r4 = new Road("A73", 1.08);
+        Road r5 = new Road("A1", 1.18);
 
         roadService.insertRoad(r1);
         roadService.insertRoad(r2);
@@ -184,9 +179,9 @@ public class Init {
         vehicleService.insertVehicle(veh1);
         vehicleService.insertVehicle(veh2);
         vehicleService.insertVehicle(veh3);
-        
-        personService.createPerson(person1);
-        personService.createPerson(person2);
-        personService.createPerson(person3);
+
+        personService.insertPerson(person1);
+        personService.insertPerson(person2);
+        personService.insertPerson(person3);
     }
 }

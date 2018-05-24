@@ -11,14 +11,24 @@ public class VehicleDTO implements Serializable {
     private String hashedLicensePlate;
     private String journeyUri;
     private String subInvoiceUri;
+    private String ownerUri;
 
     public VehicleDTO() {
     }
 
-    public VehicleDTO(String hashedLicensePlate, String journeyUri, String subInvoiceUri) {
+    public VehicleDTO(String hashedLicensePlate, String journeyUri, String subInvoiceUri, String ownerUri) {
         this.hashedLicensePlate = hashedLicensePlate;
         this.journeyUri = journeyUri;
         this.subInvoiceUri = subInvoiceUri;
+        this.ownerUri = ownerUri;
+    }
+
+    public String getOwnerUri() {
+        return ownerUri;
+    }
+
+    public void setOwnerUri(String ownerUri) {
+        this.ownerUri = ownerUri;
     }
 
     public void setHashedLicensePlate(String hashedLicensePlate) {

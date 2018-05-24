@@ -44,16 +44,16 @@ public class PersonService {
         try {
             return personDAO.getAllPersons();
         } catch (PersistenceException pe) {
-            LOGGER.log(Level.FINE, "ERROR while performing getAllPerson operation; {0}", pe.getMessage());
+            LOGGER.log(Level.FINE, "ERROR while performing getAllPersons operation; {0}", pe.getMessage());
             return null;
         }
     }
 
-    public Person createPerson(Person person) {
+    public Person insertPerson(Person person) {
         try {
-            return personDAO.createPerson(person);
+            return personDAO.insertPerson(person);
         } catch (PersistenceException pe) {
-            LOGGER.log(Level.FINE, "ERROR while performing createPerson operation; {0}", pe.getMessage());
+            LOGGER.log(Level.FINE, "ERROR while performing insertPerson operation; {0}", pe.getMessage());
             return null;
         }
     }
@@ -62,7 +62,7 @@ public class PersonService {
         try {
             return personDAO.updatePerson(person);
         } catch (PersistenceException pe) {
-            LOGGER.log(Level.FINE, "ERROR while performing createPerson operation; {0}", pe.getMessage());
+            LOGGER.log(Level.FINE, "ERROR while performing updatePerson operation; {0}", pe.getMessage());
             return null;
         }
     }
@@ -71,7 +71,7 @@ public class PersonService {
         try {
             return personDAO.getPersonByVehicle(vehicle);
         } catch (PersistenceException pe) {
-            LOGGER.log(Level.FINE, "ERROR while performing createPerson operation; {0}", pe.getMessage());
+            LOGGER.log(Level.FINE, "ERROR while performing getPersonByVehicle operation; {0}", pe.getMessage());
             return null;
         }
     }
@@ -81,7 +81,7 @@ public class PersonService {
             Vehicle vehicle = vehicleDAO.getVehicle(licenseplate, hashed);
             return personDAO.getPersonByVehicle(vehicle);
         } catch (PersistenceException pe) {
-            LOGGER.log(Level.FINE, "ERROR while performing createPerson operation; {0}", pe.getMessage());
+            LOGGER.log(Level.FINE, "ERROR while performing getPersonByLicensePlate operation; {0}", pe.getMessage());
             return null;
         }
     }

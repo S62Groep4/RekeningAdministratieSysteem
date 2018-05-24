@@ -13,16 +13,26 @@ public class SubInvoiceDTO implements Serializable {
     private String paymentStatus;
     private String invoiceDate;
     private String price;
+    private String ownerUri;
 
     public SubInvoiceDTO() {
     }
 
-    public SubInvoiceDTO(Long invoiceNumber, String country, String paymentStatus, String invoiceDate, String price) {
+    public SubInvoiceDTO(Long invoiceNumber, String country, String paymentStatus, String invoiceDate, String price, String ownerUri) {
         this.invoiceNumber = invoiceNumber;
         this.country = country;
         this.paymentStatus = paymentStatus;
         this.invoiceDate = invoiceDate;
         this.price = price;
+        this.ownerUri = ownerUri;
+    }
+
+    public String getOwnerUri() {
+        return ownerUri;
+    }
+
+    public void setOwnerUri(String ownerUri) {
+        this.ownerUri = ownerUri;
     }
 
     public void setInvoiceNumber(Long invoiceNumber) {

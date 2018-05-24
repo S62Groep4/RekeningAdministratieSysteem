@@ -6,10 +6,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -22,19 +22,20 @@ import org.mindrot.jbcrypt.BCrypt;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Vehicle.findAll", query = "SELECT v FROM Vehicle v")
-    ,@NamedQuery(name = "Vehicle.findByLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.licencePlate = :licencePlate")
-    ,@NamedQuery(name = "Vehicle.findByMultipleLicenceplates", query = "SELECT v FROM Vehicle v WHERE v.licencePlate LIKE :licencePlate")
-    ,@NamedQuery(name = "Vehicle.findJourneys", query = "SELECT j FROM Journey j WHERE j.vehicle.licencePlate IN (SELECT v.licencePlate FROM Vehicle v WHERE v.licencePlate = :licencePlate)")
-    ,@NamedQuery(name = "Vehicle.findInvoices", query = "SELECT i FROM SubInvoice i WHERE i.vehicle.licencePlate IN (SELECT v.licencePlate FROM Vehicle v WHERE v.licencePlate = :licencePlate)")})
+    ,@NamedQuery(name = "Vehicle.findByLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.hashedLicencePlate = :licencePlate")
+    ,@NamedQuery(name = "Vehicle.findByMultipleLicenceplates", query = "SELECT v FROM Vehicle v WHERE v.hashedLicencePlate LIKE :licencePlate")
+    ,@NamedQuery(name = "Vehicle.findJourneys", query = "SELECT j FROM Journey j WHERE j.vehicle.hashedLicencePlate IN (SELECT v.hashedLicencePlate FROM Vehicle v WHERE v.hashedLicencePlate = :licencePlate)")
+    ,@NamedQuery(name = "Vehicle.findInvoices", query = "SELECT i FROM SubInvoice i WHERE i.vehicle.hashedLicencePlate IN (SELECT v.hashedLicencePlate FROM Vehicle v WHERE v.hashedLicencePlate = :licencePlate)")})
 public class Vehicle implements Serializable {
 
     @Id
-    private String licencePlate = null;
     private String hashedLicencePlate;
     @OneToMany(mappedBy = "vehicle", cascade = ALL)
     private final List<Journey> journeys = new ArrayList<>();
     @OneToMany(mappedBy = "vehicle", cascade = ALL)
     private final List<SubInvoice> subInvoices = new ArrayList<>();
+    @ManyToOne
+    private Person owner;
 
     public Vehicle() {
     }
@@ -43,18 +44,13 @@ public class Vehicle implements Serializable {
         this.hashedLicencePlate = licencePlate;
     }
 
-    public Vehicle(String licencePlate, String hashedLicencePlate) {
-        this.licencePlate = licencePlate;
-        this.hashedLicencePlate = hashedLicencePlate;
-    }
-
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
-    public String getLicencePlate() {
-        return licencePlate;
+    public Person getOwner() {
+        return owner;
     }
 
-    public void setLicencePlate(String licencePlate) {
-        this.licencePlate = licencePlate;
+    public void setOwner(Person owner) {
+        this.owner = owner;
     }
 
     public void setHashedLicencePlate(String hashedLicencePlate) {

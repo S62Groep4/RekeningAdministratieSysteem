@@ -1,6 +1,7 @@
 package util;
 
 import domain.Journey;
+import domain.Person;
 import domain.Road;
 import domain.SubInvoice;
 import domain.TransLocation;
@@ -142,5 +143,32 @@ public class DtoToDomain {
                 roadDTO.getId(),
                 roadDTO.getName(),
                 roadDTO.getRate());
+    }
+
+    public static List<Person> PERSON_DTO_TO_DOMAIN(List<PersonDTO> personDTOs) {
+        List<Person> persons = new ArrayList<>();
+        if (personDTOs == null || personDTOs.isEmpty()) {
+            return persons;
+        }
+
+        for (PersonDTO p : personDTOs) {
+            Person person = new Person(
+                    p.getId(),
+                    p.getFirstName(),
+                    p.getLastName());
+            persons.add(person);
+        }
+        return persons;
+    }
+
+    public static Person PERSON_DTO_TO_DOMAIN(PersonDTO personDTO) {
+        if (personDTO == null) {
+            return new Person();
+        }
+
+        return new Person(
+                personDTO.getId(),
+                personDTO.getFirstName(),
+                personDTO.getLastName());
     }
 }

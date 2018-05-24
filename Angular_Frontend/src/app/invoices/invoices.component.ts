@@ -10,7 +10,7 @@ import {InvoiceService} from '../services/invoice.service';
 export class InvoicesComponent implements OnInit {
 
   model;
-  selectedInvoice: Invoice = new Invoice(null, '', '', '', '');
+  selectedInvoice: Invoice = new Invoice(null, '', '', '', '', '');
   invoices: Invoice[] = [];
 
   constructor(private invoiceService: InvoiceService) {
@@ -42,7 +42,7 @@ export class InvoicesComponent implements OnInit {
 
   onItemClick(invoice: Invoice) {
     if (this.selectedInvoice === invoice) {
-      this.selectedInvoice = new Invoice(null, '', '', '', '');
+      this.selectedInvoice = new Invoice(null, '', '', '', '', '');
     } else {
       this.selectedInvoice = invoice;
     }

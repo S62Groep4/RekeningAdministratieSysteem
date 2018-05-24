@@ -32,6 +32,11 @@ public class Road implements Serializable {
     public Road() {
     }
 
+    public Road(String name, Double rate) {
+        this.name = name;
+        this.rate = rate;
+    }
+
     public Road(Long id, String name, Double rate) {
         this.id = id;
         this.name = name;

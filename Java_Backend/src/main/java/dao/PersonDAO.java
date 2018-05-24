@@ -1,8 +1,6 @@
 package dao;
 
-import domain.Journey;
 import domain.Person;
-import domain.SubInvoice;
 import domain.Vehicle;
 
 import javax.persistence.PersistenceException;
@@ -18,11 +16,10 @@ public interface PersonDAO {
 
     List<Person> getAllPersons() throws PersistenceException;
 
-    Person createPerson(Person person) throws PersistenceException;
+    Person insertPerson(Person person) throws PersistenceException;
 
     Person updatePerson(Person person) throws PersistenceException;
 
     Person getPersonByVehicle(Vehicle vehicle) throws PersistenceException;
-
 
 }

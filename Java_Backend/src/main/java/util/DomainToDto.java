@@ -1,12 +1,12 @@
 package util;
 
 import domain.Journey;
+import domain.Person;
 import domain.Road;
 import domain.SubInvoice;
 import domain.TransLocation;
 import domain.Vehicle;
 import dto.*;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -29,24 +29,23 @@ public class DomainToDto {
             VehicleDTO vehicleDTO = new VehicleDTO(
                     vehicle.getHashedLicencePlate(),
                     APIURI + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/journeys",
-                    APIURI + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/invoices");
+                    APIURI + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/invoices",
+                    APIURI + "persons/" + vehicle.getOwner().getId());
             vehicleDTOs.add(vehicleDTO);
         }
         return vehicleDTOs;
     }
 
     public static VehicleDTO VEHICLESTODTOS(Vehicle vehicle) {
-        VehicleDTO vehicleDTO = new VehicleDTO(vehicle.getHashedLicencePlate(), null, null);
         if (vehicle == null) {
-            return vehicleDTO;
+            return new VehicleDTO();
         }
-        
-        System.out.println("DTO: Vehicle retrieved: " + vehicle.getLicencePlate() + " hashedlicence: " + vehicle.getHashedLicencePlate());
-        
-        vehicleDTO = new VehicleDTO(
+
+        VehicleDTO vehicleDTO = new VehicleDTO(
                 vehicle.getHashedLicencePlate(),
                 APIURI + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/journeys",
-                APIURI + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/invoices");
+                APIURI + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/invoices",
+                APIURI + "persons/" + vehicle.getOwner().getId());
 
         return vehicleDTO;
     }
@@ -63,25 +62,24 @@ public class DomainToDto {
                     s.getCountry(),
                     s.getPaymentStatus(),
                     s.getInvoiceDate(),
-                    s.getPrice() + "");
+                    s.getPrice() + "",
+                    APIURI + "persons/" + s.getVehicle().getOwner().getId());
             subInvoiceDTOs.add(invoice);
         }
         return subInvoiceDTOs;
     }
 
     public static SubInvoiceDTO SUBINVOICESTODTOS(SubInvoice subInvoice) {
-        SubInvoiceDTO subInvoiceDTO = new SubInvoiceDTO(subInvoice.getInvoiceNumber(), 
-                subInvoice.getCountry(), subInvoice.getPaymentStatus(), 
-                subInvoice.getInvoiceDate(), String.valueOf(subInvoice.getPrice()));
         if (subInvoice == null) {
-            return subInvoiceDTO;
+            return new SubInvoiceDTO();
         }
 
-        subInvoiceDTO = new SubInvoiceDTO(subInvoice.getInvoiceNumber(),
+        SubInvoiceDTO subInvoiceDTO = new SubInvoiceDTO(subInvoice.getInvoiceNumber(),
                 subInvoice.getCountry(),
                 subInvoice.getPaymentStatus(),
                 subInvoice.getInvoiceDate(),
-                subInvoice.getPrice() + "");
+                subInvoice.getPrice() + "",
+                APIURI + "persons/" + subInvoice.getVehicle().getOwner().getId());
         return subInvoiceDTO;
     }
 
@@ -101,12 +99,11 @@ public class DomainToDto {
     }
 
     public static JourneyDTO JOURNEYSTODTOS(Journey journey) {
-        JourneyDTO journeyDTO = new JourneyDTO(journey.getId(), null);
         if (journey == null) {
-            return journeyDTO;
+            return new JourneyDTO();
         }
 
-        journeyDTO = new JourneyDTO(journey.getId(),
+        JourneyDTO journeyDTO = new JourneyDTO(journey.getId(),
                 APIURI + "translocations/journeyid/" + journey.getId());
         return journeyDTO;
     }
@@ -130,13 +127,11 @@ public class DomainToDto {
     }
 
     public static TransLocationDTO TRANSLOCATIONSTODTOS(TransLocation location) {
-        TransLocationDTO transLocationDTO = new TransLocationDTO(location.getLat(), 
-                location.getLon(), location.getDateTime(), location.getSerialNumber(), location.getCountryCode());
         if (location == null) {
-            return transLocationDTO;
+            return new TransLocationDTO();
         }
 
-        transLocationDTO = new TransLocationDTO(
+        TransLocationDTO transLocationDTO = new TransLocationDTO(
                 location.getLat(),
                 location.getLon(),
                 location.getDateTime(),
@@ -145,13 +140,13 @@ public class DomainToDto {
         return transLocationDTO;
     }
 
-    public static List<RoadDTO> ROADSTODTOS(List<Road> road) {
+    public static List<RoadDTO> ROADSTODTOS(List<Road> roads) {
         List<RoadDTO> roadDtos = new ArrayList<>();
-        if (road == null || road.isEmpty()) {
+        if (roads == null || roads.isEmpty()) {
             return roadDtos;
         }
 
-        for (Road r : road) {
+        for (Road r : roads) {
             RoadDTO roadDto = new RoadDTO(
                     r.getId(),
                     r.getName(),
@@ -170,5 +165,34 @@ public class DomainToDto {
                 road.getId(),
                 road.getName(),
                 road.getRate());
+    }
+
+    public static List<PersonDTO> PERSONSTODTOS(List<Person> persons) {
+        List<PersonDTO> personDtos = new ArrayList<>();
+        if (persons == null || persons.isEmpty()) {
+            return personDtos;
+        }
+
+        for (Person p : persons) {
+            PersonDTO personDto = new PersonDTO(
+                    p.getId(),
+                    p.getFirstName(),
+                    p.getLastName(),
+                    APIURI + "persons/" + p.getId() + "/vehicles");
+            personDtos.add(personDto);
+        }
+        return personDtos;
+    }
+
+    public static PersonDTO PERSONSTODTOS(Person person) {
+        if (person == null) {
+            return new PersonDTO();
+        }
+
+        return new PersonDTO(
+                person.getId(),
+                person.getFirstName(),
+                person.getLastName(),
+                APIURI + "persons/" + person.getId() + "/vehicles");
     }
 }
