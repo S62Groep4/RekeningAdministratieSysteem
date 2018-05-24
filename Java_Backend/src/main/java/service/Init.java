@@ -1,24 +1,15 @@
 package service;
 
 import domain.Journey;
+import domain.Person;
 import domain.Road;
 import domain.SubInvoice;
 import domain.TransLocation;
 import domain.Vehicle;
-import dto.JourneyDTO;
-import dto.SubInvoiceDTO;
-import dto.TransLocationDTO;
-import dto.VehicleDTO;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
-import org.mindrot.jbcrypt.BCrypt;
-import static util.DtoToDomain.VEHICLE_DTO_TO_DOMAIN;
 
 /**
  *
@@ -39,6 +30,9 @@ public class Init {
 
     @Inject
     JourneyService journeyService;
+    
+    @Inject
+    PersonService personService;
 
     @Inject
     RoadService roadService;
@@ -120,6 +114,11 @@ public class Init {
         loc15.setDateTime("2018-05-04T12:00:00+0200");
         j4.addTransLocation(loc15);
 
+        Person person1 = new Person("Peter", "Fritssens");
+        Person person2 = new Person("Freek", "Jannssen");
+        Person person3 = new Person("Robert", "de Graaf");
+        Person person4 = new Person("Rickert", "Fruitboom");
+
         j1.addTransLocation(loc1);
         j1.addTransLocation(loc2);
         j1.addTransLocation(loc3);
@@ -128,18 +127,27 @@ public class Init {
         j2.addTransLocation(loc6);
         j2.addTransLocation(loc7);
 
-        Vehicle veh1 = new Vehicle();
+        Vehicle veh1 = new Vehicle("68JFSF", "68JFSF");
         veh1.setUnHashedLicencePlate("68JFSF");
         veh1.addJourney(j1);
 
-        Vehicle veh2 = new Vehicle();
+        Vehicle veh2 = new Vehicle("54HSHS", "54HSHS");
         veh2.setUnHashedLicencePlate("54HSHS");
         veh2.addJourney(j2);
-
+      
         Vehicle veh3 = new Vehicle();
         veh3.setUnHashedLicencePlate("33DSVL");
         veh3.addJourney(j3);
         veh3.addJourney(j4);
+      
+        SubInvoice inv1 = new SubInvoice(null, "31", 165.00);
+        veh1.addInvoice(inv1);
+
+        SubInvoice inv2 = new SubInvoice(null, "31", 486.00);
+        veh2.addInvoice(inv2);
+        
+        person1.addVehicle(veh1);
+        person2.addVehicle(veh2);
 
         Road r1 = new Road(null, "A2", 1.2);
         Road r2 = new Road(null, "A55", 1.1);
@@ -176,5 +184,9 @@ public class Init {
         vehicleService.insertVehicle(veh1);
         vehicleService.insertVehicle(veh2);
         vehicleService.insertVehicle(veh3);
+        
+        personService.createPerson(person1);
+        personService.createPerson(person2);
+        personService.createPerson(person3);
     }
 }

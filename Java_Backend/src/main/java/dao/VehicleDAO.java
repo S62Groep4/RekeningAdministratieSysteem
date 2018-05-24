@@ -12,7 +12,7 @@ import javax.persistence.PersistenceException;
  */
 public interface VehicleDAO {
 
-    Vehicle getVehicle(String hashedLicenceplate) throws PersistenceException;
+    Vehicle getVehicle(String Licenceplate, boolean hashed) throws PersistenceException;
 
     List<Vehicle> getAllVehicles() throws PersistenceException;
     

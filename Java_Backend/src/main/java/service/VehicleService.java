@@ -26,9 +26,9 @@ public class VehicleService {
     public VehicleService() {
     }
 
-    public Vehicle getVehicle(String hashedLicenceplate) throws PersistenceException {
+    public Vehicle getVehicle(String hashedLicenceplate, boolean hashed) throws PersistenceException {
         try {
-            return vehicleDao.getVehicle(hashedLicenceplate);
+            return vehicleDao.getVehicle(hashedLicenceplate, hashed);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing getVehicle operation; {0}", pe.getMessage());
             return null;
