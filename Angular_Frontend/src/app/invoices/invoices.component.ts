@@ -9,6 +9,7 @@ import {InvoiceService} from '../services/invoice.service';
 })
 export class InvoicesComponent implements OnInit {
 
+  model;
   selectedInvoice: Invoice = new Invoice(null, '', '', '', '');
   invoices: Invoice[] = [];
 
@@ -21,6 +22,22 @@ export class InvoicesComponent implements OnInit {
 
   getInvoices(): void {
     this.invoiceService.getAllInvoices().subscribe(res => this.invoices = res);
+  }
+
+  generateInvoices(): void {
+    this.invoiceService.generateInvoices().subscribe(res => this.invoices = res);
+  }
+
+  recalculateInvoice(invoiceNumber: number): void {
+    this.invoiceService.recalculateInvoice(invoiceNumber).subscribe(res => this.selectedInvoice = res);
+  }
+
+  searchInvoices(invoiceDate: string): void {
+    // this.invoiceService.searchInvoices(invoiceDate).subscribe(res => this.invoices = res);
+  }
+
+  clearCalendar(): void {
+    this.model = '';
   }
 
   onItemClick(invoice: Invoice) {

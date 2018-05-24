@@ -18,4 +18,16 @@ export class InvoiceService {
   getAllInvoices(): Observable<Invoice[]> {
     return this.http.get(this.apiUri).map(res => res as Invoice[]);
   }
+
+  generateInvoices(): Observable<Invoice[]> {
+    // TO DO define url to generate Invoices
+    const url = `${this.apiUri}/generate`;
+    return this.http.get(url).map(res => res as Invoice[]);
+  }
+
+  recalculateInvoice(invoiceNumber: number): Observable<Invoice> {
+    // TO DO define url to regenerate invoice
+    const url = `${this.apiUri}/DEFINE URL`;
+    return this.http.get(url).map(res => res as Invoice);
+  }
 }

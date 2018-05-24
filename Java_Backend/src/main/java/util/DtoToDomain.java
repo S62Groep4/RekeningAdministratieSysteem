@@ -6,8 +6,6 @@ import domain.SubInvoice;
 import domain.TransLocation;
 import domain.Vehicle;
 import dto.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -49,8 +47,8 @@ public class DtoToDomain {
                     s.getInvoiceNumber(),
                     s.getCountry(),
                     Double.parseDouble(s.getPrice()),
-                    s.getInvoiceDate(),
-                    s.getPaymentStatus());
+                    s.getInvoiceDate());
+            invoice.setPaymentStatus(s.getPaymentStatus());
             invoices.add(invoice);
         }
         return invoices;
@@ -60,12 +58,13 @@ public class DtoToDomain {
         if (invoiceDTO == null) {
             return new SubInvoice();
         }
-        return new SubInvoice(
+        SubInvoice invoice = new SubInvoice(
                 invoiceDTO.getInvoiceNumber(),
                 invoiceDTO.getCountry(),
                 Double.parseDouble(invoiceDTO.getPrice()),
-                invoiceDTO.getInvoiceDate(),
-                invoiceDTO.getPaymentStatus());
+                invoiceDTO.getInvoiceDate());
+        invoice.setPaymentStatus(invoiceDTO.getPaymentStatus());
+        return invoice;
     }
 
     public static List<Journey> JOURNEY_DTO_TO_DOMAIN(List<JourneyDTO> journeyDTOs) {

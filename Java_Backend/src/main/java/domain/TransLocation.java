@@ -1,6 +1,8 @@
 package domain;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -21,6 +23,8 @@ import javax.persistence.NamedQuery;
     ,@NamedQuery(name = "TransLocation.findBySerialNumber", query = "SELECT t FROM TransLocation t WHERE t.serialNumber = :serialNumber")
     ,@NamedQuery(name = "TransLocation.findByJourneyId", query = "SELECT t FROM TransLocation t WHERE t.journey.id = :journeyId")})
 public class TransLocation implements Serializable {
+
+    private static final DateFormat DF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -97,7 +101,7 @@ public class TransLocation implements Serializable {
     public TransLocation(Double lat, Double lon, String serialNumber, String countryCode) {
         this.lat = lat;
         this.lon = lon;
-        this.dateTime = new Date(System.currentTimeMillis()).toString();
+        this.dateTime = DF.format(new Date());
         this.serialNumber = serialNumber;
         this.countryCode = countryCode;
     }
