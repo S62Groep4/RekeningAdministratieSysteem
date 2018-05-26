@@ -104,7 +104,7 @@ public class PersonResource {
     @GET
     @Path("licenceplate/{licenceplate}")
     public Response getPersonByLicenceplate(@PathParam("licenceplate") String licenceplate) {
-        PersonDTO personDTO = DomainToDto.PERSONSTODTOS(personService.getPersonByLicensePlate(licenceplate, false));
+        PersonDTO personDTO = DomainToDto.PERSONSTODTOS(personService.getPersonByLicensePlate(licenceplate, true));
         return Response.ok(personDTO).build();
     }
 
