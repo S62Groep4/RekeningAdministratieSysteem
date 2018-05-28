@@ -24,7 +24,9 @@ public class DtoToDomain {
         }
 
         for (VehicleDTO v : vehicleDTOs) {
-            Vehicle vehicle = new Vehicle(new String(Base64.getDecoder().decode(v.getHashedLicensePlate())));
+            Vehicle vehicle = new Vehicle(
+                    new String(Base64.getDecoder().decode(v.getHashedLicensePlate())),
+                    Long.parseLong(v.getCarTrackerId()));
             vehicles.add(vehicle);
         }
         return vehicles;
@@ -34,7 +36,9 @@ public class DtoToDomain {
         if (vehicleDTO == null) {
             return new Vehicle();
         }
-        return new Vehicle(new String(Base64.getDecoder().decode(vehicleDTO.getHashedLicensePlate())));
+        return new Vehicle(
+                new String(Base64.getDecoder().decode(vehicleDTO.getHashedLicensePlate())),
+                Long.parseLong(vehicleDTO.getCarTrackerId()));
     }
 
     public static List<SubInvoice> SUBINVOICE_DTO_TO_DOMAIN(List<SubInvoiceDTO> invoiceDTOs) {
@@ -99,7 +103,7 @@ public class DtoToDomain {
             TransLocation location = new TransLocation(
                     Double.longBitsToDouble(t.getLat()),
                     Double.longBitsToDouble(t.getLon()),
-                    t.getSerialNumber(),
+                    t.getCarTrackerId(),
                     t.getCountryCode());
             translocations.add(location);
         }
@@ -114,7 +118,7 @@ public class DtoToDomain {
         return new TransLocation(
                 Double.longBitsToDouble(locationDTO.getLat()),
                 Double.longBitsToDouble(locationDTO.getLon()),
-                locationDTO.getSerialNumber(),
+                locationDTO.getCarTrackerId(),
                 locationDTO.getCountryCode());
     }
 

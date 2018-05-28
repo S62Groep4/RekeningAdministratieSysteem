@@ -11,7 +11,7 @@ public class TransLocationDTO implements Serializable {
     private Long lat;
     private Long lon;
     private String dateTime;
-    private String serialNumber;
+    private String carTrackerId;
     private String countryCode;
 
     public TransLocationDTO() {
@@ -21,7 +21,7 @@ public class TransLocationDTO implements Serializable {
         this.lat = lat.longValue();
         this.lon = lon.longValue();
         this.dateTime = dateTime;
-        this.serialNumber = serialNumber;
+        this.carTrackerId = serialNumber;
         this.countryCode = countryCode;
     }
 
@@ -37,8 +37,8 @@ public class TransLocationDTO implements Serializable {
         this.dateTime = dateTime;
     }
 
-    public void setSerialNumber(String serialNumber) {
-        this.serialNumber = serialNumber;
+    public void setCarTrackerId(String carTrackerId) {
+        this.carTrackerId = carTrackerId;
     }
 
     public void setCountryCode(String countryCode) {
@@ -57,8 +57,8 @@ public class TransLocationDTO implements Serializable {
         return dateTime;
     }
 
-    public String getSerialNumber() {
-        return serialNumber;
+    public String getCarTrackerId() {
+        return carTrackerId;
     }
 
     public String getCountryCode() {

@@ -77,40 +77,48 @@ public class Init {
         //|||||||||||||||||||||||||||||||||||||||||
          */
         Journey j1 = new Journey(null);
-        Journey j2 = new Journey(null);
-        Journey j3 = new Journey(null);
-        Journey j4 = new Journey(null);
         TransLocation loc1 = new TransLocation(51.855305, 9.623518, "654161", "49");
+        j1.addTransLocation(loc1);
         TransLocation loc2 = new TransLocation(51.735719, 9.579573, "654161", "49");
+        j1.addTransLocation(loc2);
         TransLocation loc3 = new TransLocation(51.626728, 9.689436, "654161", "49");
-        TransLocation loc4 = new TransLocation(48.087453, 11.535139, "188654", "49");
-        TransLocation loc5 = new TransLocation(48.058089, 11.359358, "188654", "49");
-        TransLocation loc6 = new TransLocation(48.014012, 11.139631, "188654", "49");
-        TransLocation loc7 = new TransLocation(48.028709, 10.985823, "188654", "49");
+        j1.addTransLocation(loc3);
 
-        TransLocation loc8 = new TransLocation(48.087453, 11.535139, "188654", "49");
+        Journey j2 = new Journey(null);
+        TransLocation loc4 = new TransLocation(48.087453, 11.535139, "188654", "49");
+        j2.addTransLocation(loc4);
+        TransLocation loc5 = new TransLocation(48.058089, 11.359358, "188654", "49");
+        j2.addTransLocation(loc5);
+        TransLocation loc6 = new TransLocation(48.014012, 11.139631, "188654", "49");
+        j2.addTransLocation(loc6);
+        TransLocation loc7 = new TransLocation(48.028709, 10.985823, "188654", "49");
+        j2.addTransLocation(loc7);
+
+        Journey j3 = new Journey(null);
+        TransLocation loc8 = new TransLocation(48.087453, 11.535139, "301214", "49");
         loc8.setDateTime("2018-04-01T12:00:00+0200");
         j3.addTransLocation(loc8);
-        TransLocation loc9 = new TransLocation(48.058089, 11.359358, "188654", "49");
+        TransLocation loc9 = new TransLocation(48.058089, 11.359358, "301214", "49");
         loc9.setDateTime("2018-04-02T12:00:00+0200");
         j3.addTransLocation(loc9);
-        TransLocation loc10 = new TransLocation(48.014012, 11.139631, "188654", "49");
+        TransLocation loc10 = new TransLocation(48.014012, 11.139631, "301214", "49");
         loc10.setDateTime("2018-04-03T12:00:00+0200");
         j3.addTransLocation(loc10);
-        TransLocation loc11 = new TransLocation(48.028709, 10.985823, "188654", "49");
+        TransLocation loc11 = new TransLocation(48.028709, 10.985823, "301214", "49");
         loc11.setDateTime("2018-04-04T12:00:00+0200");
         j3.addTransLocation(loc11);
 
-        TransLocation loc12 = new TransLocation(48.087453, 11.535139, "188654", "49");
+        Journey j4 = new Journey(null);
+        TransLocation loc12 = new TransLocation(48.087453, 11.535139, "301214", "49");
         loc12.setDateTime("2018-05-01T12:00:00+0200");
         j4.addTransLocation(loc12);
-        TransLocation loc13 = new TransLocation(48.058089, 11.359358, "188654", "49");
+        TransLocation loc13 = new TransLocation(48.058089, 11.359358, "301214", "49");
         loc13.setDateTime("2018-05-02T12:00:00+0200");
         j4.addTransLocation(loc13);
-        TransLocation loc14 = new TransLocation(48.014012, 11.139631, "188654", "49");
+        TransLocation loc14 = new TransLocation(48.014012, 11.139631, "301214", "49");
         loc14.setDateTime("2018-05-03T12:00:00+0200");
         j4.addTransLocation(loc14);
-        TransLocation loc15 = new TransLocation(48.028709, 10.985823, "188654", "49");
+        TransLocation loc15 = new TransLocation(48.028709, 10.985823, "301214", "49");
         loc15.setDateTime("2018-05-04T12:00:00+0200");
         j4.addTransLocation(loc15);
 
@@ -119,24 +127,19 @@ public class Init {
         Person person3 = new Person("Robert", "de Graaf");
         Person person4 = new Person("Rickert", "Fruitboom");
 
-        j1.addTransLocation(loc1);
-        j1.addTransLocation(loc2);
-        j1.addTransLocation(loc3);
-        j2.addTransLocation(loc4);
-        j2.addTransLocation(loc5);
-        j2.addTransLocation(loc6);
-        j2.addTransLocation(loc7);
-
         Vehicle veh1 = new Vehicle();
         veh1.setUnHashedLicencePlate("68JFSF");
+        veh1.setCarTrackerId(654161L);
         veh1.addJourney(j1);
 
         Vehicle veh2 = new Vehicle();
         veh2.setUnHashedLicencePlate("54HSHS");
+        veh2.setCarTrackerId(188654L);
         veh2.addJourney(j2);
 
         Vehicle veh3 = new Vehicle();
         veh3.setUnHashedLicencePlate("33DSVL");
+        veh3.setCarTrackerId(301214L);
         veh3.addJourney(j3);
         veh3.addJourney(j4);
 

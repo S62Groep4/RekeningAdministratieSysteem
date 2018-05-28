@@ -1,10 +1,7 @@
 <form class="form-inline">
   <div class="mr-auto">
-    <button type="submit" class="btn btn-success" (click)="generateInvoices()" *ngIf="!selectedInvoice.invoiceNumber">
+    <button type="submit" class="btn btn-success" (click)="generateInvoices()">
       Rechnungen erstellen
-    </button>
-    <button type="submit" class="btn btn-success" (click)="recalculateInvoice(selectedInvoice.invoiceNumber)"
-            *ngIf="selectedInvoice.invoiceNumber">Rechnung {{selectedInvoice.invoiceNumber}} neu berechnen
     </button>
   </div>
 

@@ -30,7 +30,8 @@ public class DomainToDto {
                     vehicle.getHashedLicencePlate(),
                     APIURI + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/journeys",
                     APIURI + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/invoices",
-                    APIURI + "persons/" + vehicle.getOwner().getId());
+                    APIURI + "persons/" + vehicle.getOwner().getId(),
+                    vehicle.getCarTrackerId().toString());
             vehicleDTOs.add(vehicleDTO);
         }
         return vehicleDTOs;
@@ -45,7 +46,8 @@ public class DomainToDto {
                 vehicle.getHashedLicencePlate(),
                 APIURI + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/journeys",
                 APIURI + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/invoices",
-                APIURI + "persons/" + vehicle.getOwner().getId());
+                APIURI + "persons/" + vehicle.getOwner().getId(),
+                vehicle.getCarTrackerId().toString());
 
         return vehicleDTO;
     }
@@ -119,7 +121,7 @@ public class DomainToDto {
                     t.getLat(),
                     t.getLon(),
                     t.getDateTime(),
-                    t.getSerialNumber(),
+                    t.getCarTrackerId(),
                     t.getCountryCode());
             transLocationDTOs.add(transLocation);
         }
@@ -135,7 +137,7 @@ public class DomainToDto {
                 location.getLat(),
                 location.getLon(),
                 location.getDateTime(),
-                location.getSerialNumber(),
+                location.getCarTrackerId(),
                 location.getCountryCode());
         return transLocationDTO;
     }

@@ -24,10 +24,4 @@ export class InvoiceService {
     const url = `${this.apiUri}/generate`;
     return this.http.get(url).map(res => res as Invoice[]);
   }
-
-  recalculateInvoice(invoiceNumber: number): Observable<Invoice> {
-    // TO DO define url to regenerate invoice
-    const url = `${this.apiUri}/DEFINE URL`;
-    return this.http.get(url).map(res => res as Invoice);
-  }
 }
