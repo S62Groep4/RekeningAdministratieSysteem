@@ -34,6 +34,7 @@ public class SubInvoiceService {
             List<Vehicle> vehicles = vehicleDao.getAllVehicles();
             for (Vehicle v : vehicles) {
                 v.generateInvoices();
+                vehicleDao.updateVehicle(v);
             }
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing generateSubInvoices operation; {0}", pe.getMessage());

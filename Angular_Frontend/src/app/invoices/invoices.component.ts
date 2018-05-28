@@ -25,11 +25,10 @@ export class InvoicesComponent implements OnInit {
   }
 
   generateInvoices(): void {
-    this.invoiceService.generateInvoices().subscribe(res => this.invoices = res);
-  }
-
-  recalculateInvoice(invoiceNumber: number): void {
-    this.invoiceService.recalculateInvoice(invoiceNumber).subscribe(res => this.selectedInvoice = res);
+    this.invoices = null;
+    this.invoiceService.generateInvoices().subscribe(res => {
+      this.getInvoices();
+    });
   }
 
   searchInvoices(invoiceDate: string): void {

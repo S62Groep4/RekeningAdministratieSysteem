@@ -29,25 +29,25 @@ import org.mindrot.jbcrypt.BCrypt;
     ,@NamedQuery(name = "Vehicle.findJourneys", query = "SELECT j FROM Journey j WHERE j.vehicle.hashedLicencePlate IN (SELECT v.hashedLicencePlate FROM Vehicle v WHERE v.hashedLicencePlate = :hashedLicencePlate)")
     ,@NamedQuery(name = "Vehicle.findInvoices", query = "SELECT i FROM SubInvoice i WHERE i.vehicle.hashedLicencePlate IN (SELECT v.hashedLicencePlate FROM Vehicle v WHERE v.hashedLicencePlate = :hashedLicencePlate)")})
 public class Vehicle implements Serializable {
-    
+
     @Id
     private String hashedLicencePlate;
     @OneToMany(mappedBy = "vehicle", cascade = ALL)
     private final List<Journey> journeys = new ArrayList<>();
-    @OneToMany(mappedBy = "vehicle", cascade = ALL)
+    @OneToMany(mappedBy = "vehicle", cascade = ALL, orphanRemoval = true)
     private final List<SubInvoice> subInvoices = new ArrayList<>();
     @ManyToOne
     private Person owner;
     private Long carTrackerId;
-    
+
     public Vehicle() {
     }
-    
+
     public Vehicle(String licencePlate, Long carTracker) {
         this.hashedLicencePlate = licencePlate;
         this.carTrackerId = carTracker;
     }
-    
+
     public Long getCarTrackerId() {
         return carTrackerId;
     }
@@ -56,37 +56,42 @@ public class Vehicle implements Serializable {
     public void setCarTrackerId(Long carTrackerId) {
         this.carTrackerId = carTrackerId;
     }
-    
+
     public Person getOwner() {
         return owner;
     }
-    
+
     public void setOwner(Person owner) {
         this.owner = owner;
     }
-    
+
     public void setHashedLicencePlate(String hashedLicencePlate) {
         this.hashedLicencePlate = hashedLicencePlate;
     }
-    
+
     public void setUnHashedLicencePlate(String licencePlate) {
         this.hashedLicencePlate = BCrypt.hashpw(licencePlate, BCrypt.gensalt(12));
     }
-    
+
     public String getHashedLicencePlate() {
         return hashedLicencePlate;
     }
-    
+
     public List<Journey> getJourneys() {
         return Collections.unmodifiableList(journeys);
     }
-    
+
     public List<SubInvoice> getSubInvoices() {
         return Collections.unmodifiableList(subInvoices);
     }
     // </editor-fold>
 
-    public List<SubInvoice> generateInvoices() {
+    public void generateInvoices() {
+        for (SubInvoice i : this.subInvoices) {
+            i.setVehicle(null);
+        }
+        this.subInvoices.clear();
+
         Map<String, List<Journey>> journeysPerMonth = new HashMap();
         List<TransLocation> locations;
 
@@ -101,12 +106,7 @@ public class Vehicle implements Serializable {
             }
             journeysPerMonth.get(locations.get(0).getDateTime().substring(0, 7)).add(j);
         }
-        
-        for (SubInvoice i : this.subInvoices) {
-            i.setVehicle(null);
-        }
-        this.subInvoices.clear();
-        
+
         for (Map.Entry<String, List<Journey>> entry : journeysPerMonth.entrySet()) {
             SubInvoice invoice = new SubInvoice(null, "49", 0, entry.getKey());
             double price = 0;
@@ -117,9 +117,8 @@ public class Vehicle implements Serializable {
             invoice.setPrice(price);
             this.subInvoices.add(invoice);
         }
-        return this.subInvoices;
     }
-    
+
     public boolean addJourney(Journey j) {
         if (j != null) {
             journeys.add(j);
@@ -128,7 +127,7 @@ public class Vehicle implements Serializable {
         }
         return false;
     }
-    
+
     public boolean addJourney(List<Journey> j) {
         if (j != null) {
             journeys.addAll(j);
@@ -139,7 +138,7 @@ public class Vehicle implements Serializable {
         }
         return false;
     }
-    
+
     public boolean addInvoice(SubInvoice i) {
         if (i != null) {
             subInvoices.add(i);
@@ -148,7 +147,7 @@ public class Vehicle implements Serializable {
         }
         return false;
     }
-    
+
     public boolean addInvoice(List<SubInvoice> i) {
         if (i != null) {
             subInvoices.addAll(i);
@@ -159,7 +158,7 @@ public class Vehicle implements Serializable {
         }
         return false;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Vehicle)) {
@@ -171,7 +170,7 @@ public class Vehicle implements Serializable {
         }
         return this.hashedLicencePlate.equals(otherUser.hashedLicencePlate);
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 5;
