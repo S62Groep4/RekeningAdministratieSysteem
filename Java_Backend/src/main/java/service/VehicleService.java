@@ -43,6 +43,15 @@ public class VehicleService {
             return null;
         }
     }
+    
+    public List<Vehicle> getVehiclesOwnedBy(Long personId) throws PersistenceException {
+        try {
+            return vehicleDao.getVehiclesOwnedBy(personId);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing getVehiclesOwnedBy operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
 
     public List<SubInvoice> getVehicleInvoices(String hashedLicenceplate) throws PersistenceException {
         try {

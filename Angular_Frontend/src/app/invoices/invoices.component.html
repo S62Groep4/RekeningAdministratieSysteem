@@ -3,6 +3,9 @@
     <button type="submit" class="btn btn-success" (click)="generateInvoices()">
       Rechnungen erstellen
     </button>
+    <button *ngIf="selectedInvoice.invoiceNumber" type="submit" class="btn btn-success" routerLink="/persons/{{this.selectedInvoiceOwnerLink}}">
+      Besitzerdaten anzeigen
+    </button>
   </div>
 
   <div class="form-group">

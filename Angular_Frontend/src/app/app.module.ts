@@ -11,6 +11,8 @@ import {RoadService} from './services/road.service';
 import {HttpClientModule} from '@angular/common/http';
 import {InvoicesComponent} from './invoices/invoices.component';
 import {InvoiceService} from './services/invoice.service';
+import {PersonService} from './services/person.service';
+import { PersonComponent } from './person/person.component';
 
 
 @NgModule({
@@ -19,7 +21,8 @@ import {InvoiceService} from './services/invoice.service';
     PageNotFoundComponent,
     HomeComponent,
     RoadsComponent,
-    InvoicesComponent
+    InvoicesComponent,
+    PersonComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,8 @@ import {InvoiceService} from './services/invoice.service';
   ],
   providers: [
     RoadService,
-    InvoiceService
+    InvoiceService,
+    PersonService
   ],
   bootstrap: [AppComponent]
 })

@@ -46,4 +46,12 @@ public class PersonDTO implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public String getVehiclesUri() {
+        return vehiclesUri;
+    }
+
+    public void setVehiclesUri(String vehiclesUri) {
+        this.vehiclesUri = vehiclesUri;
+    }
 }

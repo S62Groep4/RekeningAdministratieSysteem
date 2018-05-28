@@ -22,6 +22,7 @@ import org.mindrot.jbcrypt.BCrypt;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Vehicle.findAll", query = "SELECT v FROM Vehicle v")
+    ,@NamedQuery(name = "Vehicle.findByOwner", query = "SELECT v FROM Vehicle v WHERE v.owner.id = :id")
     ,@NamedQuery(name = "Vehicle.findBycarTrackerId", query = "SELECT v FROM Vehicle v WHERE v.carTrackerId = :carTrackerId")
     ,@NamedQuery(name = "Vehicle.findByLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.hashedLicencePlate = :licencePlate")
     ,@NamedQuery(name = "Vehicle.findByHashedLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.hashedLicencePlate = :hashedLicencePlate")

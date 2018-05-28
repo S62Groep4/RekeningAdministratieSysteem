@@ -72,4 +72,9 @@ public class VehicleDAOImpl implements VehicleDAO {
         em.persist(vehicle);
         return vehicle;
     }
+
+    @Override
+    public List<Vehicle> getVehiclesOwnedBy(Long personId) throws PersistenceException {
+        return em.createNamedQuery("Vehicle.findByOwner").setParameter("id", personId).getResultList();
+    }
 }

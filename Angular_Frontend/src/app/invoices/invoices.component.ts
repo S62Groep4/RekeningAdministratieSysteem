@@ -11,6 +11,7 @@ export class InvoicesComponent implements OnInit {
 
   model;
   selectedInvoice: Invoice = new Invoice(null, '', '', '', '', '');
+  selectedInvoiceOwnerLink: string;
   invoices: Invoice[] = [];
 
   constructor(private invoiceService: InvoiceService) {
@@ -44,6 +45,7 @@ export class InvoicesComponent implements OnInit {
       this.selectedInvoice = new Invoice(null, '', '', '', '', '');
     } else {
       this.selectedInvoice = invoice;
+      this.selectedInvoiceOwnerLink = invoice.ownerUri.substring(invoice.ownerUri.lastIndexOf('/'));
     }
   }
 }

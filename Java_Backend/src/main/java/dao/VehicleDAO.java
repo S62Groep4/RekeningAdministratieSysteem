@@ -15,6 +15,8 @@ public interface VehicleDAO {
     Vehicle getVehicle(String Licenceplate, boolean hashed) throws PersistenceException;
 
     Vehicle getVehicle(Long carTrackerId) throws PersistenceException;
+    
+    List<Vehicle> getVehiclesOwnedBy(Long personId) throws PersistenceException;
 
     List<Vehicle> getAllVehicles() throws PersistenceException;
 

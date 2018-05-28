@@ -20,7 +20,6 @@ export class InvoiceService {
   }
 
   generateInvoices(): Observable<Invoice[]> {
-    // TO DO define url to generate Invoices
     const url = `${this.apiUri}/generate`;
     return this.http.get(url).map(res => res as Invoice[]);
   }
