@@ -101,8 +101,8 @@ public class DtoToDomain {
 
         for (TransLocationDTO t : locationDTOs) {
             TransLocation location = new TransLocation(
-                    Double.longBitsToDouble(t.getLat()),
-                    Double.longBitsToDouble(t.getLon()),
+                    t.getLat(),
+                    t.getLon(),
                     t.getCarTrackerId(),
                     t.getCountryCode());
             translocations.add(location);
@@ -116,8 +116,8 @@ public class DtoToDomain {
         }
 
         return new TransLocation(
-                Double.longBitsToDouble(locationDTO.getLat()),
-                Double.longBitsToDouble(locationDTO.getLon()),
+                locationDTO.getLat(),
+                locationDTO.getLon(),
                 locationDTO.getCarTrackerId(),
                 locationDTO.getCountryCode());
     }
