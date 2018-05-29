@@ -28,20 +28,18 @@ public class PersonDAOImpl implements PersonDAO {
 
     @Override
     public List<Person> getAllPersons() throws PersistenceException {
-        return em.createQuery("Select p from Person p", Person.class)
-                .getResultList();
+        return em.createNamedQuery("Person.findAll").getResultList();
     }
 
     @Override
-    public Person createPerson(Person person) throws PersistenceException {
+    public Person insertPerson(Person person) throws PersistenceException {
         em.persist(person);
         return person;
     }
 
     @Override
     public Person updatePerson(Person person) throws PersistenceException {
-        em.merge(person);
-        return person;
+        return em.merge(person);
     }
 
     @Override

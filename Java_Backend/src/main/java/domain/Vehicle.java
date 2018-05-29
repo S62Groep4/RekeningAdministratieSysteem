@@ -6,10 +6,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -22,39 +22,48 @@ import org.mindrot.jbcrypt.BCrypt;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Vehicle.findAll", query = "SELECT v FROM Vehicle v")
-    ,@NamedQuery(name = "Vehicle.findByLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.licencePlate = :licencePlate")
-    ,@NamedQuery(name = "Vehicle.findByMultipleLicenceplates", query = "SELECT v FROM Vehicle v WHERE v.licencePlate LIKE :licencePlate")
-    ,@NamedQuery(name = "Vehicle.findJourneys", query = "SELECT j FROM Journey j WHERE j.vehicle.licencePlate IN (SELECT v.licencePlate FROM Vehicle v WHERE v.licencePlate = :licencePlate)")
-    ,@NamedQuery(name = "Vehicle.findInvoices", query = "SELECT i FROM SubInvoice i WHERE i.vehicle.licencePlate IN (SELECT v.licencePlate FROM Vehicle v WHERE v.licencePlate = :licencePlate)")})
+    ,@NamedQuery(name = "Vehicle.findByOwner", query = "SELECT v FROM Vehicle v WHERE v.owner.id = :id")
+    ,@NamedQuery(name = "Vehicle.findBycarTrackerId", query = "SELECT v FROM Vehicle v WHERE v.carTrackerId = :carTrackerId")
+    ,@NamedQuery(name = "Vehicle.findByLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.hashedLicencePlate = :licencePlate")
+    ,@NamedQuery(name = "Vehicle.findByHashedLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.hashedLicencePlate = :hashedLicencePlate")
+    ,@NamedQuery(name = "Vehicle.findByMultipleLicenceplates", query = "SELECT v FROM Vehicle v WHERE v.hashedLicencePlate LIKE :hashedLicencePlate")
+    ,@NamedQuery(name = "Vehicle.findJourneys", query = "SELECT j FROM Journey j WHERE j.vehicle.hashedLicencePlate IN (SELECT v.hashedLicencePlate FROM Vehicle v WHERE v.hashedLicencePlate = :hashedLicencePlate)")
+    ,@NamedQuery(name = "Vehicle.findInvoices", query = "SELECT i FROM SubInvoice i WHERE i.vehicle.hashedLicencePlate IN (SELECT v.hashedLicencePlate FROM Vehicle v WHERE v.hashedLicencePlate = :hashedLicencePlate)")})
 public class Vehicle implements Serializable {
 
     @Id
-    private String licencePlate = null;
     private String hashedLicencePlate;
     @OneToMany(mappedBy = "vehicle", cascade = ALL)
     private final List<Journey> journeys = new ArrayList<>();
-    @OneToMany(mappedBy = "vehicle", cascade = ALL)
+    @OneToMany(mappedBy = "vehicle", cascade = ALL, orphanRemoval = true)
     private final List<SubInvoice> subInvoices = new ArrayList<>();
+    @ManyToOne
+    private Person owner;
+    private Long carTrackerId;
 
     public Vehicle() {
     }
 
-    public Vehicle(String licencePlate) {
+    public Vehicle(String licencePlate, Long carTracker) {
         this.hashedLicencePlate = licencePlate;
+        this.carTrackerId = carTracker;
     }
 
-    public Vehicle(String licencePlate, String hashedLicencePlate) {
-        this.licencePlate = licencePlate;
-        this.hashedLicencePlate = hashedLicencePlate;
+    public Long getCarTrackerId() {
+        return carTrackerId;
     }
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
-    public String getLicencePlate() {
-        return licencePlate;
+    public void setCarTrackerId(Long carTrackerId) {
+        this.carTrackerId = carTrackerId;
     }
 
-    public void setLicencePlate(String licencePlate) {
-        this.licencePlate = licencePlate;
+    public Person getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Person owner) {
+        this.owner = owner;
     }
 
     public void setHashedLicencePlate(String hashedLicencePlate) {
@@ -79,6 +88,11 @@ public class Vehicle implements Serializable {
     // </editor-fold>
 
     public void generateInvoices() {
+        for (SubInvoice i : this.subInvoices) {
+            i.setVehicle(null);
+        }
+        this.subInvoices.clear();
+
         Map<String, List<Journey>> journeysPerMonth = new HashMap();
         List<TransLocation> locations;
 
@@ -94,19 +108,12 @@ public class Vehicle implements Serializable {
             journeysPerMonth.get(locations.get(0).getDateTime().substring(0, 7)).add(j);
         }
 
-        //beide kanten van de bidirectionele relatie opruimen
-        //zodat de lijst leegemaakt kan worden om dubbele invoices te voorkomen
-        for (SubInvoice inv : this.subInvoices) {
-            inv.setVehicle(null);
-        }
-        this.subInvoices.clear();
-
         for (Map.Entry<String, List<Journey>> entry : journeysPerMonth.entrySet()) {
             SubInvoice invoice = new SubInvoice(null, "49", 0, entry.getKey());
             double price = 0;
-            //calculate price
-            List<Journey> journeysOfCurrentMonth = entry.getValue();
 
+//            calculate price
+//            List<Journey> journeysOfCurrentMonth = entry.getValue();
             invoice.setVehicle(this);
             invoice.setPrice(price);
             this.subInvoices.add(invoice);

@@ -61,6 +61,19 @@ public class VehicleResource {
         }
     }
 
+    @GET
+    @Path("cartracker/{carTrackerId}")
+    public Response getVehicle(@PathParam("carTrackerId") Long carTrackerId) {
+        VehicleDTO dto = DomainToDto.VEHICLESTODTOS(vehicleService.getVehicle(carTrackerId));
+        return Response.ok(dto).build();
+    }
+
+    @GET
+    @Path("owner/{personId}")
+    public Response getVehiclesOwnedBy(@PathParam("personId") Long personId) {
+        List<VehicleDTO> dto = DomainToDto.VEHICLESTODTOS(vehicleService.getVehiclesOwnedBy(personId));
+        return Response.ok(dto).build();
+    }
 
     @GET
     @Path("{hashedLicensePlate}/journeys")

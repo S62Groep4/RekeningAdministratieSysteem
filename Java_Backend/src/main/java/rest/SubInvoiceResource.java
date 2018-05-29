@@ -70,7 +70,6 @@ public class SubInvoiceResource {
     @Path("generate")
     public Response generateSubInvoices() {
         subInvoiceService.generateSubInvoices();
-        List<SubInvoiceDTO> dto = DomainToDto.SUBINVOICESTODTOS(subInvoiceService.getAllSubInvoices());
-        return Response.ok(dto).build();
+        return Response.ok().build();
     }
 }

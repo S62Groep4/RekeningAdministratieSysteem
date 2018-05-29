@@ -47,16 +47,16 @@ public class TransLocationResource {
     }
 
     @DELETE
-    @Path("{serialNumber}")
-    public Response removeTransLocation(@PathParam("serialNumber") String serialNumber) {
-        transLocationService.removeTransLocation(serialNumber);
+    @Path("{carTrackerId}")
+    public Response removeTransLocation(@PathParam("carTrackerId") Long carTrackerId) {
+        transLocationService.removeTransLocation(carTrackerId);
         return Response.ok().build();
     }
 
     @GET
-    @Path("{serialNumber}")
-    public Response getTransLocation(@PathParam("serialNumber") String serialNumber) {
-        TransLocationDTO dto = DomainToDto.TRANSLOCATIONSTODTOS(transLocationService.getTransLocation(serialNumber));
+    @Path("{carTrackerId}")
+    public Response getTransLocation(@PathParam("carTrackerId") Long carTrackerId) {
+        TransLocationDTO dto = DomainToDto.TRANSLOCATIONSTODTOS(transLocationService.getTransLocation(carTrackerId));
         return Response.ok(dto).build();
     }
 

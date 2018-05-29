@@ -15,26 +15,25 @@ import static javax.persistence.CascadeType.ALL;
  */
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Person.GetPersonByCar", query = "SELECT p FROM Person p WHERE :vehicle member p.vehicles")
+    @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p")
+    ,@NamedQuery(name = "Person.GetPersonByCar", query = "SELECT p FROM Person p WHERE :vehicle member p.vehicles")
 })
-    public class Person implements Serializable {
+public class Person implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
     private String firstName;
-
     private String lastName;
-
-
+    @OneToMany(mappedBy = "owner", cascade = ALL)
     private final List<Vehicle> vehicles = new ArrayList<>();
 
     public Person() {
     }
 
-    public Person(Long id) {
-        this.id = id;
+    public Person(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public Person(Long id, String firstName, String lastName) {
@@ -44,7 +43,6 @@ import static javax.persistence.CascadeType.ALL;
     }
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
-
     public Long getId() {
         return id;
     }
@@ -70,22 +68,24 @@ import static javax.persistence.CascadeType.ALL;
     }
 
     public List<Vehicle> getVehicles() {
-        return vehicles;
+        return Collections.unmodifiableList(vehicles);
     }
 
-    public void addVehicle(Vehicle vehicle){
-        this.vehicles.add(vehicle );
+    public void addVehicle(Vehicle vehicle) {
+        if (!this.vehicles.contains(vehicle)) {
+            vehicle.setOwner(this);
+            this.vehicles.add(vehicle);
+        }
     }
 
-    public void removeVehicle(Vehicle vehicle){
-        this.vehicles.remove(vehicle );
+    public void removeVehicle(Vehicle vehicle) {
+        if (this.vehicles.contains(vehicle)) {
+            vehicle.setOwner(null);
+            this.vehicles.remove(vehicle);
+        }
     }
 
     // </editor-fold>
-
-
-
-
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Person)) {

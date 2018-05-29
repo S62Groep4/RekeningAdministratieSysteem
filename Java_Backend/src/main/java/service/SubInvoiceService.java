@@ -4,7 +4,6 @@ import dao.SubInvoiceDAO;
 import dao.VehicleDAO;
 import domain.SubInvoice;
 import domain.Vehicle;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,9 +34,10 @@ public class SubInvoiceService {
             List<Vehicle> vehicles = vehicleDao.getAllVehicles();
             for (Vehicle v : vehicles) {
                 v.generateInvoices();
+                vehicleDao.updateVehicle(v);
             }
         } catch (PersistenceException pe) {
-            LOGGER.log(Level.FINE, "ERROR while performing getSubInvoice operation; {0}", pe.getMessage());
+            LOGGER.log(Level.FINE, "ERROR while performing generateSubInvoices operation; {0}", pe.getMessage());
         }
     }
 

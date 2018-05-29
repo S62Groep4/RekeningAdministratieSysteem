@@ -26,11 +26,16 @@ public class VehicleDAOImpl implements VehicleDAO {
 
     @Override
     public Vehicle getVehicle(String licencePlate, boolean hashed) throws PersistenceException {
-        if(hashed){
+        if (hashed) {
             return (Vehicle) em.createNamedQuery("Vehicle.findByHashedLicenceplate").setParameter("hashedLicencePlate", licencePlate).getSingleResult();
         } else {
             return (Vehicle) em.createNamedQuery("Vehicle.findByLicenceplate").setParameter("licencePlate", licencePlate).getSingleResult();
         }
+    }
+
+    @Override
+    public Vehicle getVehicle(Long carTrackerId) throws PersistenceException {
+        return (Vehicle) em.createNamedQuery("Vehicle.findBycarTrackerId").setParameter("carTrackerId", carTrackerId).getSingleResult();
     }
 
     @Override
@@ -66,5 +71,10 @@ public class VehicleDAOImpl implements VehicleDAO {
     public Vehicle insertVehicle(Vehicle vehicle) throws PersistenceException {
         em.persist(vehicle);
         return vehicle;
+    }
+
+    @Override
+    public List<Vehicle> getVehiclesOwnedBy(Long personId) throws PersistenceException {
+        return em.createNamedQuery("Vehicle.findByOwner").setParameter("id", personId).getResultList();
     }
 }

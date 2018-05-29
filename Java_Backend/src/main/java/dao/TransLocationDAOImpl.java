@@ -18,8 +18,8 @@ public class TransLocationDAOImpl implements TransLocationDAO {
     EntityManager em;
 
     @Override
-    public TransLocation getTransLocation(String serialNumber) throws PersistenceException {
-        TransLocation location = (TransLocation) em.createNamedQuery("TransLocation.findBySerialNumber").setParameter("serialNumber", serialNumber).getSingleResult();
+    public TransLocation getTransLocation(Long carTrackerId) throws PersistenceException {
+        TransLocation location = (TransLocation) em.createNamedQuery("TransLocation.findByCarTrackerId").setParameter("carTrackerId", carTrackerId).getSingleResult();
         if (location != null) {
             return location;
         }
@@ -42,8 +42,8 @@ public class TransLocationDAOImpl implements TransLocationDAO {
     }
 
     @Override
-    public void removeTransLocation(String serialNumber) throws PersistenceException {
-        em.remove(em.find(TransLocation.class, serialNumber));
+    public void removeTransLocation(Long carTrackerId) throws PersistenceException {
+        em.remove(em.find(TransLocation.class, carTrackerId));
     }
 
     @Override

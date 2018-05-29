@@ -10,7 +10,8 @@ import {InvoiceService} from '../services/invoice.service';
 export class InvoicesComponent implements OnInit {
 
   model;
-  selectedInvoice: Invoice = new Invoice(null, '', '', '', '');
+  selectedInvoice: Invoice = new Invoice(null, '', '', '', '', '');
+  selectedInvoiceOwnerLink: string;
   invoices: Invoice[] = [];
 
   constructor(private invoiceService: InvoiceService) {
@@ -25,11 +26,10 @@ export class InvoicesComponent implements OnInit {
   }
 
   generateInvoices(): void {
-    this.invoiceService.generateInvoices().subscribe(res => this.invoices = res);
-  }
-
-  recalculateInvoice(invoiceNumber: number): void {
-    this.invoiceService.recalculateInvoice(invoiceNumber).subscribe(res => this.selectedInvoice = res);
+    this.invoices = null;
+    this.invoiceService.generateInvoices().subscribe(res => {
+      this.getInvoices();
+    });
   }
 
   searchInvoices(invoiceDate: string): void {
@@ -42,9 +42,10 @@ export class InvoicesComponent implements OnInit {
 
   onItemClick(invoice: Invoice) {
     if (this.selectedInvoice === invoice) {
-      this.selectedInvoice = new Invoice(null, '', '', '', '');
+      this.selectedInvoice = new Invoice(null, '', '', '', '', '');
     } else {
       this.selectedInvoice = invoice;
+      this.selectedInvoiceOwnerLink = invoice.ownerUri.substring(invoice.ownerUri.lastIndexOf('/'));
     }
   }
 }

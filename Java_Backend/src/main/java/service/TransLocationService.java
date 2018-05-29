@@ -33,9 +33,9 @@ public class TransLocationService {
         }
     }
 
-    public TransLocation getTransLocation(String serialNumber) throws PersistenceException {
+    public TransLocation getTransLocation(Long carTrackerId) throws PersistenceException {
         try {
-            return translocationDao.getTransLocation(serialNumber);
+            return translocationDao.getTransLocation(carTrackerId);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing getTransLocation operation; {0}", pe.getMessage());
             return null;
@@ -60,9 +60,9 @@ public class TransLocationService {
         }
     }
 
-    public void removeTransLocation(String serialNumber) throws PersistenceException {
+    public void removeTransLocation(Long carTrackerId) throws PersistenceException {
         try {
-            translocationDao.removeTransLocation(serialNumber);
+            translocationDao.removeTransLocation(carTrackerId);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing removeTransLocation operation; {0}", pe.getMessage());
         }

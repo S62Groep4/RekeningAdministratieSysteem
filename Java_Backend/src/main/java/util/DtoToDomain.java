@@ -1,6 +1,7 @@
 package util;
 
 import domain.Journey;
+import domain.Person;
 import domain.Road;
 import domain.SubInvoice;
 import domain.TransLocation;
@@ -23,7 +24,9 @@ public class DtoToDomain {
         }
 
         for (VehicleDTO v : vehicleDTOs) {
-            Vehicle vehicle = new Vehicle(new String(Base64.getDecoder().decode(v.getHashedLicensePlate())));
+            Vehicle vehicle = new Vehicle(
+                    new String(Base64.getDecoder().decode(v.getHashedLicensePlate())),
+                    Long.parseLong(v.getCarTrackerId()));
             vehicles.add(vehicle);
         }
         return vehicles;
@@ -33,7 +36,9 @@ public class DtoToDomain {
         if (vehicleDTO == null) {
             return new Vehicle();
         }
-        return new Vehicle(new String(Base64.getDecoder().decode(vehicleDTO.getHashedLicensePlate())));
+        return new Vehicle(
+                new String(Base64.getDecoder().decode(vehicleDTO.getHashedLicensePlate())),
+                Long.parseLong(vehicleDTO.getCarTrackerId()));
     }
 
     public static List<SubInvoice> SUBINVOICE_DTO_TO_DOMAIN(List<SubInvoiceDTO> invoiceDTOs) {
@@ -96,9 +101,9 @@ public class DtoToDomain {
 
         for (TransLocationDTO t : locationDTOs) {
             TransLocation location = new TransLocation(
-                    Double.longBitsToDouble(t.getLat()),
-                    Double.longBitsToDouble(t.getLon()),
-                    t.getSerialNumber(),
+                    t.getLat(),
+                    t.getLon(),
+                    t.getCarTrackerId(),
                     t.getCountryCode());
             translocations.add(location);
         }
@@ -111,9 +116,9 @@ public class DtoToDomain {
         }
 
         return new TransLocation(
-                Double.longBitsToDouble(locationDTO.getLat()),
-                Double.longBitsToDouble(locationDTO.getLon()),
-                locationDTO.getSerialNumber(),
+                locationDTO.getLat(),
+                locationDTO.getLon(),
+                locationDTO.getCarTrackerId(),
                 locationDTO.getCountryCode());
     }
 
@@ -142,5 +147,32 @@ public class DtoToDomain {
                 roadDTO.getId(),
                 roadDTO.getName(),
                 roadDTO.getRate());
+    }
+
+    public static List<Person> PERSON_DTO_TO_DOMAIN(List<PersonDTO> personDTOs) {
+        List<Person> persons = new ArrayList<>();
+        if (personDTOs == null || personDTOs.isEmpty()) {
+            return persons;
+        }
+
+        for (PersonDTO p : personDTOs) {
+            Person person = new Person(
+                    p.getId(),
+                    p.getFirstName(),
+                    p.getLastName());
+            persons.add(person);
+        }
+        return persons;
+    }
+
+    public static Person PERSON_DTO_TO_DOMAIN(PersonDTO personDTO) {
+        if (personDTO == null) {
+            return new Person();
+        }
+
+        return new Person(
+                personDTO.getId(),
+                personDTO.getFirstName(),
+                personDTO.getLastName());
     }
 }
