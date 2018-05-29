@@ -18,32 +18,43 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
     @NamedQuery(name = "Road.findAll", query = "SELECT r FROM Road r")
     ,@NamedQuery(name = "Road.findById", query = "SELECT r FROM Road r WHERE r.id = :roadId")
-    ,@NamedQuery(name = "Road.findByName", query = "SELECT r FROM Road r WHERE r.name = :roadName")
-    ,@NamedQuery(name = "Road.searchByName", query = "SELECT r FROM Road r WHERE r.name LIKE :roadName")})
+    ,@NamedQuery(name = "Road.findByName", query = "SELECT r FROM Road r WHERE r.shortName = :roadName OR r.longName = :roadName")})
 public class Road implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column(unique = true)
-    private String name;
+    private String shortName;
+    @Column(unique = true)
+    private String longName;
     private Double rate;
 
     public Road() {
     }
 
-    public Road(String name, Double rate) {
-        this.name = name;
+    public Road(String shortName, String longName, Double rate) {
+        this.shortName = shortName;
+        this.longName = longName;
         this.rate = rate;
     }
 
-    public Road(Long id, String name, Double rate) {
+    public Road(Long id, String shortName, String longName, Double rate) {
         this.id = id;
-        this.name = name;
+        this.shortName = shortName;
+        this.longName = longName;
         this.rate = rate;
     }
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
+    public String getLongName() {
+        return longName;
+    }
+
+    public void setLongName(String longName) {
+        this.longName = longName;
+    }
+
     public Long getId() {
         return id;
     }
@@ -52,12 +63,12 @@ public class Road implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getShortName() {
+        return shortName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     public Double getRate() {
@@ -71,10 +82,11 @@ public class Road implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 47 * hash + Objects.hashCode(this.id);
-        hash = 47 * hash + Objects.hashCode(this.name);
-        hash = 47 * hash + Objects.hashCode(this.rate);
+        int hash = 3;
+        hash = 17 * hash + Objects.hashCode(this.id);
+        hash = 17 * hash + Objects.hashCode(this.shortName);
+        hash = 17 * hash + Objects.hashCode(this.longName);
+        hash = 17 * hash + Objects.hashCode(this.rate);
         return hash;
     }
 
@@ -90,7 +102,10 @@ public class Road implements Serializable {
             return false;
         }
         final Road other = (Road) obj;
-        if (!Objects.equals(this.name, other.name)) {
+        if (!Objects.equals(this.shortName, other.shortName)) {
+            return false;
+        }
+        if (!Objects.equals(this.longName, other.longName)) {
             return false;
         }
         if (!Objects.equals(this.id, other.id)) {

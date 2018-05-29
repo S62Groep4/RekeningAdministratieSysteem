@@ -1,15 +1,23 @@
 package service;
 
+import GoogleApi.PlaceResponse;
+import GoogleApi.SnappedPoint;
 import domain.Journey;
 import domain.Person;
 import domain.Road;
-import domain.SubInvoice;
 import domain.TransLocation;
 import domain.Vehicle;
+import dto.TransLocationDTO;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
+import util.DomainToDto;
 
 /**
  *
@@ -122,6 +130,34 @@ public class Init {
         loc15.setDateTime("2018-05-04T12:00:00+0200");
         j4.addTransLocation(loc15);
 
+        List<TransLocation> domain = new ArrayList();
+        domain.addAll(j1.getTransLocations());
+        domain.addAll(j2.getTransLocations());
+        domain.addAll(j3.getTransLocations());
+        domain.addAll(j4.getTransLocations());
+
+        List<TransLocationDTO> dtos = DomainToDto.TRANSLOCATIONSTODTOS(domain);
+        List<SnappedPoint> response = null;
+
+        try {
+            response = GoogleApi.NearestRoads.CoordinatesToPlaceIds(dtos);
+        } catch (IOException ex) {
+            Logger.getLogger(Init.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        PlaceResponse rep1 = null;
+        PlaceResponse rep2 = null;
+
+        try {
+            rep1 = GoogleApi.RoadNames.PlaceIdToRoadName(response.get(0).getPlaceId());
+            rep2 = GoogleApi.RoadNames.PlaceIdToRoadName(response.get(response.size() - 1).getPlaceId());
+        } catch (IOException ex) {
+            Logger.getLogger(Init.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        System.out.println("ROAD 1 NAME: " + rep1.getLong_name());
+        System.out.println("ROAD 2 NAME: " + rep2.getLong_name());
+
         Person person1 = new Person("Peter", "Fritssens");
         Person person2 = new Person("Freek", "Jannssen");
         Person person3 = new Person("Robert", "de Graaf");
@@ -147,11 +183,11 @@ public class Init {
         person2.addVehicle(veh2);
         person3.addVehicle(veh3);
 
-        Road r1 = new Road("A2", 1.2);
-        Road r2 = new Road("A55", 1.1);
-        Road r3 = new Road("A50", 1.15);
-        Road r4 = new Road("A73", 1.08);
-        Road r5 = new Road("A1", 1.18);
+        Road r1 = new Road("B11", "Wolfratshauser Straße", 1.2);
+        Road r2 = new Road("Uslar", "Uslar", 1.1);
+        Road r3 = new Road("A50", "A50", 1.15);
+        Road r4 = new Road("A73", "A73", 1.08);
+        Road r5 = new Road("A1", "A1", 1.18);
 
         roadService.insertRoad(r1);
         roadService.insertRoad(r2);

@@ -93,8 +93,8 @@ public class Journey implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        //hash = 79 * hash + Objects.hashCode(this.id);
-        //hash = 79 * hash + Objects.hashCode(this.locations);
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.locations);
         return hash;
     }
 }
