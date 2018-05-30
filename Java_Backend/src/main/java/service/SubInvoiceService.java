@@ -96,7 +96,7 @@ public class SubInvoiceService {
 //                 map roadTaxRates container <uniquePlaceId, taxrate>
                     Map<String, Double> roadTaxRates = new HashMap();
                     for (Entry<String, String> roadNameEntry : roadNames.entrySet()) {
-                        Road temp = null;
+                        Road temp;
                         try {
                             temp = roadDao.getRoad(roadNameEntry.getValue());
                         } catch (PersistenceException pe) {
@@ -129,10 +129,8 @@ public class SubInvoiceService {
             }
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing generateSubInvoices operation; {0}", pe.getMessage());
-
         } catch (Exception ex) {
-            Logger.getLogger(SubInvoiceService.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SubInvoiceService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
