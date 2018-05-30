@@ -1,14 +1,10 @@
 package GoogleApi;
 
-import static domain.Journey_.locations;
-import dto.RoadDTO;
-import dto.TransLocationDTO;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -24,7 +20,7 @@ public class RoadNames {
     private static final String URL = "https://maps.googleapis.com/maps/api/place/details/json?placeid=%s&key=%s";
     private static final String APIKEY = "AIzaSyDOXFVIhlU_vXNSM_4GFuNBigk_XMTFOdo";
 
-    public static PlaceResponse PlaceIdToRoadName(String placeId) throws IOException {
+    public static PlaceResponse PlaceIdToRoadName(String placeId) throws IOException, Exception {
         String fullUrl = String.format(URL, URLEncoder.encode(placeId, StandardCharsets.UTF_8.toString()), APIKEY);
         HttpClient httpClient = HttpClientBuilder.create().build();
         HttpGet request = new HttpGet(fullUrl);

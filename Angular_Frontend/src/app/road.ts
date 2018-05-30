@@ -1,11 +1,13 @@
 export class Road {
   id: number;
-  name: string;
+  shortName: string;
+  longName: string;
   rate: number;
 
-  constructor(id: number, name: string, rate: number) {
+  constructor(id: number, shortName: string, longName: string, rate: number) {
     this.id = id;
-    this.name = name;
+    this.shortName = shortName;
+    this.longName = longName;
     this.rate = rate;
   }
 }

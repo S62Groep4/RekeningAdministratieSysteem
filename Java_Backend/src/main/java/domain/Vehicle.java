@@ -90,6 +90,9 @@ public class Vehicle implements Serializable {
 
     public void clearInvoices() {
         synchronized (subInvoices) {
+            for (SubInvoice i : this.subInvoices) {
+                i.setVehicle(null);
+            }
             this.subInvoices.clear();
         }
     }

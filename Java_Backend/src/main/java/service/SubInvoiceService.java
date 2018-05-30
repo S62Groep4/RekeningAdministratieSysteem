@@ -1,27 +1,25 @@
 package service;
 
-import GoogleApi.PlaceResponse;
 import GoogleApi.SnappedPoint;
+import dao.RoadDAO;
 import dao.SubInvoiceDAO;
 import dao.VehicleDAO;
 import domain.Journey;
+import domain.Road;
 import domain.SubInvoice;
 import domain.TransLocation;
 import domain.Vehicle;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.PersistenceException;
-import util.DomainToDto;
 
 /**
  *
@@ -36,7 +34,11 @@ public class SubInvoiceService {
     @Inject
     VehicleDAO vehicleDao;
 
+    @Inject
+    RoadDAO roadDao;
+
     private static final Logger LOGGER = Logger.getLogger(SubInvoiceService.class.getName());
+    private final double BASETAX = 0.05;
 
     public SubInvoiceService() {
     }
@@ -45,10 +47,7 @@ public class SubInvoiceService {
         try {
             List<Vehicle> vehicles = vehicleDao.getAllVehicles();
             for (Vehicle v : vehicles) {
-
-                for (SubInvoice i : v.getSubInvoices()) {
-                    i.setVehicle(null);
-                }
+//                clear invoices for this vehicle before (re)calculating
                 v.clearInvoices();
 
                 Map<String, List<Journey>> journeysPerMonth = new HashMap();
@@ -67,42 +66,71 @@ public class SubInvoiceService {
                 }
 
                 for (Map.Entry<String, List<Journey>> entry : journeysPerMonth.entrySet()) {
-                    SubInvoice invoice = new SubInvoice(null, "49", 0, entry.getKey());
                     double price = 0;
 
-                    /*
 //                zoek de wegen via Google api
                     List<TransLocation> locationsThisMonth = new ArrayList();
                     for (Journey j : entry.getValue()) {
                         locationsThisMonth.addAll(j.getTransLocations());
                     }
-                    List<SnappedPoint> snappedPoints = GoogleApi.NearestRoads.CoordinatesToPlaceIds(DomainToDto.TRANSLOCATIONSTODTOS(locationsThisMonth));
 
-                    Set<String> uniquePlaceIds = new TreeSet();
-
-//                 voeg de placeId's toe aan een set zodat er geen dubbele entries zijn
-                    for (SnappedPoint sp : snappedPoints) {
-                        uniquePlaceIds.add(sp.getPlaceId());
+                    Map<TransLocation, SnappedPoint> snappedPoints = new HashMap();
+                    try {
+                        snappedPoints = GoogleApi.NearestRoads.CoordinatesToPlaceIds(locationsThisMonth);
+                    } catch (IOException ex) {
+                        //handle coordinate could not be mapped to placeID
+                        Logger.getLogger(SubInvoiceService.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
 //                 zoek de wegnamen (short_name)
                     Map<String, String> roadNames = new HashMap();
-                    for (String uniquePlaceId : uniquePlaceIds) {
-                        roadNames.put(uniquePlaceId, GoogleApi.RoadNames.PlaceIdToRoadName(uniquePlaceId).getShort_name());
+                    for (SnappedPoint sp : snappedPoints.values()) {
+                        try {
+                            roadNames.put(sp.getPlaceId(), GoogleApi.RoadNames.PlaceIdToRoadName(sp.getPlaceId()).getShort_name());
+                        } catch (Exception ex) {
+                            //handle placeID could not be mapped to road name
+                            Logger.getLogger(SubInvoiceService.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+
+//                 map roadTaxRates container <uniquePlaceId, taxrate>
+                    Map<String, Double> roadTaxRates = new HashMap();
+                    for (Entry<String, String> roadNameEntry : roadNames.entrySet()) {
+                        Road temp = null;
+                        try {
+                            temp = roadDao.getRoad(roadNameEntry.getValue());
+                        } catch (PersistenceException pe) {
+//                            if road not found
+                            continue;
+                        }
+                        roadTaxRates.put(roadNameEntry.getKey(), temp.getRate());
                     }
 
                     //TO DO 
                     //koppel prijs aan de wegen en set de prijs van de invoice
-                     */
-                    invoice.setVehicle(v);
-                    invoice.setPrice(price);
-                    v.addInvoice(invoice);
-                }
+                    for (TransLocation l : locationsThisMonth) {
+                        try {
+                            //debug wat er precies gebeurt met duplicates
+                            //wel/niet toegevoegd aan prijs
+                            price += roadTaxRates.get(snappedPoints.get(l).getPlaceId());
+                        } catch (NullPointerException pne) {
+                            //als weg niet gevonden is dan houd basisprijs aan
+                            price += BASETAX;
+                        }
+                    }
 
+                    if (price != 0) {
+                        SubInvoice invoice = new SubInvoice(null, "49", price, entry.getKey());
+                        invoice.setVehicle(v);
+                        v.addInvoice(invoice);
+                    }
+                }
                 vehicleDao.updateVehicle(v);
             }
-        } catch (PersistenceException /*| IOException*/ pe) {
+        } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing generateSubInvoices operation; {0}", pe.getMessage());
+        } catch (Exception ex) {
+            Logger.getLogger(SubInvoiceService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
