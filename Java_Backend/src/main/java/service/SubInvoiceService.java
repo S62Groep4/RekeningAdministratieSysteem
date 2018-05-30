@@ -129,8 +129,10 @@ public class SubInvoiceService {
             }
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing generateSubInvoices operation; {0}", pe.getMessage());
+
         } catch (Exception ex) {
-            Logger.getLogger(SubInvoiceService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SubInvoiceService.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
