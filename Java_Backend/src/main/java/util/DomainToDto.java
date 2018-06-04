@@ -146,7 +146,8 @@ public class DomainToDto {
         for (Road r : roads) {
             RoadDTO roadDto = new RoadDTO(
                     r.getId(),
-                    r.getName(),
+                    r.getShortName(),
+                    r.getLongName(),
                     r.getRate());
             roadDtos.add(roadDto);
         }
@@ -160,7 +161,8 @@ public class DomainToDto {
 
         return new RoadDTO(
                 road.getId(),
-                road.getName(),
+                road.getShortName(),
+                road.getLongName(),
                 road.getRate());
     }
 

@@ -1,15 +1,23 @@
 package service;
 
+import GoogleApi.PlaceResponse;
+import GoogleApi.SnappedPoint;
 import domain.Journey;
 import domain.Person;
 import domain.Road;
-import domain.SubInvoice;
 import domain.TransLocation;
 import domain.Vehicle;
+import dto.TransLocationDTO;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
+import util.DomainToDto;
 
 /**
  *
@@ -109,16 +117,16 @@ public class Init {
         j3.addTransLocation(loc11);
 
         Journey j4 = new Journey(null);
-        TransLocation loc12 = new TransLocation(48.087453, 11.535139, "301214", "49");
+        TransLocation loc12 = new TransLocation(52.464471, 13.231006, "301214", "49");
         loc12.setDateTime("2018-05-01T12:00:00+0200");
         j4.addTransLocation(loc12);
-        TransLocation loc13 = new TransLocation(48.058089, 11.359358, "301214", "49");
+        TransLocation loc13 = new TransLocation(52.462072, 13.227734, "301214", "49");
         loc13.setDateTime("2018-05-02T12:00:00+0200");
         j4.addTransLocation(loc13);
-        TransLocation loc14 = new TransLocation(48.014012, 11.139631, "301214", "49");
+        TransLocation loc14 = new TransLocation(52.459052, 13.223861, "301214", "49");
         loc14.setDateTime("2018-05-03T12:00:00+0200");
         j4.addTransLocation(loc14);
-        TransLocation loc15 = new TransLocation(48.028709, 10.985823, "301214", "49");
+        TransLocation loc15 = new TransLocation(52.454332, 13.217960, "301214", "49");
         loc15.setDateTime("2018-05-04T12:00:00+0200");
         j4.addTransLocation(loc15);
 
@@ -147,11 +155,11 @@ public class Init {
         person2.addVehicle(veh2);
         person3.addVehicle(veh3);
 
-        Road r1 = new Road("A2", 1.2);
-        Road r2 = new Road("A55", 1.1);
-        Road r3 = new Road("A50", 1.15);
-        Road r4 = new Road("A73", 1.08);
-        Road r5 = new Road("A1", 1.18);
+        Road r1 = new Road("B11", "Wolfratshauser Straße", 1.0);
+        Road r2 = new Road("Uslar", "Uslar",1.0);
+        Road r3 = new Road("E51", "Autobahnzubringer Magdeburg/Leipzig", 1.0);
+        Road r4 = new Road("A73", "A73", 1.0);
+        Road r5 = new Road("A1", "A1", 1.0);
 
         roadService.insertRoad(r1);
         roadService.insertRoad(r2);

@@ -126,7 +126,8 @@ public class DtoToDomain {
         for (RoadDTO r : roadDTOs) {
             Road road = new Road(
                     r.getId(),
-                    r.getName(),
+                    r.getShortName(),
+                    r.getLongName(),
                     r.getRate());
             roads.add(road);
         }
@@ -140,7 +141,8 @@ public class DtoToDomain {
 
         return new Road(
                 roadDTO.getId(),
-                roadDTO.getName(),
+                roadDTO.getShortName(),
+                roadDTO.getLongName(),
                 roadDTO.getRate());
     }
 
