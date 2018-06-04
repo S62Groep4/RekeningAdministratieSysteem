@@ -23,10 +23,19 @@ public class TransLocationService {
 
     public TransLocationService() {
     }
-
-    public TransLocation getTransLocation(String serialNumber) throws PersistenceException {
+    
+    public List<TransLocation> getAllTransLocationsByJourney(long id){
         try {
-            return translocationDao.getTransLocation(serialNumber);
+            return translocationDao.getAllTransLocationsByJourney(id);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing getTransLocation operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
+
+    public TransLocation getTransLocation(Long carTrackerId) throws PersistenceException {
+        try {
+            return translocationDao.getTransLocation(carTrackerId);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing getTransLocation operation; {0}", pe.getMessage());
             return null;
@@ -42,30 +51,29 @@ public class TransLocationService {
         }
     }
 
-    public boolean updateTransLocation(TransLocation location) throws PersistenceException {
+    public TransLocation updateTransLocation(TransLocation location) throws PersistenceException {
         try {
             return translocationDao.updateTransLocation(location);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing updateTransLocation operation; {0}", pe.getMessage());
-            return false;
+            return null;
         }
     }
 
-    public boolean removeTransLocation(String serialNumber) throws PersistenceException {
+    public void removeTransLocation(Long carTrackerId) throws PersistenceException {
         try {
-            return translocationDao.removeTransLocation(serialNumber);
+            translocationDao.removeTransLocation(carTrackerId);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing removeTransLocation operation; {0}", pe.getMessage());
-            return false;
         }
     }
 
-    public boolean insertTransLocation(TransLocation location) throws PersistenceException {
+    public TransLocation insertTransLocation(TransLocation location) throws PersistenceException {
         try {
             return translocationDao.insertTransLocation(location);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing insertTransLocation operation; {0}", pe.getMessage());
-            return false;
+            return null;
         }
     }
 }

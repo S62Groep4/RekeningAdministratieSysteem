@@ -1,12 +1,15 @@
 package domain;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
@@ -17,8 +20,11 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "TransLocation.findAll", query = "SELECT t FROM TransLocation t")
-    ,@NamedQuery(name = "TransLocation.findBySerialNumber", query = "SELECT t FROM TransLocation t WHERE t.serialNumber = :serialNumber")})
+    ,@NamedQuery(name = "TransLocation.findByCarTrackerId", query = "SELECT t FROM TransLocation t WHERE t.carTrackerId = :carTrackerId")
+    ,@NamedQuery(name = "TransLocation.findByJourneyId", query = "SELECT t FROM TransLocation t WHERE t.journey.id = :journeyId")})
 public class TransLocation implements Serializable {
+
+    private static final DateFormat DF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -26,17 +32,18 @@ public class TransLocation implements Serializable {
     private Double lat;
     private Double lon;
     private String dateTime;
-    private String serialNumber;
+    private String carTrackerId;
     private String countryCode;
-    private int journeyId;
+    @ManyToOne
+    private Journey journey;
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
-    public int getJourneyId() {
-        return journeyId;
+    public Journey getJourney() {
+        return journey;
     }
 
-    public void setJourneyId(int journeyId) {
-        this.journeyId = journeyId;
+    public void setJourney(Journey journey) {
+        this.journey = journey;
     }
 
     public Double getLat() {
@@ -51,8 +58,8 @@ public class TransLocation implements Serializable {
         return dateTime;
     }
 
-    public String getSerialNumber() {
-        return serialNumber;
+    public String getCarTrackerId() {
+        return carTrackerId;
     }
 
     public String getCountryCode() {
@@ -79,8 +86,8 @@ public class TransLocation implements Serializable {
         this.dateTime = dateTime;
     }
 
-    public void setSerialNumber(String serialNumber) {
-        this.serialNumber = serialNumber;
+    public void setCarTrackerId(String carTrackerId) {
+        this.carTrackerId = carTrackerId;
     }
 
     public void setCountryCode(String countryCode) {
@@ -91,13 +98,12 @@ public class TransLocation implements Serializable {
     public TransLocation() {
     }
 
-    public TransLocation(Double lat, Double lon, String serialNumber, String countryCode, int journeyId) {
+    public TransLocation(Double lat, Double lon, String carTracker, String countryCode) {
         this.lat = lat;
         this.lon = lon;
-        this.dateTime = new Date(System.currentTimeMillis()).toString();
-        this.serialNumber = serialNumber;
+        this.dateTime = DF.format(new Date());
+        this.carTrackerId = carTracker;
         this.countryCode = countryCode;
-        this.journeyId = journeyId;
     }
 
     @Override
@@ -115,11 +121,11 @@ public class TransLocation implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 53 * hash + Objects.hashCode(this.lat);
-        hash = 53 * hash + Objects.hashCode(this.lon);
-        hash = 53 * hash + Objects.hashCode(this.dateTime);
-        hash = 53 * hash + Objects.hashCode(this.serialNumber);
-        hash = 53 * hash + Objects.hashCode(this.countryCode);
+        hash = 59 * hash + Objects.hashCode(this.lat);
+        hash = 59 * hash + Objects.hashCode(this.lon);
+        hash = 59 * hash + Objects.hashCode(this.dateTime);
+        hash = 59 * hash + Objects.hashCode(this.carTrackerId);
+        hash = 59 * hash + Objects.hashCode(this.countryCode);
         return hash;
     }
 }

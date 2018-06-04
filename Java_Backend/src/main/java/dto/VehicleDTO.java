@@ -8,62 +8,60 @@ import java.io.Serializable;
  */
 public class VehicleDTO implements Serializable {
 
-    private String hashedLicencePlate;
-    private String journeyUrl;
-    private int journeys;
-    private String subInvoiceUrl;
-    private int subInvoices;
+    private String hashedLicensePlate;
+    private String journeyUri;
+    private String subInvoiceUri;
+    private String ownerUri;
+    private String carTrackerId;
 
     public VehicleDTO() {
     }
 
-    public VehicleDTO(String hashedLicencePlate, String journeyUrl, int journeys, String subInvoiceUrl, int subInvoices) {
-        this.hashedLicencePlate = hashedLicencePlate;
-        this.journeyUrl = journeyUrl;
-        this.journeys = journeys;
-        this.subInvoiceUrl = subInvoiceUrl;
-        this.subInvoices = subInvoices;
+    public VehicleDTO(String hashedLicensePlate, String journeyUri, String subInvoiceUri, String ownerUri, String carTrackerId) {
+        this.hashedLicensePlate = hashedLicensePlate;
+        this.journeyUri = journeyUri;
+        this.subInvoiceUri = subInvoiceUri;
+        this.ownerUri = ownerUri;
+        this.carTrackerId = carTrackerId;
     }
 
-    public String getHashedLicencePlate() {
-        return hashedLicencePlate;
+    public String getCarTrackerId() {
+        return carTrackerId;
     }
 
-    public void setHashedLicencePlate(String hashedLicencePlate) {
-        this.hashedLicencePlate = hashedLicencePlate;
+    public void setCarTrackerId(String carTrackerId) {
+        this.carTrackerId = carTrackerId;
     }
 
-    public String getJourneyUrl() {
-        return journeyUrl;
+    public String getOwnerUri() {
+        return ownerUri;
     }
 
-    public void setJourneyUrl(String journeyUrl) {
-        this.journeyUrl = journeyUrl;
+    public void setOwnerUri(String ownerUri) {
+        this.ownerUri = ownerUri;
     }
 
-    public int getJourneys() {
-        return journeys;
+    public void setHashedLicensePlate(String hashedLicensePlate) {
+        this.hashedLicensePlate = hashedLicensePlate;
     }
 
-    public void setJourneys(int journeys) {
-        this.journeys = journeys;
+    public void setJourneyUri(String journeyUri) {
+        this.journeyUri = journeyUri;
     }
 
-    public String getSubInvoiceUrl() {
-        return subInvoiceUrl;
+    public void setSubInvoiceUri(String subInvoiceUri) {
+        this.subInvoiceUri = subInvoiceUri;
     }
 
-    public void setSubInvoiceUrl(String subInvoiceUrl) {
-        this.subInvoiceUrl = subInvoiceUrl;
+    public String getHashedLicensePlate() {
+        return hashedLicensePlate;
     }
 
-    public int getSubInvoices() {
-        return subInvoices;
+    public String getJourneyUri() {
+        return journeyUri;
     }
 
-    public void setSubInvoices(int subInvoices) {
-        this.subInvoices = subInvoices;
+    public String getSubInvoiceUri() {
+        return subInvoiceUri;
     }
-    
-    
 }

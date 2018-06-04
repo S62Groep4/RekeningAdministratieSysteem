@@ -9,16 +9,14 @@ import java.io.Serializable;
 public class JourneyDTO implements Serializable {
 
     private Long id;
-    private String translocationUrl;
-    private int translocations;
+    private String translocationUri;
 
     public JourneyDTO() {
     }
 
-    public JourneyDTO(Long id, String translocationUrl, int translocations) {
+    public JourneyDTO(Long id, String translocationUri) {
         this.id = id;
-        this.translocationUrl = translocationUrl;
-        this.translocations = translocations;
+        this.translocationUri = translocationUri;
     }
 
     public Long getId() {
@@ -29,20 +27,11 @@ public class JourneyDTO implements Serializable {
         this.id = id;
     }
 
-    public String getTranslocationUrl() {
-        return translocationUrl;
+    public String getTranslocationUri() {
+        return translocationUri;
     }
 
-    public void setTranslocationUrl(String translocationUrl) {
-        this.translocationUrl = translocationUrl;
+    public void setTranslocationUri(String translocationUri) {
+        this.translocationUri = translocationUri;
     }
-
-    public int getTranslocations() {
-        return translocations;
-    }
-
-    public void setTranslocations(int translocations) {
-        this.translocations = translocations;
-    }
-
 }

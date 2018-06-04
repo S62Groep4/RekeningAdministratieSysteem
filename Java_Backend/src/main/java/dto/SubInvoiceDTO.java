@@ -8,61 +8,70 @@ import java.io.Serializable;
  */
 public class SubInvoiceDTO implements Serializable {
 
-    private String invoiceNumber;
+    private Long invoiceNumber;
     private String country;
-    private boolean isPayed;
+    private String paymentStatus;
     private String invoiceDate;
-    private double price;
+    private String price;
+    private String ownerUri;
 
     public SubInvoiceDTO() {
     }
 
-    public SubInvoiceDTO(String invoiceNumber, String country, boolean isPayed, String invoiceDate, double price) {
+    public SubInvoiceDTO(Long invoiceNumber, String country, String paymentStatus, String invoiceDate, String price, String ownerUri) {
         this.invoiceNumber = invoiceNumber;
         this.country = country;
-        this.isPayed = isPayed;
+        this.paymentStatus = paymentStatus;
         this.invoiceDate = invoiceDate;
         this.price = price;
+        this.ownerUri = ownerUri;
     }
 
-    public String getInvoiceNumber() {
-        return invoiceNumber;
+    public String getOwnerUri() {
+        return ownerUri;
     }
 
-    public void setInvoiceNumber(String invoiceNumber) {
+    public void setOwnerUri(String ownerUri) {
+        this.ownerUri = ownerUri;
+    }
+
+    public void setInvoiceNumber(Long invoiceNumber) {
         this.invoiceNumber = invoiceNumber;
-    }
-
-    public String getCountry() {
-        return country;
     }
 
     public void setCountry(String country) {
         this.country = country;
     }
 
-    public boolean isIsPayed() {
-        return isPayed;
-    }
-
-    public void setIsPayed(boolean isPayed) {
-        this.isPayed = isPayed;
-    }
-
-    public String getInvoiceDate() {
-        return invoiceDate;
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
     public void setInvoiceDate(String invoiceDate) {
         this.invoiceDate = invoiceDate;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
+    public Long getInvoiceNumber() {
+        return invoiceNumber;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public String getInvoiceDate() {
+        return invoiceDate;
+    }
+
+    public String getPrice() {
+        return price;
+    }
 }

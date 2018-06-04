@@ -18,8 +18,12 @@ public class SubInvoiceDAOImpl implements SubInvoiceDAO {
     EntityManager em;
 
     @Override
-    public SubInvoice getSubInvoice(String invoiceNumber) throws PersistenceException {
-        return (SubInvoice) em.createNamedQuery("SubInvoice.findByInvoiceNumber").setParameter("invoiceNumber", invoiceNumber).getSingleResult();
+    public SubInvoice getSubInvoice(Long invoiceNumber) throws PersistenceException {
+        SubInvoice invoice = (SubInvoice) em.createNamedQuery("SubInvoice.findByInvoiceNumber").setParameter("invoiceNumber", invoiceNumber).getSingleResult();
+        if (invoice != null) {
+            return invoice;
+        }
+        return new SubInvoice();
     }
 
     @Override
@@ -28,21 +32,18 @@ public class SubInvoiceDAOImpl implements SubInvoiceDAO {
     }
 
     @Override
-    public boolean updateSubInvoice(SubInvoice invoice) throws PersistenceException {
-        em.merge(invoice);
-        return true;
+    public SubInvoice updateSubInvoice(SubInvoice invoice) throws PersistenceException {
+        return em.merge(invoice);
     }
 
     @Override
-    public boolean removeSubInvoice(String invoiceNumber) throws PersistenceException {
+    public void removeSubInvoice(Long invoiceNumber) throws PersistenceException {
         em.remove(em.find(SubInvoice.class, invoiceNumber));
-        return true;
     }
 
     @Override
-    public boolean insertSubInvoice(SubInvoice invoice) throws PersistenceException {
+    public SubInvoice insertSubInvoice(SubInvoice invoice) throws PersistenceException {
         em.persist(invoice);
-        return true;
+        return invoice;
     }
-
 }

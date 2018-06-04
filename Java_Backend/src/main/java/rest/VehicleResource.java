@@ -1,19 +1,19 @@
 package rest;
 
 import domain.Vehicle;
+import dto.JourneyDTO;
+import dto.SubInvoiceDTO;
+import dto.VehicleDTO;
+import java.util.Base64;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import service.VehicleService;
+import util.DomainToDto;
+import util.DtoToDomain;
 
 @Stateless
 @Path("vehicles")
@@ -25,29 +25,75 @@ public class VehicleResource {
     VehicleService vehicleService;
 
     @POST
-    public void insertVehicle(Vehicle vehicle) {
-        vehicleService.insertVehicle(vehicle);
+    public Response insertVehicle(VehicleDTO vehicle) {
+        Vehicle vehicleToÍnsert = DtoToDomain.VEHICLE_DTO_TO_DOMAIN(vehicle);
+        VehicleDTO dto = DomainToDto.VEHICLESTODTOS(vehicleService.insertVehicle(vehicleToÍnsert));
+        return Response.ok(dto).build();
     }
 
     @PUT
-    public void updateVehicle(Vehicle vehicle) {
-        vehicleService.updateVehicle(vehicle);
+    public Response updateVehicle(VehicleDTO vehicle) {
+        Vehicle vehicleToUpdate = DtoToDomain.VEHICLE_DTO_TO_DOMAIN(vehicle);
+        VehicleDTO dto = DomainToDto.VEHICLESTODTOS(vehicleService.updateVehicle(vehicleToUpdate));
+        return Response.ok(dto).build();
     }
 
     @DELETE
     @Path("{hashedLicensePlate}")
-    public void removeVehicle(@PathParam("hashLicensePlate") String hashedLicensePlate) {
+    public Response removeVehicle(@PathParam("hashedLicensePlate") String encodedLicensePlate) {
+        String hashedLicensePlate = new String(Base64.getDecoder().decode(encodedLicensePlate));
         vehicleService.removeVehicle(hashedLicensePlate);
+        return Response.ok().build();
     }
 
     @GET
-    @Path("{hashedLicensePlate}")
-    public Vehicle getVehicle(@PathParam("hashLicensePlate") String hashedLicensePlate) {
-        return vehicleService.getVehicle(hashedLicensePlate);
+    @Path("{LicensePlate}")
+    public Response getVehicle(
+            @DefaultValue("true") @QueryParam("hashed") boolean hashed,
+            @PathParam("LicensePlate") String licensePlate) {
+        if (hashed) {
+            String hashedLicensePlate = new String(Base64.getDecoder().decode(licensePlate));
+            VehicleDTO dto = DomainToDto.VEHICLESTODTOS(vehicleService.getVehicle(hashedLicensePlate, true));
+            return Response.ok(dto).build();
+        } else {
+            VehicleDTO dto = DomainToDto.VEHICLESTODTOS(vehicleService.getVehicle(licensePlate, false));
+            return Response.ok(dto).build();
+        }
     }
 
     @GET
-    public List<Vehicle> getAllVehicles() {
-        return vehicleService.getAllVehicles();
+    @Path("cartracker/{carTrackerId}")
+    public Response getVehicle(@PathParam("carTrackerId") Long carTrackerId) {
+        VehicleDTO dto = DomainToDto.VEHICLESTODTOS(vehicleService.getVehicle(carTrackerId));
+        return Response.ok(dto).build();
+    }
+
+    @GET
+    @Path("owner/{personId}")
+    public Response getVehiclesOwnedBy(@PathParam("personId") Long personId) {
+        List<VehicleDTO> dto = DomainToDto.VEHICLESTODTOS(vehicleService.getVehiclesOwnedBy(personId));
+        return Response.ok(dto).build();
+    }
+
+    @GET
+    @Path("{hashedLicensePlate}/journeys")
+    public Response getVehicleJourneys(@PathParam("hashedLicensePlate") String encodedLicensePlate) {
+        String hashedLicensePlate = new String(Base64.getDecoder().decode(encodedLicensePlate));
+        List<JourneyDTO> dto = DomainToDto.JOURNEYSTODTOS(vehicleService.getVehicleJourneys(hashedLicensePlate));
+        return Response.ok(dto).build();
+    }
+
+    @GET
+    @Path("{hashedLicensePlate}/invoices")
+    public Response getVehicleInvoices(@PathParam("hashedLicensePlate") String encodedLicensePlate) {
+        String hashedLicensePlate = new String(Base64.getDecoder().decode(encodedLicensePlate));
+        List<SubInvoiceDTO> dto = DomainToDto.SUBINVOICESTODTOS(vehicleService.getVehicleInvoices(hashedLicensePlate));
+        return Response.ok(dto).build();
+    }
+
+    @GET
+    public Response getAllVehicles() {
+        List<VehicleDTO> dto = DomainToDto.VEHICLESTODTOS(vehicleService.getAllVehicles());
+        return Response.ok(dto).build();
     }
 }

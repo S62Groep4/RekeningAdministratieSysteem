@@ -18,8 +18,12 @@ public class TransLocationDAOImpl implements TransLocationDAO {
     EntityManager em;
 
     @Override
-    public TransLocation getTransLocation(String serialNumber) throws PersistenceException {
-        return (TransLocation) em.createNamedQuery("TransLocation.findBySerialNumber").setParameter("serialNumber", serialNumber).getSingleResult();
+    public TransLocation getTransLocation(Long carTrackerId) throws PersistenceException {
+        TransLocation location = (TransLocation) em.createNamedQuery("TransLocation.findByCarTrackerId").setParameter("carTrackerId", carTrackerId).getSingleResult();
+        if (location != null) {
+            return location;
+        }
+        return new TransLocation();
     }
 
     @Override
@@ -28,20 +32,23 @@ public class TransLocationDAOImpl implements TransLocationDAO {
     }
 
     @Override
-    public boolean updateTransLocation(TransLocation location) throws PersistenceException {
-        em.merge(location);
-        return true;
+    public List<TransLocation> getAllTransLocationsByJourney(long id) throws PersistenceException {
+        return em.createNamedQuery("TransLocation.findByJourneyId").setParameter("journeyId", id).getResultList();
     }
 
     @Override
-    public boolean removeTransLocation(String serialNumber) throws PersistenceException {
-        em.remove(em.find(TransLocation.class, serialNumber));
-        return true;
+    public TransLocation updateTransLocation(TransLocation location) throws PersistenceException {
+        return em.merge(location);
     }
 
     @Override
-    public boolean insertTransLocation(TransLocation location) throws PersistenceException {
+    public void removeTransLocation(Long carTrackerId) throws PersistenceException {
+        em.remove(em.find(TransLocation.class, carTrackerId));
+    }
+
+    @Override
+    public TransLocation insertTransLocation(TransLocation location) throws PersistenceException {
         em.persist(location);
-        return true;
+        return location;
     }
 }
