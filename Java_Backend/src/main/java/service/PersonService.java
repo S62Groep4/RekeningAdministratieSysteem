@@ -2,10 +2,7 @@ package service;
 
 import dao.PersonDAO;
 import dao.VehicleDAO;
-import domain.Journey;
-import domain.Person;
-import domain.SubInvoice;
-import domain.Vehicle;
+import domain.*;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -25,6 +22,8 @@ public class PersonService {
     PersonDAO personDAO;
     @Inject
     VehicleDAO vehicleDAO;
+
+    @Inject AddressService addressService;
 
     private static final Logger LOGGER = Logger.getLogger(PersonService.class.getName());
 
@@ -65,6 +64,25 @@ public class PersonService {
             LOGGER.log(Level.FINE, "ERROR while performing updatePerson operation; {0}", pe.getMessage());
             return null;
         }
+    }
+
+    public Person setPersonsAddress(int personId, Address address){
+        Person managedPerson = this.getPerson(personId);
+        if(managedPerson == null){
+            // Modern Java compiler convert your + operations by StringBuilders append.
+            throw new NullPointerException("ERROR while performing setPersonsAddress operation, can not find person with id " + personId );
+        }
+
+        Address managedAddress = addressService.findAddress(address);
+        if(managedAddress == null){
+            managedAddress = addressService.insertAddress(address);
+        };
+
+        managedPerson.setAddress(managedAddress);
+        managedPerson = updatePerson(managedPerson);
+
+        return managedPerson;
+
     }
 
     public Person getPersonByVehicle(Vehicle vehicle) {

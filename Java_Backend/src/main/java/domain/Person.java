@@ -2,12 +2,15 @@ package domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.CascadeType.DETACH;
+import static javax.persistence.CascadeType.REMOVE;
 
 /**
  *
@@ -15,8 +18,8 @@ import static javax.persistence.CascadeType.ALL;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p")
-    ,@NamedQuery(name = "Person.GetPersonByCar", query = "SELECT p FROM Person p WHERE :vehicle member p.vehicles")
+    @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p"),
+    @NamedQuery(name = "Person.GetPersonByCar", query = "SELECT p FROM Person p WHERE :vehicle member p.vehicles")
 })
 public class Person implements Serializable {
 
@@ -25,7 +28,12 @@ public class Person implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
-    @OneToMany(mappedBy = "owner", cascade = ALL)
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "person_id")
+    private Address address;
+
+    @OneToMany(mappedBy = "owner", cascade = ALL, fetch = FetchType.LAZY)
     private final List<Vehicle> vehicles = new ArrayList<>();
 
     public Person() {
@@ -69,6 +77,15 @@ public class Person implements Serializable {
 
     public List<Vehicle> getVehicles() {
         return Collections.unmodifiableList(vehicles);
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+        this.address.addPerson(this);
     }
 
     public void addVehicle(Vehicle vehicle) {
