@@ -1,18 +1,23 @@
 package rest;
 
+import domain.Address;
 import domain.Person;
 import domain.Vehicle;
+import dto.AddressDTO;
 import dto.PersonDTO;
 import dto.VehicleDTO;
+import service.AddressService;
 import service.PersonService;
 import service.VehicleService;
 import util.DomainToDto;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+
 import util.DtoToDomain;
 
 @Stateless
@@ -26,6 +31,10 @@ public class PersonResource {
 
     @Inject
     VehicleService vehicleService;
+
+    @Inject
+    AddressService addressService;
+
 
     @GET
     public Response getPersons() {
@@ -111,5 +120,21 @@ public class PersonResource {
     public Response insertPerson(PersonDTO person) {
         PersonDTO personDTO = DomainToDto.PERSONSTODTOS(personService.insertPerson(DtoToDomain.PERSON_DTO_TO_DOMAIN(person)));
         return Response.ok(personDTO).build();
+    }
+
+    @POST
+    @Path("{identifier}/address")
+
+    public Response insertAddress(
+            @PathParam("identifier") int id,
+            AddressDTO addressDTO) {
+        // Link the address create an address object and link this to a person
+        Person person =
+                personService.setPersonsAddress(id,
+                        DtoToDomain.ADDRESS_DTO_TO_DOMAIN(addressDTO)
+                );
+        // Return a dto of the address
+        AddressDTO dto = DomainToDto.ADDRESSTODTOS(person.getAddress());
+        return Response.ok(dto).build();
     }
 }

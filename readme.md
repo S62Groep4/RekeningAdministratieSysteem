@@ -31,3 +31,5 @@ DELETE Delete a vehicle of a user
 - RekeningAdministratieSysteem-1.0-SNAPSHOT/api/persons/{id}/vehicles/{hashedPlate}
 
 
+post Add a address to a user (Old one will be overridden)
+- RekeningAdministratieSysteem-1.0-SNAPSHOT/api/persons/{id}/address
