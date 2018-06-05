@@ -42,7 +42,7 @@ public class RoadDAOImpl implements RoadDAO {
 
     @Override
     public List<Road> searchRoad(String name) throws PersistenceException {
-        return em.createNamedQuery("Road.searchByName").setParameter("roadName", "%" + name + "%").getResultList();
+        return em.createNamedQuery("Road.findByName").setParameter("roadName", "%" + name + "%").getResultList();
     }
 
     @Override
