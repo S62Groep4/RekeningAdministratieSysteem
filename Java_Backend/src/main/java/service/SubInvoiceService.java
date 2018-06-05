@@ -47,7 +47,7 @@ public class SubInvoiceService {
         try {
             List<Vehicle> vehicles = vehicleDao.getAllVehicles();
             for (Vehicle v : vehicles) {
-//                clear invoices for this vehicle before (re)calculating
+//                clear invoices for this vehicle before (re)calculating to avoid duplicates
                 v.clearInvoices();
 
                 Map<String, List<Journey>> journeysPerMonth = new HashMap();
@@ -79,7 +79,7 @@ public class SubInvoiceService {
                         snappedPoints = GoogleApi.NearestRoads.CoordinatesToPlaceIds(locationsThisMonth);
                     } catch (IOException ex) {
                         //handle coordinate could not be mapped to placeID
-                        Logger.getLogger(SubInvoiceService.class.getName()).log(Level.SEVERE, null, ex);
+                        LOGGER.log(Level.SEVERE, null, ex);
                     }
 
 //                 zoek de wegnamen (short_name)
@@ -89,7 +89,7 @@ public class SubInvoiceService {
                             roadNames.put(sp.getPlaceId(), GoogleApi.RoadNames.PlaceIdToRoadName(sp.getPlaceId()).getShort_name());
                         } catch (Exception ex) {
                             //handle placeID could not be mapped to road name
-                            Logger.getLogger(SubInvoiceService.class.getName()).log(Level.SEVERE, null, ex);
+                            LOGGER.log(Level.SEVERE, null, ex);
                         }
                     }
 
@@ -130,7 +130,7 @@ public class SubInvoiceService {
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing generateSubInvoices operation; {0}", pe.getMessage());
         } catch (Exception ex) {
-            Logger.getLogger(SubInvoiceService.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "ERROR while performing generateSubInvoices operation; {0}", ex.getMessage());
         }
     }
 

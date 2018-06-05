@@ -18,7 +18,7 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
     @NamedQuery(name = "Road.findAll", query = "SELECT r FROM Road r")
     ,@NamedQuery(name = "Road.findById", query = "SELECT r FROM Road r WHERE r.id = :roadId")
-    ,@NamedQuery(name = "Road.findByName", query = "SELECT r FROM Road r WHERE r.shortName = :roadName OR r.longName = :roadName")})
+    ,@NamedQuery(name = "Road.findByName", query = "SELECT r FROM Road r WHERE (r.shortName LIKE :roadName) OR (r.longName LIKE :roadName)")})
 public class Road implements Serializable {
 
     @Id
