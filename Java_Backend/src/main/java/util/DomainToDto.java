@@ -1,11 +1,6 @@
 package util;
 
-import domain.Journey;
-import domain.Person;
-import domain.Road;
-import domain.SubInvoice;
-import domain.TransLocation;
-import domain.Vehicle;
+import domain.*;
 import dto.*;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -151,7 +146,8 @@ public class DomainToDto {
         for (Road r : roads) {
             RoadDTO roadDto = new RoadDTO(
                     r.getId(),
-                    r.getName(),
+                    r.getShortName(),
+                    r.getLongName(),
                     r.getRate());
             roadDtos.add(roadDto);
         }
@@ -165,7 +161,8 @@ public class DomainToDto {
 
         return new RoadDTO(
                 road.getId(),
-                road.getName(),
+                road.getShortName(),
+                road.getLongName(),
                 road.getRate());
     }
 
@@ -180,7 +177,8 @@ public class DomainToDto {
                     p.getId(),
                     p.getFirstName(),
                     p.getLastName(),
-                    APIURI + "persons/" + p.getId() + "/vehicles");
+                    APIURI + "persons/" + p.getId() + "/vehicles",
+                    APIURI + "address/" + p.getId());
             personDtos.add(personDto);
         }
         return personDtos;
@@ -195,6 +193,42 @@ public class DomainToDto {
                 person.getId(),
                 person.getFirstName(),
                 person.getLastName(),
-                APIURI + "persons/" + person.getId() + "/vehicles");
+                APIURI + "persons/" + person.getId() + "/vehicles",
+                APIURI + "address/" + person.getId()
+        );
+    }
+
+    public static List<AddressDTO> ADDRESSTODTOS(List<Address> addresses) {
+        List<AddressDTO> addressDtos = new ArrayList<>();
+        if (addresses == null || addresses.isEmpty()) {
+            return addressDtos;
+        }
+
+        for (Address a : addresses) {
+            AddressDTO addressDTO = new AddressDTO(
+                    a.getId(),
+                    a.getStreetName(),
+                    a.getStreetNumber(),
+                    a.getZipCode(),
+                    a.getCity(),
+                    a.getCountry());
+
+            addressDtos.add(addressDTO);
+        }
+        return addressDtos;
+    }
+
+    public static AddressDTO ADDRESSTODTOS(Address address) {
+        if (address == null) {
+            return new AddressDTO();
+        }
+
+        return new AddressDTO(
+                address.getId(),
+                address.getStreetName(),
+                address.getStreetNumber(),
+                address.getZipCode(),
+                address.getCity(),
+                address.getCountry());
     }
 }

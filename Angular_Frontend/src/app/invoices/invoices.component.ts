@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Invoice} from '../invoice';
 import {InvoiceService} from '../services/invoice.service';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'app-invoices',
@@ -14,6 +15,9 @@ export class InvoicesComponent implements OnInit {
   selectedInvoiceOwnerLink: string;
   invoices: Invoice[] = [];
 
+  // isLoading: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+
   constructor(private invoiceService: InvoiceService) {
   }
 
@@ -22,7 +26,9 @@ export class InvoicesComponent implements OnInit {
   }
 
   getInvoices(): void {
-    this.invoiceService.getAllInvoices().subscribe(res => this.invoices = res);
+    this.invoiceService.getAllInvoices().subscribe(res => {
+      this.invoices = res;
+    });
   }
 
   generateInvoices(): void {

@@ -121,11 +121,11 @@ public class TransLocation implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        //hash = 59 * hash + Objects.hashCode(this.lat);
-        //hash = 59 * hash + Objects.hashCode(this.lon);
-        //hash = 59 * hash + Objects.hashCode(this.dateTime);
-        //hash = 59 * hash + Objects.hashCode(this.carTrackerId);
-        //hash = 59 * hash + Objects.hashCode(this.countryCode);
+        hash = 59 * hash + Objects.hashCode(this.lat);
+        hash = 59 * hash + Objects.hashCode(this.lon);
+        hash = 59 * hash + Objects.hashCode(this.dateTime);
+        hash = 59 * hash + Objects.hashCode(this.carTrackerId);
+        hash = 59 * hash + Objects.hashCode(this.countryCode);
         return hash;
     }
 }

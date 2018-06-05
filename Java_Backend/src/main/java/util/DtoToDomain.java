@@ -1,11 +1,6 @@
 package util;
 
-import domain.Journey;
-import domain.Person;
-import domain.Road;
-import domain.SubInvoice;
-import domain.TransLocation;
-import domain.Vehicle;
+import domain.*;
 import dto.*;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -131,7 +126,8 @@ public class DtoToDomain {
         for (RoadDTO r : roadDTOs) {
             Road road = new Road(
                     r.getId(),
-                    r.getName(),
+                    r.getShortName(),
+                    r.getLongName(),
                     r.getRate());
             roads.add(road);
         }
@@ -145,7 +141,8 @@ public class DtoToDomain {
 
         return new Road(
                 roadDTO.getId(),
-                roadDTO.getName(),
+                roadDTO.getShortName(),
+                roadDTO.getLongName(),
                 roadDTO.getRate());
     }
 
@@ -174,5 +171,39 @@ public class DtoToDomain {
                 personDTO.getId(),
                 personDTO.getFirstName(),
                 personDTO.getLastName());
+    }
+
+    public static List<Address> ADDRESS_DTO_TO_DOMAIN(List<AddressDTO> addressDTOS) {
+        List<Address> addresses = new ArrayList<>();
+        if (addressDTOS == null || addressDTOS.isEmpty()) {
+            return addresses;
+        }
+
+        for (AddressDTO a : addressDTOS) {
+            Address address = new Address(
+                    a.getId(),
+                    a.getStreetName(),
+                    a.getStreetNumber(),
+                    a.getZipCode(),
+                    a.getCity(),
+                    a.getCountry()
+            );
+            addresses.add(address);
+        }
+        return addresses;
+    }
+
+    public static Address ADDRESS_DTO_TO_DOMAIN(AddressDTO addressDTO) {
+        if (addressDTO == null) {
+            return new Address();
+        }
+
+        return new Address(
+                addressDTO.getId(),
+                addressDTO.getStreetName(),
+                addressDTO.getStreetNumber(),
+                addressDTO.getZipCode(),
+                addressDTO.getCity(),
+                addressDTO.getCountry());
     }
 }

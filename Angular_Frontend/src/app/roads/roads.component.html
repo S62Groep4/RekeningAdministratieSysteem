@@ -1,5 +1,7 @@
 <form class="form-inline">
-  <input id="name" name="name" [(ngModel)]="selectedRoad.name" type="text" class="form-control mr-3" placeholder="Name"
+  <input id="longname" name="longname" [(ngModel)]="selectedRoad.longName" type="text" class="form-control mr-3" placeholder="Langer Name"
+         value="">
+  <input id="shortname" name="shortname" [(ngModel)]="selectedRoad.shortName" type="text" class="form-control mr-3" placeholder="Kurzer Name"
          value="">
   <input id="rate" name="rate" [(ngModel)]="selectedRoad.rate" type="number" min="0.00" step="0.01"
          class="form-control mr-3" placeholder="0.00">
@@ -14,7 +16,8 @@
   <thead>
   <tr>
     <th scope="col">Id</th>
-    <th scope="col">Name</th>
+    <th scope="col">Langer Name</th>
+    <th scope="col">Kurzer Name</th>
     <th scope="col">Preis</th>
   </tr>
   </thead>
@@ -22,7 +25,8 @@
   <tr *ngFor="let r of roads" (click)="onItemClick(r)" class="clickable-tr"
       [ngClass]="{'selected-tr' : selectedRoad === r}">
     <th scope="row">{{r.id}}</th>
-    <td>{{r.name}}</td>
+    <td>{{r.longName}}</td>
+    <td>{{r.shortName}}</td>
     <td>{{r.rate | number : '1.2-2'}}</td>
   </tr>
   </tbody>

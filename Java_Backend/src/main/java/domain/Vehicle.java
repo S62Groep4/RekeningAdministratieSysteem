@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -34,9 +35,9 @@ public class Vehicle implements Serializable {
     @Id
     private String hashedLicencePlate;
     @OneToMany(mappedBy = "vehicle", cascade = ALL)
-    private final List<Journey> journeys = new ArrayList<>();
+    private final List<Journey> journeys = Collections.synchronizedList(new ArrayList());
     @OneToMany(mappedBy = "vehicle", cascade = ALL, orphanRemoval = true)
-    private final List<SubInvoice> subInvoices = new ArrayList<>();
+    private final List<SubInvoice> subInvoices = Collections.synchronizedList(new ArrayList());
     @ManyToOne
     private Person owner;
     private Long carTrackerId;
@@ -87,75 +88,59 @@ public class Vehicle implements Serializable {
     }
     // </editor-fold>
 
-    public void generateInvoices() {
-        for (SubInvoice i : this.subInvoices) {
-            i.setVehicle(null);
-        }
-        this.subInvoices.clear();
-
-        Map<String, List<Journey>> journeysPerMonth = new HashMap();
-        List<TransLocation> locations;
-
-        //lijst splitten per maand
-        //hashmap is <"yyyy-MM", lijst van journeys in deze maand>
-        //in welke maand een journey valt hangt af van de datetime string van 
-        //de eerste translocation binnen deze journey
-        for (Journey j : this.journeys) {
-            locations = j.getTransLocations();
-            if (!journeysPerMonth.containsKey(locations.get(0).getDateTime().substring(0, 7))) {
-                journeysPerMonth.put(locations.get(0).getDateTime().substring(0, 7), new ArrayList());
+    public void clearInvoices() {
+        synchronized (subInvoices) {
+            for (SubInvoice i : this.subInvoices) {
+                i.setVehicle(null);
             }
-            journeysPerMonth.get(locations.get(0).getDateTime().substring(0, 7)).add(j);
-        }
-
-        for (Map.Entry<String, List<Journey>> entry : journeysPerMonth.entrySet()) {
-            SubInvoice invoice = new SubInvoice(null, "49", 0, entry.getKey());
-            double price = 0;
-
-//            calculate price
-//            List<Journey> journeysOfCurrentMonth = entry.getValue();
-            invoice.setVehicle(this);
-            invoice.setPrice(price);
-            this.subInvoices.add(invoice);
+            this.subInvoices.clear();
         }
     }
 
     public boolean addJourney(Journey j) {
         if (j != null) {
-            journeys.add(j);
-            j.setVehicle(this);
-            return true;
+            synchronized (journeys) {
+                journeys.add(j);
+                j.setVehicle(this);
+                return true;
+            }
         }
         return false;
     }
 
     public boolean addJourney(List<Journey> j) {
         if (j != null) {
-            journeys.addAll(j);
-            for (Journey jou : journeys) {
-                jou.setVehicle(this);
+            synchronized (journeys) {
+                journeys.addAll(j);
+                for (Journey jou : journeys) {
+                    jou.setVehicle(this);
+                }
+                return true;
             }
-            return true;
         }
         return false;
     }
 
     public boolean addInvoice(SubInvoice i) {
         if (i != null) {
-            subInvoices.add(i);
-            i.setVehicle(this);
-            return true;
+            synchronized (subInvoices) {
+                subInvoices.add(i);
+                i.setVehicle(this);
+                return true;
+            }
         }
         return false;
     }
 
     public boolean addInvoice(List<SubInvoice> i) {
         if (i != null) {
-            subInvoices.addAll(i);
-            for (SubInvoice s : subInvoices) {
-                s.setVehicle(this);
+            synchronized (subInvoices) {
+                subInvoices.addAll(i);
+                for (SubInvoice s : subInvoices) {
+                    s.setVehicle(this);
+                }
+                return true;
             }
-            return true;
         }
         return false;
     }
@@ -175,9 +160,8 @@ public class Vehicle implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        //hash = 83 * hash + Objects.hashCode(this.hashedLicencePlate);
-        //hash = 83 * hash + Objects.hashCode(this.journeys);
-        //hash = 83 * hash + Objects.hashCode(this.subInvoices);
+        hash = 83 * hash + Objects.hashCode(this.hashedLicencePlate);
+        hash = 83 * hash + Objects.hashCode(this.journeys);
         return hash;
     }
 }
