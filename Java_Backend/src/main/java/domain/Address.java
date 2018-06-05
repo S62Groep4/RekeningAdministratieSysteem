@@ -3,11 +3,9 @@ package domain;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import static javax.persistence.CascadeType.ALL;
 
 /**
  *
@@ -16,14 +14,15 @@ import static javax.persistence.CascadeType.ALL;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Address.findAddress",
-                query = "SELECT a FROM Address a " +
-                        "WHERE streetName = :streetName " +
-                        "AND streetNumber = :streetNumber" +
-                        "AND zipCode = :zipCode" +
-                        "AND city = :city" +
-                        "AND country = :country "),
+            query = "SELECT a FROM Address a "
+            + "WHERE a.streetName = :streetName "
+            + "AND a.streetNumber = :streetNumber "
+            + "AND a.zipCode = :zipCode "
+            + "AND a.city = :city "
+            + "AND a.country = :country ")
+    ,
         @NamedQuery(name = "Address.getAll",
-                query = "SELECT a FROM Address a ")
+            query = "SELECT a FROM Address a ")
 })
 public class Address implements Serializable {
 
@@ -39,11 +38,10 @@ public class Address implements Serializable {
     @OneToMany(
             mappedBy = "address",
             fetch = FetchType.LAZY
-    )    private final List<Person> persons = new ArrayList<>();
-
+    )
+    private final List<Person> persons = new ArrayList<>();
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
-
     public Long getId() {
         return id;
     }
@@ -96,8 +94,8 @@ public class Address implements Serializable {
         return persons;
     }
 
-    public boolean addPerson(Person person){
-        if(!persons.contains(person)){
+    public boolean addPerson(Person person) {
+        if (!persons.contains(person)) {
             persons.add(person);
             return true;
         }
@@ -105,8 +103,8 @@ public class Address implements Serializable {
         return false;
     }
 
-    public boolean removePerson(Person person){
-        if(persons.contains(person)){
+    public boolean removePerson(Person person) {
+        if (persons.contains(person)) {
             persons.remove(person);
             return true;
         }

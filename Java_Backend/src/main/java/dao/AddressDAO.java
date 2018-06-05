@@ -1,6 +1,5 @@
 package dao;
 
-import com.sun.xml.internal.ws.addressing.policy.AddressingPolicyMapConfigurator;
 import domain.Address;
 import domain.Person;
 import domain.Vehicle;
