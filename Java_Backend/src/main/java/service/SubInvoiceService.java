@@ -10,6 +10,8 @@ import domain.SubInvoice;
 import domain.TransLocation;
 import domain.Vehicle;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +43,12 @@ public class SubInvoiceService {
     private final double BASETAX = 0.05;
 
     public SubInvoiceService() {
+    }
+
+    private static double roundToPrice(double value) {
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
     public void generateSubInvoices() {
@@ -120,7 +128,7 @@ public class SubInvoiceService {
                     }
 
                     if (price != 0) {
-                        SubInvoice invoice = new SubInvoice(null, "49", price, entry.getKey());
+                        SubInvoice invoice = new SubInvoice(null, "49", roundToPrice(price), entry.getKey());
                         invoice.setVehicle(v);
                         v.addInvoice(invoice);
                     }
@@ -174,6 +182,20 @@ public class SubInvoiceService {
             return subinvoiceDao.insertSubInvoice(invoice);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing insertSubInvoice operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
+
+    public SubInvoice insertRemoteSubInvoice(SubInvoice invoice, Long carTrackerId) throws PersistenceException {
+        try {
+            Vehicle v = vehicleDao.getVehicle(carTrackerId);
+            if (v != null) {
+                v.addInvoice(invoice);
+                return subinvoiceDao.insertSubInvoice(invoice);
+            }
+            return null;
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing insertRemoteSubInvoice operation; {0}", pe.getMessage());
             return null;
         }
     }
