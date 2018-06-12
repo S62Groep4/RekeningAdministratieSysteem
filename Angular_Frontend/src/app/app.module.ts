@@ -12,7 +12,10 @@ import {HttpClientModule} from '@angular/common/http';
 import {InvoicesComponent} from './invoices/invoices.component';
 import {InvoiceService} from './services/invoice.service';
 import {PersonService} from './services/person.service';
-import { PersonComponent } from './person/person.component';
+import {PersonComponent} from './person/person.component';
+import {LoginComponent} from './login/login.component';
+import {AuthenticationService} from './services/authentication.service';
+import {AuthguardService} from './services/authguard.service';
 
 
 @NgModule({
@@ -22,7 +25,8 @@ import { PersonComponent } from './person/person.component';
     HomeComponent,
     RoadsComponent,
     InvoicesComponent,
-    PersonComponent
+    PersonComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +38,9 @@ import { PersonComponent } from './person/person.component';
   providers: [
     RoadService,
     InvoiceService,
-    PersonService
+    PersonService,
+    AuthenticationService,
+    AuthguardService
   ],
   bootstrap: [AppComponent]
 })

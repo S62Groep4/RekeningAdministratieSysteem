@@ -6,6 +6,8 @@ import {HomeComponent} from './home/home.component';
 import {RoadsComponent} from './roads/roads.component';
 import {InvoicesComponent} from './invoices/invoices.component';
 import {PersonComponent} from './person/person.component';
+import {LoginComponent} from './login/login.component';
+import {AuthguardService} from './services/authguard.service';
 
 const appRoutes: Routes = [
   {
@@ -13,16 +15,23 @@ const appRoutes: Routes = [
     component: HomeComponent
   },
   {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
     path: 'invoices',
-    component: InvoicesComponent
+    component: InvoicesComponent,
+    canActivate: [AuthguardService]
   },
   {
     path: 'roads',
-    component: RoadsComponent
+    component: RoadsComponent,
+    canActivate: [AuthguardService]
   },
   {
     path: 'persons/:id',
-    component: PersonComponent
+    component: PersonComponent,
+    canActivate: [AuthguardService]
   },
   {
     path: '',

@@ -1,23 +1,15 @@
 package service;
 
-import GoogleApi.PlaceResponse;
-import GoogleApi.SnappedPoint;
 import domain.Journey;
 import domain.Person;
 import domain.Road;
 import domain.TransLocation;
+import domain.User;
 import domain.Vehicle;
-import dto.TransLocationDTO;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
-import util.DomainToDto;
 
 /**
  *
@@ -44,6 +36,9 @@ public class Init {
 
     @Inject
     RoadService roadService;
+
+    @Inject
+    UserService userService;
 
     @PostConstruct
     public void init() {
@@ -156,10 +151,15 @@ public class Init {
         person3.addVehicle(veh3);
 
         Road r1 = new Road("B11", "Wolfratshauser Straße", 1.0);
-        Road r2 = new Road("Uslar", "Uslar",1.0);
+        Road r2 = new Road("Uslar", "Uslar", 1.0);
         Road r3 = new Road("E51", "Autobahnzubringer Magdeburg/Leipzig", 1.0);
         Road r4 = new Road("A73", "A73", 1.0);
         Road r5 = new Road("A1", "A1", 1.0);
+
+        User user1 = new User("user1", "user1");
+        User user2 = new User("user2", "user2");
+        User user3 = new User("user3", "user3");
+        User user4 = new User("user4", "user4");
 
         roadService.insertRoad(r1);
         roadService.insertRoad(r2);
@@ -194,5 +194,10 @@ public class Init {
         personService.insertPerson(person1);
         personService.insertPerson(person2);
         personService.insertPerson(person3);
+
+        userService.insertUser(user1);
+        userService.insertUser(user2);
+        userService.insertUser(user3);
+        userService.insertUser(user4);
     }
 }
