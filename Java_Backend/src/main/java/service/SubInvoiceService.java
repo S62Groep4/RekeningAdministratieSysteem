@@ -122,6 +122,7 @@ public class SubInvoiceService {
                     if (price != 0) {
                         SubInvoice invoice = new SubInvoice(null, "49", price, entry.getKey());
                         invoice.setVehicle(v);
+                        invoice.addJourneys(entry.getValue());
                         v.addInvoice(invoice);
                     }
                 }
@@ -176,5 +177,10 @@ public class SubInvoiceService {
             LOGGER.log(Level.FINE, "ERROR while performing insertSubInvoice operation; {0}", pe.getMessage());
             return null;
         }
+    }
+    
+    public List<Journey> getSubInvoiceJourneys(Long invoiceNumber) {
+        SubInvoice subInvoice = this.getSubInvoice(invoiceNumber);
+        return subInvoice.getJourneys();
     }
 }
