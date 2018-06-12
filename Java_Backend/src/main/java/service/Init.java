@@ -157,8 +157,11 @@ public class Init {
         Road r5 = new Road("A1", "A1", 1.0);
 
         User user1 = new User("user1", "user1");
+        user1.setPerson(person1);
         User user2 = new User("user2", "user2");
+        user2.setPerson(person2);
         User user3 = new User("user3", "user3");
+        user3.setPerson(person3);
         User user4 = new User("user4", "user4");
 
         roadService.insertRoad(r1);

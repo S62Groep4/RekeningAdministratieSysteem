@@ -25,11 +25,11 @@ public class Person implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
-    @OneToOne(mappedBy = "person", fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "person_id")
+    @JoinColumn(name = "ADDRESS_ID")
     private Address address;
 
     @OneToMany(mappedBy = "owner", cascade = ALL, fetch = FetchType.LAZY)
@@ -99,6 +99,14 @@ public class Person implements Serializable {
             vehicle.setOwner(null);
             this.vehicles.remove(vehicle);
         }
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     // </editor-fold>
