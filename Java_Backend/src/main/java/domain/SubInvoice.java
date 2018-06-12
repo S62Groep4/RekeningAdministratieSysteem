@@ -3,7 +3,10 @@ package domain;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,6 +37,7 @@ public class SubInvoice implements Serializable {
     private double price;
     @ManyToOne
     private Vehicle vehicle;
+    private final List<Journey> journeys = new ArrayList<>();
 
     public SubInvoice() {
     }
@@ -52,6 +56,15 @@ public class SubInvoice implements Serializable {
         this.price = price;
         this.invoiceDate = invoiceDate;
         this.paymentStatus = "OPEN";
+    }
+
+    public SubInvoice(Long invoiceNumber, String country, double price, String invoiceDate, List<Journey> journeys) {
+        this.invoiceNumber = invoiceNumber;
+        this.country = country;
+        this.price = price;
+        this.invoiceDate = invoiceDate;
+        this.paymentStatus = "OPEN";
+        this.journeys.addAll(journeys);
     }
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
@@ -101,6 +114,14 @@ public class SubInvoice implements Serializable {
 
     public double getPrice() {
         return price;
+    }
+    
+    public void addJourneys(List<Journey> journeys) {
+        this.journeys.addAll(journeys);
+    }
+    
+    public List<Journey> getJourneys() {
+        return Collections.unmodifiableList(journeys);
     }
     // </editor-fold>
 
