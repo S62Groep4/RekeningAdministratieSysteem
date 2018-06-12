@@ -1,6 +1,8 @@
 package rest;
 
+import domain.Journey;
 import domain.SubInvoice;
+import dto.JourneyDTO;
 import dto.SubInvoiceDTO;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -81,5 +83,13 @@ public class SubInvoiceResource {
     public Response generateSubInvoices() {
         subInvoiceService.generateSubInvoices();
         return Response.ok().build();
+    }
+    
+    @GET
+    @Path("{invoiceNumber}/journeys")
+    public Response getSubInvoiceJourneys(@PathParam("invoiceNumber") Long invoiceNumber) {
+        List<Journey> journeys = subInvoiceService.getSubInvoiceJourneys(invoiceNumber);
+        List<JourneyDTO> journeyDTOs = DomainToDto.JOURNEYSTODTOS(journeys);
+        return Response.ok(journeyDTOs).build();
     }
 }
