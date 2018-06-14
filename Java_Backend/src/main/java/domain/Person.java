@@ -16,7 +16,11 @@ import static javax.persistence.CascadeType.ALL;
 @NamedQueries({
     @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p")
     ,
-    @NamedQuery(name = "Person.GetPersonByCar", query = "SELECT p FROM Person p WHERE :vehicle member p.vehicles")
+    @NamedQuery(name = "Person.findPersonByCar", query = "SELECT p FROM Person p WHERE :vehicle member p.vehicles")
+    ,
+    @NamedQuery(name = "Person.findByUserEmail", query = "SELECT p FROM Person p WHERE p.user.email = :email")
+    ,
+    @NamedQuery(name = "Person.findByUserEmailWithVehicles", query = "SELECT p FROM Person p JOIN FETCH p.vehicles WHERE p.user.email = :email")
 })
 public class Person implements Serializable {
 
@@ -25,13 +29,11 @@ public class Person implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "ADDRESS_ID")
     private Address address;
-
     @OneToMany(mappedBy = "owner", cascade = ALL, fetch = FetchType.LAZY)
     private final List<Vehicle> vehicles = new ArrayList<>();
 
