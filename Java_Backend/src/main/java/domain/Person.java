@@ -2,15 +2,11 @@ package domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-
 import static javax.persistence.CascadeType.ALL;
-import static javax.persistence.CascadeType.DETACH;
-import static javax.persistence.CascadeType.REMOVE;
 
 /**
  *
@@ -18,8 +14,13 @@ import static javax.persistence.CascadeType.REMOVE;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p"),
-    @NamedQuery(name = "Person.GetPersonByCar", query = "SELECT p FROM Person p WHERE :vehicle member p.vehicles")
+    @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p")
+    ,
+    @NamedQuery(name = "Person.findPersonByCar", query = "SELECT p FROM Person p WHERE :vehicle member p.vehicles")
+    ,
+    @NamedQuery(name = "Person.findByUserEmail", query = "SELECT p FROM Person p WHERE p.user.email = :email")
+    ,
+    @NamedQuery(name = "Person.findByUserEmailWithVehicles", query = "SELECT p FROM Person p JOIN FETCH p.vehicles WHERE p.user.email = :email")
 })
 public class Person implements Serializable {
 
@@ -28,11 +29,11 @@ public class Person implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "person_id")
+    @OneToOne
+    private User user;
+    @ManyToOne
+    @JoinColumn(name = "ADDRESS_ID")
     private Address address;
-
     @OneToMany(mappedBy = "owner", cascade = ALL, fetch = FetchType.LAZY)
     private final List<Vehicle> vehicles = new ArrayList<>();
 
@@ -100,6 +101,14 @@ public class Person implements Serializable {
             vehicle.setOwner(null);
             this.vehicles.remove(vehicle);
         }
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     // </editor-fold>

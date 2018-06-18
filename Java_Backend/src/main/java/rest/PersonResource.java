@@ -1,6 +1,5 @@
 package rest;
 
-import domain.Address;
 import domain.Person;
 import domain.Vehicle;
 import dto.AddressDTO;
@@ -35,7 +34,6 @@ public class PersonResource {
     @Inject
     AddressService addressService;
 
-
     @GET
     public Response getPersons() {
         List<PersonDTO> dto = DomainToDto.PERSONSTODTOS(personService.getAllPersons());
@@ -53,6 +51,14 @@ public class PersonResource {
     public Response getPersonVehicle(
             @PathParam("identifier") int id) {
         List<VehicleDTO> vehicleDTOS = DomainToDto.VEHICLESTODTOS(personService.getPerson(id).getVehicles());
+        return Response.ok(vehicleDTOS).build();
+    }
+
+    @GET
+    @Path("/email={identifier}/vehicles")
+    public Response getPersonVehicleByEmail(
+            @PathParam("identifier") String accountEmail) {
+        List<VehicleDTO> vehicleDTOS = DomainToDto.VEHICLESTODTOS(personService.getPersonAndFetchVehiclesEagerly(accountEmail).getVehicles());
         return Response.ok(vehicleDTOS).build();
     }
 
@@ -95,16 +101,22 @@ public class PersonResource {
     @Path("{identifier}")
     public Response getPerson(
             @DefaultValue("id") @QueryParam("type") String identifierType,
-            @PathParam("identifier") int identifier) {
-        if (identifierType.equals("id")) {
-            PersonDTO personDTO = DomainToDto.PERSONSTODTOS(personService.getPerson(new Long(identifier)));
-            return Response.ok(personDTO).build();
-        } else if (identifierType.equals("plainplate")) {
-            PersonDTO personDTO = DomainToDto.PERSONSTODTOS(personService.getPerson(new Long(identifier)));
-            return Response.ok(personDTO).build();
-        } else if (identifierType.equals("hashedplate")) {
-            PersonDTO personDTO = DomainToDto.PERSONSTODTOS(personService.getPerson(new Long(identifier)));
-            return Response.ok(personDTO).build();
+            @PathParam("identifier") String identifier) {
+        switch (identifierType) {
+            case "id": {
+                PersonDTO personDTO = DomainToDto.PERSONSTODTOS(personService.getPerson(new Long(identifier)));
+                return Response.ok(personDTO).build();
+            }
+            case "plainplate": {
+                PersonDTO personDTO = DomainToDto.PERSONSTODTOS(personService.getPerson(new Long(identifier)));
+                return Response.ok(personDTO).build();
+            }
+            case "hashedplate": {
+                PersonDTO personDTO = DomainToDto.PERSONSTODTOS(personService.getPerson(new Long(identifier)));
+                return Response.ok(personDTO).build();
+            }
+            default:
+                break;
         }
         return Response.status(Response.Status.BAD_REQUEST.getStatusCode(), "Invalid type! [ null / id / plainplate / hashedplate]").build();
     }
@@ -129,10 +141,7 @@ public class PersonResource {
             @PathParam("identifier") int id,
             AddressDTO addressDTO) {
         // Link the address create an address object and link this to a person
-        Person person =
-                personService.setPersonsAddress(id,
-                        DtoToDomain.ADDRESS_DTO_TO_DOMAIN(addressDTO)
-                );
+        Person person = personService.setPersonsAddress(id, DtoToDomain.ADDRESS_DTO_TO_DOMAIN(addressDTO));
         // Return a dto of the address
         AddressDTO dto = DomainToDto.ADDRESSTODTOS(person.getAddress());
         return Response.ok(dto).build();
