@@ -3,11 +3,12 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {User} from '../user';
 import {Observable} from 'rxjs/Observable';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class AuthenticationService {
 
-  url = 'http://localhost:8080/Java_Backend/api/login';
+  url = environment.apiBaseUrl + '/login';
 
   httpOptions = {
     headers: new HttpHeaders({

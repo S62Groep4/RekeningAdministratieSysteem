@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Invoice} from '../invoice';
+import {environment} from '../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -10,7 +11,7 @@ const httpOptions = {
 @Injectable()
 export class InvoiceService {
 
-  private apiUri = 'http://localhost:8080/Java_Backend/api/subinvoices';
+  private apiUri = environment.apiBaseUrl + '/subinvoices';
 
   constructor(private http: HttpClient) {
   }

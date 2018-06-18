@@ -4,6 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import 'rxjs/add/operator/map';
+import {environment} from '../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -12,7 +13,7 @@ const httpOptions = {
 @Injectable()
 export class RoadService {
 
-  private apiUri = 'http://localhost:8080/Java_Backend/api/roads';
+  private apiUri = environment.apiBaseUrl + '/roads';
 
   constructor(private http: HttpClient) {
   }

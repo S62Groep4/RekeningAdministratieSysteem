@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class DomainToDto {
 
-    private static final String APIURI = "http://192.168.24.91:8080/Java_Backend/api/";
+    private static final String APIURI = "http://192.168.24.91:8080/RekeningAdministratieSysteem/api/";
 
     public static List<VehicleDTO> VEHICLESTODTOS(List<Vehicle> vehicles) {
         List<VehicleDTO> vehicleDTOs = new ArrayList<>();
