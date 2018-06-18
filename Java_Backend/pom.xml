@@ -48,6 +48,16 @@
             <artifactId>jersey-media-json-jackson</artifactId>
             <version>2.26</version>
         </dependency>
+        <dependency>
+            <groupId>net.reini</groupId>
+            <artifactId>rabbitmq-cdi</artifactId>
+            <version>0.9.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.2</version>
+        </dependency>
     </dependencies>
 
     <build>
