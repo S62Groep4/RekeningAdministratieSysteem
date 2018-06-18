@@ -16,8 +16,8 @@ import javax.persistence.PersistenceException;
 @Stateless
 public class VehicleDAOImpl implements VehicleDAO {
 
-    @PersistenceContext
-    EntityManager em;
+    @PersistenceContext(unitName = "ptt_test")
+    private EntityManager em;
 
     @Override
     public List<Vehicle> getAllVehicles() throws PersistenceException {
@@ -34,8 +34,8 @@ public class VehicleDAOImpl implements VehicleDAO {
     }
 
     @Override
-    public Vehicle getVehicle(String carTrackerId) throws PersistenceException {
-        return (Vehicle) em.createNamedQuery("Vehicle.findBycarTrackerId").setParameter("carTrackerId", carTrackerId).getSingleResult();
+    public List<Vehicle> getVehicle(String carTrackerId) throws PersistenceException {
+        return em.createNamedQuery("Vehicle.findBycarTrackerId").setParameter("carTrackerId", carTrackerId).getResultList();
     }
 
     @Override
@@ -77,4 +77,10 @@ public class VehicleDAOImpl implements VehicleDAO {
     public List<Vehicle> getVehiclesOwnedBy(Long personId) throws PersistenceException {
         return em.createNamedQuery("Vehicle.findByOwner").setParameter("id", personId).getResultList();
     }
+
+    @Override
+    public void flush() {
+        em.flush();
+    }
+
 }

@@ -59,4 +59,9 @@ public class JourneyDAOImpl implements JourneyDAO {
         this.em.flush();
     }
 
+    @Override
+    public void truncate() {
+        em.createNativeQuery("DELETE FROM Journey").executeUpdate();
+    }
+
 }

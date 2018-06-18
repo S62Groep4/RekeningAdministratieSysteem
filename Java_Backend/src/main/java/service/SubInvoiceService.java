@@ -1,8 +1,10 @@
 package service;
 
 import GoogleApi.SnappedPoint;
+import dao.JourneyDAO;
 import dao.RoadDAO;
 import dao.SubInvoiceDAO;
+import dao.TransLocationDAO;
 import dao.VehicleDAO;
 import domain.Journey;
 import domain.Road;
@@ -34,8 +36,14 @@ public class SubInvoiceService {
     SubInvoiceDAO subinvoiceDao;
 
     @Inject
+    TransLocationDAO transLocationDAO;
+
+    @Inject
+    JourneyDAO journeyDAO;
+
+    @Inject
     VehicleDAO vehicleDao;
-    
+
     @Inject
     JourneyService journeyService;
 
@@ -55,17 +63,35 @@ public class SubInvoiceService {
     }
 
     public void generateSubInvoices() {
+        for (Vehicle v : vehicleDao.getAllVehicles()) {
+            v.removeJourneys();
+//            for (Journey j : v.getJourneys()) {
+//                v.removeJourney(j);
+//                for (TransLocation t : j.getTransLocations()) {
+//                    transLocationDAO.remove(t);
+//                }
+//            }
+            v.removeInvoices();
+        }
+
+        subinvoiceDao.truncate();
+        transLocationDAO.truncate();
+        journeyDAO.truncate();
+
+        vehicleDao.flush();
+
         try {
             journeyService.updateJourneysFromRegistration();
         } catch (IOException ex) {
             System.out.println("Update journeys error: " + ex.getMessage());
         }
-        
+
         try {
             List<Vehicle> vehicles = vehicleDao.getAllVehicles();
             for (Vehicle v : vehicles) {
 //                clear invoices for this vehicle before (re)calculating to avoid duplicates
-                v.clearInvoices();
+                //v.clearInvoices();
+                //vehicleDao.flush();
 
                 Map<String, List<Journey>> journeysPerMonth = new HashMap();
                 List<TransLocation> locations;
@@ -116,7 +142,7 @@ public class SubInvoiceService {
                         Road temp;
                         try {
                             List<Road> roads = roadDao.getRoad(roadNameEntry.getValue());
-                            if(roads.isEmpty()) {
+                            if (roads.isEmpty()) {
                                 temp = new Road(roadNameEntry.getValue(), roadNameEntry.getValue(), BASETAX);
                             } else {
                                 temp = roads.get(0);
@@ -147,13 +173,15 @@ public class SubInvoiceService {
                         invoice.setVehicle(v);
                         invoice.addJourneys(entry.getValue());
                         v.addInvoice(invoice);
+                        subinvoiceDao.insertSubInvoice(invoice);
                     } else {
                         System.out.println("Price is 0!");
                     }
                 }
-                
-                //vehicleDao.updateVehicle(v);
-                vehicleDao.insertVehicle(v);
+                subinvoiceDao.flush();
+
+                vehicleDao.updateVehicle(v);
+                //vehicleDao.insertVehicle(v);
             }
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing generateSubInvoices operation; {0}", pe.getMessage());
@@ -218,9 +246,9 @@ public class SubInvoiceService {
 
     public SubInvoice insertRemoteSubInvoice(SubInvoice invoice, String carTrackerId) throws PersistenceException {
         try {
-            Vehicle v = vehicleDao.getVehicle(carTrackerId);
-            if (v != null) {
-                v.addInvoice(invoice);
+            List<Vehicle> foundVehicles = vehicleDao.getVehicle(carTrackerId);
+            if (!foundVehicles.isEmpty()) {
+                foundVehicles.get(0).addInvoice(invoice);
                 return subinvoiceDao.insertSubInvoice(invoice);
             }
             return null;

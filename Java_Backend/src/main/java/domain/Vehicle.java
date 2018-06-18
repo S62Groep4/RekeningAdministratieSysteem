@@ -50,6 +50,25 @@ public class Vehicle implements Serializable {
         this.carTrackerId = carTracker;
     }
 
+    public void removeJourney(Journey j) {
+        this.journeys.remove(j);
+        j.setVehicle(null);
+    }
+
+    public void removeInvoices() {
+        for (SubInvoice su : subInvoices) {
+            su.setVehicle(null);
+        }
+        this.subInvoices.clear();
+    }
+
+    public void removeJourneys() {
+        for (Journey j : journeys) {
+            j.setVehicle(null);
+        }
+        this.journeys.clear();
+    }
+
     public String getCarTrackerId() {
         return carTrackerId;
     }
@@ -92,10 +111,10 @@ public class Vehicle implements Serializable {
         synchronized (subInvoices) {
             List<SubInvoice> invoicesToRemove = new ArrayList();
             for (SubInvoice i : this.subInvoices) {
-                if (i.getCountry().equals("49")) {
-                    i.setVehicle(null);
-                    invoicesToRemove.add(i);
-                }
+//                if (i.getCountry().equals("DE")) {
+                i.setVehicle(null);
+                invoicesToRemove.add(i);
+//                }
             }
             this.subInvoices.removeAll(invoicesToRemove);
         }

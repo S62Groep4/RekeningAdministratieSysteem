@@ -20,4 +20,7 @@ public interface SubInvoiceDAO {
 
     SubInvoice insertSubInvoice(SubInvoice invoice) throws PersistenceException;
 
+    void flush();
+    
+    void truncate();
 }

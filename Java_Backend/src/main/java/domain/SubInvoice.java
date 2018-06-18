@@ -67,6 +67,10 @@ public class SubInvoice implements Serializable {
         this.paymentStatus = "OPEN";
         this.journeys.addAll(journeys);
     }
+    
+    public void removeJourneys() {
+        journeys.clear();
+    }
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
     public void setPaymentStatus(String paymentStatus) {
