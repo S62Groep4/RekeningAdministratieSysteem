@@ -5,10 +5,10 @@ export class Invoice {
   invoiceDate: string;
   price: string;
   ownerUri: string;
-  carTrackerId: number;
+  carTrackerId: string;
 
   constructor(invoiceNumber: number, country: string, paymentStatus: string, invoiceDate: string,
-              price: string, ownerUri: string, carTrackerId: number) {
+              price: string, ownerUri: string, carTrackerId: string) {
     this.invoiceNumber = invoiceNumber;
     this.country = country;
     this.paymentStatus = paymentStatus;

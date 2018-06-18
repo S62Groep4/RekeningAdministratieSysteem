@@ -10,7 +10,7 @@ import {InvoiceService} from '../services/invoice.service';
 export class InvoicesComponent implements OnInit {
 
   model;
-  selectedInvoice: Invoice = new Invoice(null, '', '', '', '', '', null);
+  selectedInvoice: Invoice = new Invoice(null, '', '', '', '', '', '');
   selectedInvoiceOwnerLink: string;
   invoices: Invoice[] = [];
 
@@ -35,9 +35,10 @@ export class InvoicesComponent implements OnInit {
     });
   }
 
-  searchInvoices(invoiceDate: string): void {
-    // this.invoiceService.searchInvoices(invoiceDate).subscribe(res => this.invoices = res);
-  }
+  /*searchInvoices(invoiceDate: string): void {
+    this.invoices = this.invoices.filter(
+      invoice => invoice.invoiceDate === invoiceDate);
+  }*/
 
   clearCalendar(): void {
     this.model = '';
@@ -45,7 +46,7 @@ export class InvoicesComponent implements OnInit {
 
   onItemClick(invoice: Invoice) {
     if (this.selectedInvoice === invoice) {
-      this.selectedInvoice = new Invoice(null, '', '', '', '', '', null);
+      this.selectedInvoice = new Invoice(null, '', '', '', '', '', '');
     } else {
       this.selectedInvoice = invoice;
       this.selectedInvoiceOwnerLink = invoice.ownerUri.substring(invoice.ownerUri.lastIndexOf('/'));
