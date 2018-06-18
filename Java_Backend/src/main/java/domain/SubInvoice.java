@@ -23,7 +23,7 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "SubInvoice.findAll", query = "SELECT s FROM SubInvoice s")
-    ,@NamedQuery(name = "SubInvoice.findByInvoiceNumber", query = "SELECT s FROM SubInvoice s WHERE s.invoiceNumber = :invoiceNumber"),
+    ,@NamedQuery(name = "SubInvoice.findByInvoiceNumber", query = "SELECT s FROM SubInvoice s WHERE s.invoiceNumber = :invoiceNumber")
 })
 public class SubInvoice implements Serializable {
 
@@ -67,7 +67,7 @@ public class SubInvoice implements Serializable {
         this.paymentStatus = "OPEN";
         this.journeys.addAll(journeys);
     }
-    
+
     public void removeJourneys() {
         journeys.clear();
     }
@@ -120,11 +120,11 @@ public class SubInvoice implements Serializable {
     public double getPrice() {
         return price;
     }
-    
+
     public void addJourneys(List<Journey> journeys) {
         this.journeys.addAll(journeys);
     }
-    
+
     public List<Journey> getJourneys() {
         return Collections.unmodifiableList(journeys);
     }

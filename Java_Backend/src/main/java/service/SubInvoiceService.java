@@ -11,6 +11,7 @@ import domain.Road;
 import domain.SubInvoice;
 import domain.TransLocation;
 import domain.Vehicle;
+import dto.SubInvoiceDTO;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -24,6 +25,8 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.PersistenceException;
+import jms.InvoiceProducer;
+import util.DomainToDto;
 
 /**
  *
@@ -46,6 +49,9 @@ public class SubInvoiceService {
 
     @Inject
     JourneyService journeyService;
+
+    @Inject
+    InvoiceProducer invoiceProducer;
 
     @Inject
     RoadDAO roadDao;
@@ -261,5 +267,27 @@ public class SubInvoiceService {
     public List<Journey> getSubInvoiceJourneys(Long invoiceNumber) {
         SubInvoice subInvoice = this.getSubInvoice(invoiceNumber);
         return subInvoice.getJourneys();
+    }
+
+    public void sendToEu(String countryCode) {
+        List<SubInvoice> subInvoices = subinvoiceDao.getAllSubInvoices();
+        switch (countryCode) {
+            case "FI": {
+                List<SubInvoice> finlandInvoices = new ArrayList<>();
+                for (SubInvoice si : subInvoices) {
+                    if(!si.getJourneys().isEmpty() && !si.getJourneys().get(0).getTransLocations().isEmpty()) {
+                        if(si.getJourneys().get(0).getTransLocations().get(0).getCountryCode().equals("FI")) {
+                            finlandInvoices.add(si);
+                        }
+                    }
+                }
+                List<SubInvoiceDTO> subInvoiceDTOs = DomainToDto.SUBINVOICESTODTOS(finlandInvoices);
+                for(SubInvoiceDTO subInvoiceDTO : subInvoiceDTOs) {
+                    System.out.println("service.SubInvoiceService.sendToEu()");
+                    invoiceProducer.send(subInvoiceDTO);
+                }
+                break;
+            }
+        }
     }
 }

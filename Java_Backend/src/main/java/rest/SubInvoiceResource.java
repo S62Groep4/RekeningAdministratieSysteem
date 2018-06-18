@@ -84,12 +84,19 @@ public class SubInvoiceResource {
         subInvoiceService.generateSubInvoices();
         return Response.ok().build();
     }
-    
+
     @GET
     @Path("{invoiceNumber}/journeys")
     public Response getSubInvoiceJourneys(@PathParam("invoiceNumber") Long invoiceNumber) {
         List<Journey> journeys = subInvoiceService.getSubInvoiceJourneys(invoiceNumber);
         List<JourneyDTO> journeyDTOs = DomainToDto.JOURNEYSTODTOS(journeys);
         return Response.ok(journeyDTOs).build();
+    }
+
+    @GET
+    @Path("sendEuInvoices/{countryCode}")
+    public Response sendEuInvoice(@PathParam("countryCode") String countryCode) {
+        subInvoiceService.sendToEu(countryCode);
+        return Response.ok().build();
     }
 }
