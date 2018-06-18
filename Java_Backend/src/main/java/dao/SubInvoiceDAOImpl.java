@@ -54,6 +54,6 @@ public class SubInvoiceDAOImpl implements SubInvoiceDAO {
 
     @Override
     public void truncate() {
-        em.createNativeQuery("DELETE FROM SubInvoice").executeUpdate();
+        em.createNativeQuery("DELETE FROM SUBINVOICE").executeUpdate();
     }
 }

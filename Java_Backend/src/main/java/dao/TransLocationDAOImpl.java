@@ -59,6 +59,6 @@ public class TransLocationDAOImpl implements TransLocationDAO {
 
     @Override
     public void truncate() {
-        em.createNativeQuery("DELETE FROM TransLocation").executeUpdate();
+        em.createNativeQuery("DELETE FROM TRANSLOCATION").executeUpdate();
     }
 }
