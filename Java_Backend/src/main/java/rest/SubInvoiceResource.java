@@ -41,9 +41,19 @@ public class SubInvoiceResource {
         return Response.ok(dto).build();
     }
 
+    @POST
+    @Path("remote/{carTrackerId}")
+    public Response insertRemoteSubInvoice(@PathParam("carTrackerId") Long carTrackerId, SubInvoiceDTO invoice) {
+        SubInvoice invoiceToInsert = DtoToDomain.SUBINVOICE_DTO_TO_DOMAIN(invoice);
+        SubInvoiceDTO dto = DomainToDto.SUBINVOICESTODTOS(subInvoiceService.insertRemoteSubInvoice(invoiceToInsert, carTrackerId));
+        return Response.ok(dto).build();
+    }
+
     @PUT
     public Response updateSubInvoice(SubInvoiceDTO invoice) {
-        SubInvoice invoiceToUpdate = DtoToDomain.SUBINVOICE_DTO_TO_DOMAIN(invoice);
+//        SubInvoice invoiceToUpdate = DtoToDomain.SUBINVOICE_DTO_TO_DOMAIN(invoice);
+        SubInvoice invoiceToUpdate = subInvoiceService.getSubInvoice(invoice.getInvoiceNumber());
+        invoiceToUpdate.setPaymentStatus(invoice.getPaymentStatus());
         SubInvoiceDTO dto = DomainToDto.SUBINVOICESTODTOS(subInvoiceService.updateSubInvoice(invoiceToUpdate));
         return Response.ok(dto).build();
     }

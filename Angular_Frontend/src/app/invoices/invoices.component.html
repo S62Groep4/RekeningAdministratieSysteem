@@ -28,6 +28,7 @@
   <thead>
   <tr>
     <th scope="col">Rechnungsnummer</th>
+    <th scope="col">Autotracker-ID</th>
     <th scope="col">Land</th>
     <th scope="col">Zahlungsstatus</th>
     <th scope="col">Rechnungsdatum</th>
@@ -38,6 +39,7 @@
   <tr *ngFor="let i of invoices" (click)="onItemClick(i)" class="clickable-tr"
       [ngClass]="{'selected-tr' : selectedInvoice === i}">
     <th scope="row">{{i.invoiceNumber}}</th>
+    <td>{{i.carTrackerId}}</td>
     <td>{{i.country}}</td>
     <td>{{i.paymentStatus}}</td>
     <td>{{i.invoiceDate | date:'yyyy-MM'}}</td>

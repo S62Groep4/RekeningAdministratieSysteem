@@ -90,10 +90,14 @@ public class Vehicle implements Serializable {
 
     public void clearInvoices() {
         synchronized (subInvoices) {
+            List<SubInvoice> invoicesToRemove = new ArrayList();
             for (SubInvoice i : this.subInvoices) {
-                i.setVehicle(null);
+                if (i.getCountry().equals("49")) {
+                    i.setVehicle(null);
+                    invoicesToRemove.add(i);
+                }
             }
-            this.subInvoices.clear();
+            this.subInvoices.removeAll(invoicesToRemove);
         }
     }
 

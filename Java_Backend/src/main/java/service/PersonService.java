@@ -20,10 +20,12 @@ public class PersonService {
 
     @Inject
     PersonDAO personDAO;
+
     @Inject
     VehicleDAO vehicleDAO;
 
-    @Inject AddressService addressService;
+    @Inject
+    AddressService addressService;
 
     private static final Logger LOGGER = Logger.getLogger(PersonService.class.getName());
 
@@ -66,15 +68,15 @@ public class PersonService {
         }
     }
 
-    public Person setPersonsAddress(int personId, Address address){
+    public Person setPersonsAddress(int personId, Address address) {
         Person managedPerson = this.getPerson(personId);
-        if(managedPerson == null){
+        if (managedPerson == null) {
             // Modern Java compiler convert your + operations by StringBuilders append.
-            throw new NullPointerException("ERROR while performing setPersonsAddress operation, can not find person with id " + personId );
+            throw new NullPointerException("ERROR while performing setPersonsAddress operation, can not find person with id " + personId);
         }
 
         Address managedAddress = addressService.findAddress(address);
-        if(managedAddress == null){
+        if (managedAddress == null) {
             managedAddress = addressService.insertAddress(address);
         };
 
@@ -104,4 +106,21 @@ public class PersonService {
         }
     }
 
+    public Person getPerson(String userAccountEmail) throws PersistenceException {
+        try {
+            return personDAO.getPerson(userAccountEmail);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing getPerson operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
+
+    public Person getPersonAndFetchVehiclesEagerly(String userAccountEmail) throws PersistenceException {
+        try {
+            return personDAO.getPersonAndFetchVehiclesEagerly(userAccountEmail);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing getPersonAndFetchVehiclesEagerly operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
 }

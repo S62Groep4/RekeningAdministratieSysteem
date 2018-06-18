@@ -14,6 +14,10 @@ public interface PersonDAO {
 
     Person getPerson(long id) throws PersistenceException;
 
+    Person getPerson(String userAccountEmail) throws PersistenceException;
+    
+    Person getPersonAndFetchVehiclesEagerly(String userAccountEmail) throws PersistenceException;
+
     List<Person> getAllPersons() throws PersistenceException;
 
     Person insertPerson(Person person) throws PersistenceException;

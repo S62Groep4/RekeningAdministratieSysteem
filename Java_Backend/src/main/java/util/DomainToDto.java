@@ -60,7 +60,8 @@ public class DomainToDto {
                     s.getPaymentStatus(),
                     s.getInvoiceDate(),
                     s.getPrice() + "",
-                    APIURI + "persons/" + s.getVehicle().getOwner().getId());
+                    APIURI + "persons/" + s.getVehicle().getOwner().getId(),
+                    s.getVehicle().getCarTrackerId());
             subInvoiceDTOs.add(invoice);
         }
         return subInvoiceDTOs;
@@ -76,7 +77,8 @@ public class DomainToDto {
                 subInvoice.getPaymentStatus(),
                 subInvoice.getInvoiceDate(),
                 subInvoice.getPrice() + "",
-                APIURI + "persons/" + subInvoice.getVehicle().getOwner().getId());
+                APIURI + "persons/" + subInvoice.getVehicle().getOwner().getId(),
+                subInvoice.getVehicle().getCarTrackerId());
         return subInvoiceDTO;
     }
 
