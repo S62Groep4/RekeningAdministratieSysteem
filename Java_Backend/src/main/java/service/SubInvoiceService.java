@@ -187,6 +187,16 @@ public class SubInvoiceService {
         }
     }
 
+    public SubInvoice insertRemoteSubInvoice(SubInvoice/*DTO*/ invoice) throws PersistenceException {
+        try {
+//            SubInvoice newInvoice = new SubInvoice(null, invoice.getCountry(), invoice.getPrice(), invoice.getInvoiceDate(), null);
+            return subinvoiceDao.insertSubInvoice(invoice);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing insertRemoteSubInvoice operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
+
     public SubInvoice insertRemoteSubInvoice(SubInvoice invoice, Long carTrackerId) throws PersistenceException {
         try {
             Vehicle v = vehicleDao.getVehicle(carTrackerId);
