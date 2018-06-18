@@ -58,7 +58,7 @@ public class SubInvoiceService {
         try {
             journeyService.updateJourneysFromRegistration();
         } catch (IOException ex) {
-            Logger.getLogger(SubInvoiceService.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Update journeys error: " + ex.getMessage());
         }
         
         try {
@@ -115,7 +115,13 @@ public class SubInvoiceService {
                     for (Entry<String, String> roadNameEntry : roadNames.entrySet()) {
                         Road temp;
                         try {
-                            temp = roadDao.getRoad(roadNameEntry.getValue());
+                            List<Road> roads = roadDao.getRoad(roadNameEntry.getValue());
+                            if(roads.isEmpty()) {
+                                temp = new Road(roadNameEntry.getValue(), roadNameEntry.getValue(), BASETAX);
+                            } else {
+                                temp = roads.get(0);
+                            }
+                            //temp = roadDao.getRoad(roadNameEntry.getValue());
                         } catch (PersistenceException pe) {
 //                            if road not found
                             continue;
@@ -137,13 +143,17 @@ public class SubInvoiceService {
                     }
 
                     if (price != 0) {
-                        SubInvoice invoice = new SubInvoice(null, "49", roundToPrice(price), entry.getKey());
+                        SubInvoice invoice = new SubInvoice(null, "DE", roundToPrice(price), entry.getKey());
                         invoice.setVehicle(v);
                         invoice.addJourneys(entry.getValue());
                         v.addInvoice(invoice);
+                    } else {
+                        System.out.println("Price is 0!");
                     }
                 }
-                vehicleDao.updateVehicle(v);
+                
+                //vehicleDao.updateVehicle(v);
+                vehicleDao.insertVehicle(v);
             }
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing generateSubInvoices operation; {0}", pe.getMessage());
@@ -196,7 +206,7 @@ public class SubInvoiceService {
         }
     }
 
-    public SubInvoice insertRemoteSubInvoice(SubInvoice invoice, Long carTrackerId) throws PersistenceException {
+    public SubInvoice insertRemoteSubInvoice(SubInvoice invoice, String carTrackerId) throws PersistenceException {
         try {
             Vehicle v = vehicleDao.getVehicle(carTrackerId);
             if (v != null) {

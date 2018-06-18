@@ -16,7 +16,7 @@ import javax.persistence.PersistenceException;
 @Stateless
 public class VehicleDAOImpl implements VehicleDAO {
 
-    @PersistenceContext(name = "ptt_test")
+    @PersistenceContext
     EntityManager em;
 
     @Override
@@ -34,7 +34,7 @@ public class VehicleDAOImpl implements VehicleDAO {
     }
 
     @Override
-    public Vehicle getVehicle(Long carTrackerId) throws PersistenceException {
+    public Vehicle getVehicle(String carTrackerId) throws PersistenceException {
         return (Vehicle) em.createNamedQuery("Vehicle.findBycarTrackerId").setParameter("carTrackerId", carTrackerId).getSingleResult();
     }
 

@@ -40,22 +40,22 @@ public class Vehicle implements Serializable {
     private final List<SubInvoice> subInvoices = Collections.synchronizedList(new ArrayList());
     @ManyToOne
     private Person owner;
-    private Long carTrackerId;
+    private String carTrackerId;
 
     public Vehicle() {
     }
 
-    public Vehicle(String licencePlate, Long carTracker) {
+    public Vehicle(String licencePlate, String carTracker) {
         this.hashedLicencePlate = licencePlate;
         this.carTrackerId = carTracker;
     }
 
-    public Long getCarTrackerId() {
+    public String getCarTrackerId() {
         return carTrackerId;
     }
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
-    public void setCarTrackerId(Long carTrackerId) {
+    public void setCarTrackerId(String carTrackerId) {
         this.carTrackerId = carTrackerId;
     }
 

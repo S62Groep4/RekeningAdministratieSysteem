@@ -63,7 +63,7 @@ public class VehicleResource {
 
     @GET
     @Path("cartracker/{carTrackerId}")
-    public Response getVehicle(@PathParam("carTrackerId") Long carTrackerId) {
+    public Response getVehicle(@PathParam("carTrackerId") String carTrackerId) {
         VehicleDTO dto = DomainToDto.VEHICLESTODTOS(vehicleService.getVehicle(carTrackerId));
         return Response.ok(dto).build();
     }

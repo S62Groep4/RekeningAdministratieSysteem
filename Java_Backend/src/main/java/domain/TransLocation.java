@@ -20,7 +20,7 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "TransLocation.findAll", query = "SELECT t FROM TransLocation t")
-    ,@NamedQuery(name = "TransLocation.findByCarTrackerId", query = "SELECT t FROM TransLocation t WHERE t.carTrackerId = :carTrackerId")
+    ,@NamedQuery(name = "TransLocation.findByCarTrackerId", query = "SELECT t FROM TransLocation t WHERE t.serialNumber = :serialNumber")
     ,@NamedQuery(name = "TransLocation.findByJourneyId", query = "SELECT t FROM TransLocation t WHERE t.journey.id = :journeyId")})
 public class TransLocation implements Serializable {
 
@@ -32,7 +32,7 @@ public class TransLocation implements Serializable {
     private Double lat;
     private Double lon;
     private String dateTime;
-    private String carTrackerId;
+    private String serialNumber;
     private String countryCode;
     @ManyToOne
     private Journey journey;
@@ -59,7 +59,7 @@ public class TransLocation implements Serializable {
     }
 
     public String getCarTrackerId() {
-        return carTrackerId;
+        return serialNumber;
     }
 
     public String getCountryCode() {
@@ -87,7 +87,7 @@ public class TransLocation implements Serializable {
     }
 
     public void setCarTrackerId(String carTrackerId) {
-        this.carTrackerId = carTrackerId;
+        this.serialNumber = carTrackerId;
     }
 
     public void setCountryCode(String countryCode) {
@@ -98,11 +98,11 @@ public class TransLocation implements Serializable {
     public TransLocation() {
     }
 
-    public TransLocation(Double lat, Double lon, String carTracker, String countryCode) {
+    public TransLocation(Double lat, Double lon, String serialNumber, String countryCode) {
         this.lat = lat;
         this.lon = lon;
         this.dateTime = DF.format(new Date());
-        this.carTrackerId = carTracker;
+        this.serialNumber = serialNumber;
         this.countryCode = countryCode;
     }
 
@@ -124,7 +124,7 @@ public class TransLocation implements Serializable {
         hash = 59 * hash + Objects.hashCode(this.lat);
         hash = 59 * hash + Objects.hashCode(this.lon);
         hash = 59 * hash + Objects.hashCode(this.dateTime);
-        hash = 59 * hash + Objects.hashCode(this.carTrackerId);
+        hash = 59 * hash + Objects.hashCode(this.serialNumber);
         hash = 59 * hash + Objects.hashCode(this.countryCode);
         return hash;
     }

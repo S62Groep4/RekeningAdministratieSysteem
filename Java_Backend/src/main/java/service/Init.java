@@ -129,26 +129,47 @@ public class Init {
         Person person2 = new Person("Freek", "Jannssen");
         Person person3 = new Person("Robert", "de Graaf");
         Person person4 = new Person("Rickert", "Fruitboom");
+        Person person5 = new Person("Rickert", "Fruitboom");
+        Person person6 = new Person("Rickert", "Fruitboom");
 
         Vehicle veh1 = new Vehicle();
         veh1.setUnHashedLicencePlate("68JFSF");
-        veh1.setCarTrackerId(654161L);
+        veh1.setCarTrackerId("654161");
         veh1.addJourney(j1);
 
         Vehicle veh2 = new Vehicle();
         veh2.setUnHashedLicencePlate("54HSHS");
-        veh2.setCarTrackerId(188654L);
+        veh2.setCarTrackerId("188654L");
         veh2.addJourney(j2);
 
         Vehicle veh3 = new Vehicle();
         veh3.setUnHashedLicencePlate("33DSVL");
-        veh3.setCarTrackerId(301214L);
+        veh3.setCarTrackerId("301214L");
         veh3.addJourney(j3);
         veh3.addJourney(j4);
+
+        //Real ones
+        Vehicle veh4 = new Vehicle();
+        veh4.setUnHashedLicencePlate("54-XJN-4");
+        veh4.setCarTrackerId("c58d5cc9-cb02-4b03-9704-f58079326779");
+        veh4.setHashedLicencePlate("$2a$04$NtDNjgrqmXVFpo6qM1CkPet6q0Lf.D1OMjyBJ4EruVhFEYadRbS56");
+
+        Vehicle veh5 = new Vehicle();
+        veh5.setUnHashedLicencePlate("63-FXA-6");
+        veh5.setCarTrackerId("c6190737-630c-4cbc-8b1d-3a6b8864516f");
+        veh5.setHashedLicencePlate("$2a$04$WibjRSBs0tMKUS/TotETReN/ALimELzhWdTz9rA7bNvYxHk6PTQsO");
+
+        Vehicle veh6 = new Vehicle();
+        veh6.setUnHashedLicencePlate("73-AHC-5");
+        veh6.setCarTrackerId("59620da1-12c5-4ccd-9b29-2ae0cefb0565");
+        veh6.setHashedLicencePlate("$2a$04$O0irp2rU9PsU1S/pfdMBquhFwlv.IQY/CZuFv5fBQMUKG3AC2Kk9.");
 
         person1.addVehicle(veh1);
         person2.addVehicle(veh2);
         person3.addVehicle(veh3);
+        person4.addVehicle(veh4);
+        person5.addVehicle(veh5);
+        person6.addVehicle(veh6);
 
         Road r1 = new Road("B11", "Wolfratshauser Straße", 1.0);
         Road r2 = new Road("Uslar", "Uslar", 1.0);
@@ -163,6 +184,11 @@ public class Init {
         User user3 = new User("user3", "user3");
         user3.setPerson(person3);
         User user4 = new User("user4", "user4");
+        user4.setPerson(person4);
+        User user5 = new User("user5", "user5");
+        user5.setPerson(person5);
+        User user6 = new User("user6", "user6");
+        user6.setPerson(person6);
 
         roadService.insertRoad(r1);
         roadService.insertRoad(r2);
@@ -193,14 +219,23 @@ public class Init {
         vehicleService.insertVehicle(veh1);
         vehicleService.insertVehicle(veh2);
         vehicleService.insertVehicle(veh3);
+        vehicleService.insertVehicle(veh4);
+        vehicleService.insertVehicle(veh5);
+        vehicleService.insertVehicle(veh6);
 
         personService.insertPerson(person1);
         personService.insertPerson(person2);
         personService.insertPerson(person3);
+        personService.insertPerson(person4);
+        personService.insertPerson(person5);
+        personService.insertPerson(person6);
 
         userService.insertUser(user1);
         userService.insertUser(user2);
         userService.insertUser(user3);
         userService.insertUser(user4);
+        userService.insertUser(user5);
+        userService.insertUser(user6);
+
     }
 }

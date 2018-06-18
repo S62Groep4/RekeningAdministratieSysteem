@@ -53,4 +53,10 @@ public class JourneyDAOImpl implements JourneyDAO {
         em.persist(journey);
         return journey;
     }
+
+    @Override
+    public void flush() {
+        this.em.flush();
+    }
+
 }

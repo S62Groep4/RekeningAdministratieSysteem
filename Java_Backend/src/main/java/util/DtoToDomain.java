@@ -21,7 +21,7 @@ public class DtoToDomain {
         for (VehicleDTO v : vehicleDTOs) {
             Vehicle vehicle = new Vehicle(
                     new String(Base64.getDecoder().decode(v.getHashedLicensePlate())),
-                    Long.parseLong(v.getCarTrackerId()));
+                    v.getCarTrackerId());
             vehicles.add(vehicle);
         }
         return vehicles;
@@ -33,7 +33,7 @@ public class DtoToDomain {
         }
         return new Vehicle(
                 new String(Base64.getDecoder().decode(vehicleDTO.getHashedLicensePlate())),
-                Long.parseLong(vehicleDTO.getCarTrackerId()));
+                vehicleDTO.getCarTrackerId());
     }
 
     public static List<SubInvoice> SUBINVOICE_DTO_TO_DOMAIN(List<SubInvoiceDTO> invoiceDTOs) {

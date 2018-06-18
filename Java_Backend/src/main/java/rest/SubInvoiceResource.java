@@ -43,7 +43,7 @@ public class SubInvoiceResource {
 
     @POST
     @Path("remote/{carTrackerId}")
-    public Response insertRemoteSubInvoice(@PathParam("carTrackerId") Long carTrackerId, SubInvoiceDTO invoice) {
+    public Response insertRemoteSubInvoice(@PathParam("carTrackerId") String carTrackerId, SubInvoiceDTO invoice) {
         SubInvoice invoiceToInsert = DtoToDomain.SUBINVOICE_DTO_TO_DOMAIN(invoice);
         SubInvoiceDTO dto = DomainToDto.SUBINVOICESTODTOS(subInvoiceService.insertRemoteSubInvoice(invoiceToInsert, carTrackerId));
         return Response.ok(dto).build();

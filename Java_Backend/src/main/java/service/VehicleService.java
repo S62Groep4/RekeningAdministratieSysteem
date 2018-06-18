@@ -35,7 +35,7 @@ public class VehicleService {
         }
     }
 
-    public Vehicle getVehicle(Long carTrackerId) throws PersistenceException {
+    public Vehicle getVehicle(String carTrackerId) throws PersistenceException {
         try {
             return vehicleDao.getVehicle(carTrackerId);
         } catch (PersistenceException pe) {
