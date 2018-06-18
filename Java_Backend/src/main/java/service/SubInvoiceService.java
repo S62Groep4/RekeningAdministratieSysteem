@@ -33,6 +33,9 @@ public class SubInvoiceService {
 
     @Inject
     VehicleDAO vehicleDao;
+    
+    @Inject
+    JourneyService journeyService;
 
     @Inject
     RoadDAO roadDao;
@@ -44,6 +47,12 @@ public class SubInvoiceService {
     }
 
     public void generateSubInvoices() {
+        try {
+            journeyService.updateJourneysFromRegistration();
+        } catch (IOException ex) {
+            Logger.getLogger(SubInvoiceService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         try {
             List<Vehicle> vehicles = vehicleDao.getAllVehicles();
             for (Vehicle v : vehicles) {
