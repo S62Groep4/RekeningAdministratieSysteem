@@ -128,8 +128,16 @@ public class JourneyService {
         for (Journey j : journeys) {
             if (!j.getTransLocations().isEmpty()) {
                 System.out.println("Get vehicle: " + j.getTransLocations().get(0).getCarTrackerId());
-                Vehicle v = vehicleService.getVehicle(j.getTransLocations().get(0).getCarTrackerId());
-                v.addJourney(j);
+                List<Vehicle> foundVehicles = vehicleService.getVehicle(j.getTransLocations().get(0).getCarTrackerId());
+                if (!foundVehicles.isEmpty()) {
+                    foundVehicles.get(0).addJourney(j);
+                } else {
+                    List<Vehicle> euroVehicles = vehicleService.getVehicle(j.getTransLocations().get(0).getCountryCode());
+                    if (euroVehicles.isEmpty()) {
+                        break;
+                    }
+                    euroVehicles.get(0).addJourney(j);
+                }
                 insertJourney(j);
             } else {
                 System.out.println("Empty journey");

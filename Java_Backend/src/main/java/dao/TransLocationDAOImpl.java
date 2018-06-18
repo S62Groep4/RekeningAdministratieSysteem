@@ -51,4 +51,14 @@ public class TransLocationDAOImpl implements TransLocationDAO {
         em.persist(location);
         return location;
     }
+
+    @Override
+    public void remove(TransLocation transLocation) {
+        em.remove(transLocation);
+    }
+
+    @Override
+    public void truncate() {
+        em.createNativeQuery("DELETE FROM TransLocation").executeUpdate();
+    }
 }

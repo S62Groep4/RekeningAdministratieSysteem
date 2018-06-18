@@ -21,4 +21,6 @@ public interface JourneyDAO {
     Journey insertJourney(Journey journey) throws PersistenceException;
     
     void flush();
+    
+    void truncate();
 }
