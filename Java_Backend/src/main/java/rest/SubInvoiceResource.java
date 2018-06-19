@@ -1,6 +1,8 @@
 package rest;
 
+import domain.Journey;
 import domain.SubInvoice;
+import dto.JourneyDTO;
 import dto.SubInvoiceDTO;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -39,9 +41,19 @@ public class SubInvoiceResource {
         return Response.ok(dto).build();
     }
 
+    @POST
+    @Path("remote/{carTrackerId}")
+    public Response insertRemoteSubInvoice(@PathParam("carTrackerId") String carTrackerId, SubInvoiceDTO invoice) {
+        SubInvoice invoiceToInsert = DtoToDomain.SUBINVOICE_DTO_TO_DOMAIN(invoice);
+        SubInvoiceDTO dto = DomainToDto.SUBINVOICESTODTOS(subInvoiceService.insertRemoteSubInvoice(invoiceToInsert, carTrackerId));
+        return Response.ok(dto).build();
+    }
+
     @PUT
     public Response updateSubInvoice(SubInvoiceDTO invoice) {
-        SubInvoice invoiceToUpdate = DtoToDomain.SUBINVOICE_DTO_TO_DOMAIN(invoice);
+//        SubInvoice invoiceToUpdate = DtoToDomain.SUBINVOICE_DTO_TO_DOMAIN(invoice);
+        SubInvoice invoiceToUpdate = subInvoiceService.getSubInvoice(invoice.getInvoiceNumber());
+        invoiceToUpdate.setPaymentStatus(invoice.getPaymentStatus());
         SubInvoiceDTO dto = DomainToDto.SUBINVOICESTODTOS(subInvoiceService.updateSubInvoice(invoiceToUpdate));
         return Response.ok(dto).build();
     }
@@ -70,6 +82,21 @@ public class SubInvoiceResource {
     @Path("generate")
     public Response generateSubInvoices() {
         subInvoiceService.generateSubInvoices();
+        return Response.ok().build();
+    }
+
+    @GET
+    @Path("{invoiceNumber}/journeys")
+    public Response getSubInvoiceJourneys(@PathParam("invoiceNumber") Long invoiceNumber) {
+        List<Journey> journeys = subInvoiceService.getSubInvoiceJourneys(invoiceNumber);
+        List<JourneyDTO> journeyDTOs = DomainToDto.JOURNEYSTODTOS(journeys);
+        return Response.ok(journeyDTOs).build();
+    }
+
+    @GET
+    @Path("sendEuInvoices/{countryCode}")
+    public Response sendEuInvoice(@PathParam("countryCode") String countryCode) {
+        subInvoiceService.sendToEu(countryCode);
         return Response.ok().build();
     }
 }

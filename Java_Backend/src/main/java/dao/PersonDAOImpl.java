@@ -44,7 +44,19 @@ public class PersonDAOImpl implements PersonDAO {
 
     @Override
     public Person getPersonByVehicle(Vehicle vehicle) throws PersistenceException {
-        return em.createNamedQuery("Person.GetPersonByCar", Person.class)
+        return em.createNamedQuery("Person.findPersonByCar", Person.class)
                 .setParameter("vehicle", vehicle).getSingleResult();
+    }
+
+    @Override
+    public Person getPerson(String userAccountEmail) throws PersistenceException {
+        return em.createNamedQuery("Person.findByUserEmail", Person.class)
+                .setParameter("email", userAccountEmail).getSingleResult();
+    }
+
+    @Override
+    public Person getPersonAndFetchVehiclesEagerly(String userAccountEmail) throws PersistenceException {
+        return em.createNamedQuery("Person.findByUserEmailWithVehicles", Person.class)
+                .setParameter("email", userAccountEmail).getSingleResult();
     }
 }

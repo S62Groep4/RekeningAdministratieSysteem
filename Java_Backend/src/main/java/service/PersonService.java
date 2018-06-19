@@ -2,10 +2,7 @@ package service;
 
 import dao.PersonDAO;
 import dao.VehicleDAO;
-import domain.Journey;
-import domain.Person;
-import domain.SubInvoice;
-import domain.Vehicle;
+import domain.*;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -23,8 +20,12 @@ public class PersonService {
 
     @Inject
     PersonDAO personDAO;
+
     @Inject
     VehicleDAO vehicleDAO;
+
+    @Inject
+    AddressService addressService;
 
     private static final Logger LOGGER = Logger.getLogger(PersonService.class.getName());
 
@@ -67,6 +68,25 @@ public class PersonService {
         }
     }
 
+    public Person setPersonsAddress(int personId, Address address) {
+        Person managedPerson = this.getPerson(personId);
+        if (managedPerson == null) {
+            // Modern Java compiler convert your + operations by StringBuilders append.
+            throw new NullPointerException("ERROR while performing setPersonsAddress operation, can not find person with id " + personId);
+        }
+
+        Address managedAddress = addressService.findAddress(address);
+        if (managedAddress == null) {
+            managedAddress = addressService.insertAddress(address);
+        };
+
+        managedPerson.setAddress(managedAddress);
+        managedPerson = updatePerson(managedPerson);
+
+        return managedPerson;
+
+    }
+
     public Person getPersonByVehicle(Vehicle vehicle) {
         try {
             return personDAO.getPersonByVehicle(vehicle);
@@ -86,4 +106,21 @@ public class PersonService {
         }
     }
 
+    public Person getPerson(String userAccountEmail) throws PersistenceException {
+        try {
+            return personDAO.getPerson(userAccountEmail);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing getPerson operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
+
+    public Person getPersonAndFetchVehiclesEagerly(String userAccountEmail) throws PersistenceException {
+        try {
+            return personDAO.getPersonAndFetchVehiclesEagerly(userAccountEmail);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing getPersonAndFetchVehiclesEagerly operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
 }

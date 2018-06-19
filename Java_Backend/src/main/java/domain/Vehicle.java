@@ -40,22 +40,41 @@ public class Vehicle implements Serializable {
     private final List<SubInvoice> subInvoices = Collections.synchronizedList(new ArrayList());
     @ManyToOne
     private Person owner;
-    private Long carTrackerId;
+    private String carTrackerId;
 
     public Vehicle() {
     }
 
-    public Vehicle(String licencePlate, Long carTracker) {
+    public Vehicle(String licencePlate, String carTracker) {
         this.hashedLicencePlate = licencePlate;
         this.carTrackerId = carTracker;
     }
 
-    public Long getCarTrackerId() {
+    public void removeJourney(Journey j) {
+        this.journeys.remove(j);
+        j.setVehicle(null);
+    }
+
+    public void removeInvoices() {
+        for (SubInvoice su : subInvoices) {
+            su.setVehicle(null);
+        }
+        this.subInvoices.clear();
+    }
+
+    public void removeJourneys() {
+        for (Journey j : journeys) {
+            j.setVehicle(null);
+        }
+        this.journeys.clear();
+    }
+
+    public String getCarTrackerId() {
         return carTrackerId;
     }
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
-    public void setCarTrackerId(Long carTrackerId) {
+    public void setCarTrackerId(String carTrackerId) {
         this.carTrackerId = carTrackerId;
     }
 
@@ -90,10 +109,14 @@ public class Vehicle implements Serializable {
 
     public void clearInvoices() {
         synchronized (subInvoices) {
+            List<SubInvoice> invoicesToRemove = new ArrayList();
             for (SubInvoice i : this.subInvoices) {
+//                if (i.getCountry().equals("DE")) {
                 i.setVehicle(null);
+                invoicesToRemove.add(i);
+//                }
             }
-            this.subInvoices.clear();
+            this.subInvoices.removeAll(invoicesToRemove);
         }
     }
 

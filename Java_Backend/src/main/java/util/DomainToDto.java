@@ -1,11 +1,6 @@
 package util;
 
-import domain.Journey;
-import domain.Person;
-import domain.Road;
-import domain.SubInvoice;
-import domain.TransLocation;
-import domain.Vehicle;
+import domain.*;
 import dto.*;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -17,7 +12,7 @@ import java.util.List;
  */
 public class DomainToDto {
 
-    private static final String APIURI = "http://localhost:8080/Java_Backend/api/";
+    private static final String APIURI = "http://192.168.24.91:8080/RekeningAdministratieSysteem/api/";
 
     public static List<VehicleDTO> VEHICLESTODTOS(List<Vehicle> vehicles) {
         List<VehicleDTO> vehicleDTOs = new ArrayList<>();
@@ -65,7 +60,8 @@ public class DomainToDto {
                     s.getPaymentStatus(),
                     s.getInvoiceDate(),
                     s.getPrice() + "",
-                    APIURI + "persons/" + s.getVehicle().getOwner().getId());
+                    APIURI + "persons/" + s.getVehicle().getOwner().getId(),
+                    s.getVehicle().getCarTrackerId());
             subInvoiceDTOs.add(invoice);
         }
         return subInvoiceDTOs;
@@ -81,7 +77,8 @@ public class DomainToDto {
                 subInvoice.getPaymentStatus(),
                 subInvoice.getInvoiceDate(),
                 subInvoice.getPrice() + "",
-                APIURI + "persons/" + subInvoice.getVehicle().getOwner().getId());
+                APIURI + "persons/" + subInvoice.getVehicle().getOwner().getId(),
+                subInvoice.getVehicle().getCarTrackerId());
         return subInvoiceDTO;
     }
 
@@ -182,7 +179,8 @@ public class DomainToDto {
                     p.getId(),
                     p.getFirstName(),
                     p.getLastName(),
-                    APIURI + "persons/" + p.getId() + "/vehicles");
+                    APIURI + "persons/" + p.getId() + "/vehicles",
+                    APIURI + "address/" + p.getId());
             personDtos.add(personDto);
         }
         return personDtos;
@@ -197,6 +195,42 @@ public class DomainToDto {
                 person.getId(),
                 person.getFirstName(),
                 person.getLastName(),
-                APIURI + "persons/" + person.getId() + "/vehicles");
+                APIURI + "persons/" + person.getId() + "/vehicles",
+                APIURI + "address/" + person.getId()
+        );
+    }
+
+    public static List<AddressDTO> ADDRESSTODTOS(List<Address> addresses) {
+        List<AddressDTO> addressDtos = new ArrayList<>();
+        if (addresses == null || addresses.isEmpty()) {
+            return addressDtos;
+        }
+
+        for (Address a : addresses) {
+            AddressDTO addressDTO = new AddressDTO(
+                    a.getId(),
+                    a.getStreetName(),
+                    a.getStreetNumber(),
+                    a.getZipCode(),
+                    a.getCity(),
+                    a.getCountry());
+
+            addressDtos.add(addressDTO);
+        }
+        return addressDtos;
+    }
+
+    public static AddressDTO ADDRESSTODTOS(Address address) {
+        if (address == null) {
+            return new AddressDTO();
+        }
+
+        return new AddressDTO(
+                address.getId(),
+                address.getStreetName(),
+                address.getStreetNumber(),
+                address.getZipCode(),
+                address.getCity(),
+                address.getCountry());
     }
 }

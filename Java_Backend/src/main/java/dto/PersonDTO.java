@@ -12,15 +12,18 @@ public class PersonDTO implements Serializable {
     private String firstName;
     private String lastName;
     private String vehiclesUri;
+    private String addressUri;
+
 
     public PersonDTO() {
     }
 
-    public PersonDTO(long id, String firstName, String lastName, String vehiclesUri) {
+    public PersonDTO(long id, String firstName, String lastName, String vehiclesUri, String addressUri) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.vehiclesUri = vehiclesUri;
+        this.addressUri= addressUri;
     }
 
     public long getId() {
@@ -53,5 +56,13 @@ public class PersonDTO implements Serializable {
 
     public void setVehiclesUri(String vehiclesUri) {
         this.vehiclesUri = vehiclesUri;
+    }
+
+    public String getAddressUri() {
+        return addressUri;
+    }
+
+    public void setAddressUri(String addressUri) {
+        this.addressUri = addressUri;
     }
 }

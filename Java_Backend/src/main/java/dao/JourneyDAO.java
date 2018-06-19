@@ -19,4 +19,8 @@ public interface JourneyDAO {
     void removeJourney(Long id) throws PersistenceException;
 
     Journey insertJourney(Journey journey) throws PersistenceException;
+    
+    void flush();
+    
+    void truncate();
 }

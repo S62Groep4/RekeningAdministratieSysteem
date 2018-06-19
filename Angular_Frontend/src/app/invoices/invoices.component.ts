@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Invoice} from '../invoice';
 import {InvoiceService} from '../services/invoice.service';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'app-invoices',
@@ -11,11 +10,9 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 export class InvoicesComponent implements OnInit {
 
   model;
-  selectedInvoice: Invoice = new Invoice(null, '', '', '', '', '');
+  selectedInvoice: Invoice = new Invoice(null, '', '', '', '', '', '');
   selectedInvoiceOwnerLink: string;
   invoices: Invoice[] = [];
-
-  // isLoading: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
 
   constructor(private invoiceService: InvoiceService) {
@@ -38,9 +35,10 @@ export class InvoicesComponent implements OnInit {
     });
   }
 
-  searchInvoices(invoiceDate: string): void {
-    // this.invoiceService.searchInvoices(invoiceDate).subscribe(res => this.invoices = res);
-  }
+  /*searchInvoices(invoiceDate: string): void {
+    this.invoices = this.invoices.filter(
+      invoice => invoice.invoiceDate === invoiceDate);
+  }*/
 
   clearCalendar(): void {
     this.model = '';
@@ -48,7 +46,7 @@ export class InvoicesComponent implements OnInit {
 
   onItemClick(invoice: Invoice) {
     if (this.selectedInvoice === invoice) {
-      this.selectedInvoice = new Invoice(null, '', '', '', '', '');
+      this.selectedInvoice = new Invoice(null, '', '', '', '', '', '');
     } else {
       this.selectedInvoice = invoice;
       this.selectedInvoiceOwnerLink = invoice.ownerUri.substring(invoice.ownerUri.lastIndexOf('/'));

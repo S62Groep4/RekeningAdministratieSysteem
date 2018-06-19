@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-
 import static javax.persistence.CascadeType.ALL;
 
 /**
@@ -16,7 +15,12 @@ import static javax.persistence.CascadeType.ALL;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p")
-    ,@NamedQuery(name = "Person.GetPersonByCar", query = "SELECT p FROM Person p WHERE :vehicle member p.vehicles")
+    ,
+    @NamedQuery(name = "Person.findPersonByCar", query = "SELECT p FROM Person p WHERE :vehicle member p.vehicles")
+    ,
+    @NamedQuery(name = "Person.findByUserEmail", query = "SELECT p FROM Person p WHERE p.user.email = :email")
+    ,
+    @NamedQuery(name = "Person.findByUserEmailWithVehicles", query = "SELECT p FROM Person p JOIN FETCH p.vehicles WHERE p.user.email = :email")
 })
 public class Person implements Serializable {
 
@@ -25,7 +29,12 @@ public class Person implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
-    @OneToMany(mappedBy = "owner", cascade = ALL)
+    @OneToOne
+    private User user;
+    @ManyToOne
+    @JoinColumn(name = "ADDRESS_ID")
+    private Address address;
+    @OneToMany(mappedBy = "owner", cascade = ALL, fetch = FetchType.LAZY)
     private final List<Vehicle> vehicles = new ArrayList<>();
 
     public Person() {
@@ -71,6 +80,15 @@ public class Person implements Serializable {
         return Collections.unmodifiableList(vehicles);
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+        this.address.addPerson(this);
+    }
+
     public void addVehicle(Vehicle vehicle) {
         if (!this.vehicles.contains(vehicle)) {
             vehicle.setOwner(this);
@@ -83,6 +101,14 @@ public class Person implements Serializable {
             vehicle.setOwner(null);
             this.vehicles.remove(vehicle);
         }
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     // </editor-fold>

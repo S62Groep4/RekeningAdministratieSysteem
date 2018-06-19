@@ -32,17 +32,13 @@ public class RoadDAOImpl implements RoadDAO {
     }
 
     @Override
-    public Road getRoad(String name) throws PersistenceException {
-        Road road = (Road) em.createNamedQuery("Road.findByName").setParameter("roadName", name).getSingleResult();
-        if (road != null) {
-            return road;
-        }
-        return new Road();
+    public List<Road> getRoad(String name) throws PersistenceException {
+        return em.createNamedQuery("Road.findByName").setParameter("roadName", name).getResultList();
     }
 
     @Override
     public List<Road> searchRoad(String name) throws PersistenceException {
-        return em.createNamedQuery("Road.searchByName").setParameter("roadName", "%" + name + "%").getResultList();
+        return em.createNamedQuery("Road.findByName").setParameter("roadName", "%" + name + "%").getResultList();
     }
 
     @Override

@@ -14,7 +14,7 @@ public interface RoadDAO {
 
     Road getRoad(Long id) throws PersistenceException;
 
-    Road getRoad(String name) throws PersistenceException;
+    List<Road> getRoad(String name) throws PersistenceException;
 
     List<Road> searchRoad(String name) throws PersistenceException;
 

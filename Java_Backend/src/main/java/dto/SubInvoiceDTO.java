@@ -14,17 +14,19 @@ public class SubInvoiceDTO implements Serializable {
     private String invoiceDate;
     private String price;
     private String ownerUri;
+    private String carTrackerId;
 
     public SubInvoiceDTO() {
     }
 
-    public SubInvoiceDTO(Long invoiceNumber, String country, String paymentStatus, String invoiceDate, String price, String ownerUri) {
+    public SubInvoiceDTO(Long invoiceNumber, String country, String paymentStatus, String invoiceDate, String price, String ownerUri, String carTrackerId) {
         this.invoiceNumber = invoiceNumber;
         this.country = country;
         this.paymentStatus = paymentStatus;
         this.invoiceDate = invoiceDate;
         this.price = price;
         this.ownerUri = ownerUri;
+        this.carTrackerId = carTrackerId;
     }
 
     public String getOwnerUri() {
@@ -73,5 +75,13 @@ public class SubInvoiceDTO implements Serializable {
 
     public String getPrice() {
         return price;
+    }
+
+    public String getCarTrackerId() {
+        return carTrackerId;
+    }
+
+    public void setCarTrackerId(String carTrackerId) {
+        this.carTrackerId = carTrackerId;
     }
 }

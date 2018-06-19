@@ -78,6 +78,10 @@ public class Journey implements Serializable {
         return false;
     }
 
+    public List<TransLocation> getLocations() {
+        return locations;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Journey)) {

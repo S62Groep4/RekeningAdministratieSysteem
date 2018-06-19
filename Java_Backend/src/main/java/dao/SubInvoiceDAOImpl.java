@@ -46,4 +46,14 @@ public class SubInvoiceDAOImpl implements SubInvoiceDAO {
         em.persist(invoice);
         return invoice;
     }
+
+    @Override
+    public void flush() {
+        em.flush();
+    } 
+
+    @Override
+    public void truncate() {
+        em.createNativeQuery("DELETE FROM SUBINVOICE").executeUpdate();
+    }
 }

@@ -33,7 +33,7 @@ public class RoadService {
         }
     }
 
-    public Road getRoad(String name) throws PersistenceException {
+    public List<Road> getRoad(String name) throws PersistenceException {
         try {
             return roadDao.getRoad(name);
         } catch (PersistenceException pe) {
